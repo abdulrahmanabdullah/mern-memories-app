@@ -12,14 +12,14 @@ import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useStyle } from "./style";
 
-const Post = () => {
+const Post = ({ post }) => {
   const classes = useStyle();
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} image="" />
+      <CardMedia className={classes.media} image={post.selectedFile} />
       {/* Card header */}
       <div className={classes.overlay}>
-        <Typography variant="h6">Creator</Typography>
+        <Typography variant="h6">{post.creator}</Typography>
         <Typography variant="body2">moment</Typography>
       </div>
       {/* Edit btn */}
@@ -28,12 +28,6 @@ const Post = () => {
           <MoreHorizIcon />
         </Button>
       </div>
-      {/* tags */}
-      <div className={classes.details}>
-        <Typography color="textSecondary" variant="body2" component="p">
-          #tags #tags #tags
-        </Typography>
-      </div>
       {/* Title */}
       <Typography
         className={classes.title}
@@ -41,14 +35,20 @@ const Post = () => {
         variant="h5"
         component="h2"
       >
-        Title
+        {post.title}
       </Typography>
       {/* Message */}
       <CardContent>
         <Typography variant="body2" component="p">
-          Message
+          {post.message}
         </Typography>
       </CardContent>
+      {/* tags */}
+      <div className={classes.details}>
+        <Typography color="textSecondary" variant="body2" component="p">
+          {post.tags}
+        </Typography>
+      </div>
       {/* Like & delete btn */}
       <CardActions className={classes.cardActions}>
         <Button size="small" color="secondary">

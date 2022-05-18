@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { useDispatch } from "react-redux";
+
 import { useStyle } from "./style";
-import Posts from "./components/Posts/Posts";
+import PostList from "./components/Posts/PostList";
 import Form from "./components/Form/Form";
+import { fetchPost } from "./features/posts/postSlice";
 
 const theme = createTheme();
 
+//TODO: get Posts from store.
 const App = () => {
+  const dispatch = useDispatch();
+  //when component mount fetch all posts.
+  // useEffect(() => {
+  //   dispatch(fetchPost());
+  // }, [dispatch]);
   const classes = useStyle();
   return (
     <Container maxWidth="lg">
@@ -29,7 +38,7 @@ const App = () => {
           >
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={7}>
-                <Posts />
+                <PostList />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Form />
