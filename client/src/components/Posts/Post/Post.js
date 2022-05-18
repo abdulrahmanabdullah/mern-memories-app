@@ -10,6 +10,8 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
+import moment from "moment";
+
 import { useStyle } from "./style";
 
 const Post = ({ post }) => {
@@ -20,7 +22,9 @@ const Post = ({ post }) => {
       {/* Card header */}
       <div className={classes.overlay}>
         <Typography variant="h6">{post.creator}</Typography>
-        <Typography variant="body2">moment</Typography>
+        <Typography variant="body2">
+          {moment(post.createdAt).fromNow()}
+        </Typography>
       </div>
       {/* Edit btn */}
       <div className={classes.overlay2}>
@@ -46,7 +50,7 @@ const Post = ({ post }) => {
       {/* tags */}
       <div className={classes.details}>
         <Typography color="textSecondary" variant="body2" component="p">
-          {post.tags}
+          {post.tags.map((tag) => `#${tag} `)}
         </Typography>
       </div>
       {/* Like & delete btn */}

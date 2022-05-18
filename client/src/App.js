@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useDispatch } from "react-redux";
 
 import { useStyle } from "./style";
 import PostList from "./components/Posts/PostList";
 import Form from "./components/Form/Form";
-import { fetchPost } from "./features/posts/postSlice";
 
 const theme = createTheme();
 
 //TODO: get Posts from store.
 const App = () => {
-  const dispatch = useDispatch();
   //when component mount fetch all posts.
   // useEffect(() => {
   //   dispatch(fetchPost());

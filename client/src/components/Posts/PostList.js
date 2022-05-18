@@ -23,29 +23,23 @@ const PostList = () => {
   let content;
   if (postStatus === "loading") {
     content = <CircularProgress />;
-  } else if (postStatus === "success") {
+  } else if (postStatus === "successed") {
     content = posts.map((post) => (
-      <Grid key={post.id} item xs={12} sm={6} md={6}>
-        <Post />
+      <Grid key={post._id} item xs={12} sm={6} md={6}>
+        <Post post={post} />
       </Grid>
     ));
   } else {
     content = <h1>{postErrorMessage}</h1>;
   }
-  return !posts.length ? (
-    <CircularProgress />
-  ) : (
+  return (
     <Grid
       className={classes.container}
       container
       alignItems="stretch"
       spacing={3}
     >
-      {posts.map((post) => (
-        <Grid key={post.id} item xs={12} sm={6} md={6}>
-          <Post post={post} />
-        </Grid>
-      ))}
+      {content}
     </Grid>
   );
 };

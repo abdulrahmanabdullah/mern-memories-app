@@ -5,7 +5,7 @@ import * as api from "../../api";
 // All actions and reducers for post will be here 👍, we don't need more files.
 
 //fetch all post action
-export const fetchPost = createAsyncThunk("post/fetchPost", async () => {
+export const fetchPost = createAsyncThunk("posts/fetchPost", async () => {
   const response = await api.fetchPostAPI();
   return response.data;
 });
@@ -16,7 +16,7 @@ export const addPost = createAsyncThunk("posts/addNewPost", async (post) => {
   return response.data;
 });
 export const postSlice = createSlice({
-  name: "post",
+  name: "posts",
   initialState: {
     status: "idle",
     posts: [],
@@ -29,9 +29,10 @@ export const postSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchPost.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status = "successed";
         //Merge array and return a new array.
-        state.posts = state.posts.concat(action.payload);
+        // state.posts = state.posts.concat(action.payload);
+        state.posts = action.payload;
       })
       .addCase(fetchPost.rejected, (state, action) => {
         state.status = "failed";
@@ -41,6 +42,7 @@ export const postSlice = createSlice({
         state.status = "upload post";
       })
       .addCase(addPost.fulfilled, (state, action) => {
+        state.status = "successed";
         state.posts.push(action.payload);
       });
   },

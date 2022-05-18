@@ -24,7 +24,6 @@ const Form = () => {
     e.preventDefault();
     //dispatch to create post
     dispatch(addPost(postDate));
-    console.log(postDate);
   };
   return (
     <Paper className={classes.paper}>
