@@ -11,11 +11,16 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../../features/posts/postSlice";
 
 import { useStyle } from "./style";
 
 const Post = ({ post }) => {
+  //component style
   const classes = useStyle();
+  //dispatch
+  const dispatch = useDispatch();
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} />
@@ -58,7 +63,11 @@ const Post = ({ post }) => {
         <Button size="small" color="secondary">
           <ThumUpAltIcon />
         </Button>
-        <Button size="small" color="secondary">
+        <Button
+          size="small"
+          color="secondary"
+          onClick={() => dispatch(deletePost(post._id))}
+        >
           <DeleteIcon />
         </Button>
       </CardActions>

@@ -1,24 +1,21 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { allPostSelector, fetchPost } from "../../features/posts/postSlice";
+import {
+  allPostSelector,
+  postStatusSelector,
+} from "../../features/posts/postSlice";
 
 import { useStyle } from "./style";
 import { Grid, CircularProgress } from "@mui/material";
 import Post from "./Post/Post";
 
-const PostList = () => {
+const PostList = ({ setPostId }) => {
   //Style
   const classes = useStyle();
-  const dispatch = useDispatch();
   //get state from redux store
   const posts = useSelector(allPostSelector);
-  const postStatus = useSelector((state) => state.posts.status);
+  const postStatus = useSelector(postStatusSelector);
   const postErrorMessage = useSelector((state) => state.posts.error);
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPost());
-    }
-  }, [postStatus, dispatch]);
   //Check request status before get data .
   let content;
   if (postStatus === "loading") {
