@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
-  fetchPost,
   allPostSelector,
   postStatusSelector,
 } from "../../features/posts/postSlice";
@@ -10,18 +9,14 @@ import { useStyle } from "./style";
 import { Grid, CircularProgress } from "@mui/material";
 import Post from "./Post/Post";
 
-const PostList = () => {
+const PostList = ({ setCurrentId }) => {
   //Style
   const classes = useStyle();
-  const dispatch = useDispatch();
   //get state from redux store
   const posts = useSelector(allPostSelector);
   const postStatus = useSelector(postStatusSelector);
   const postErrorMessage = useSelector((state) => state.posts.error);
 
-  useEffect(() => {
-    dispatch(fetchPost());
-  }, [dispatch]);
   //Check request status before get data .
   let content;
   if (postStatus === "loading") {
@@ -29,7 +24,7 @@ const PostList = () => {
   } else if (postStatus === "successed") {
     content = posts.map((post) => (
       <Grid key={post._id} item xs={12} sm={6} md={6}>
-        <Post post={post} />
+        <Post post={post} setCurrentId={setCurrentId} />
       </Grid>
     ));
   } else {

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { postStatusSelector } from "./features/posts/postSlice";
+import { useDispatch } from "react-redux";
 import { fetchPost } from "./features/posts/postSlice";
 import { useStyle } from "./style";
 import PostList from "./components/Posts/PostList";
@@ -13,6 +12,14 @@ const theme = createTheme();
 const App = () => {
   //component styles
   const classes = useStyle();
+  // state component to pass it as a props to Form and PostList.
+  const [currentId, setCurrentId] = useState(0);
+  //dispatch to get all posts
+  const dispatch = useDispatch();
+  // When component mount get posts OR when posts change.
+  useEffect(() => {
+    dispatch(fetchPost());
+  }, [currentId, dispatch]);
 
   return (
     <Container maxWidth="lg">
@@ -34,10 +41,10 @@ const App = () => {
           >
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={7}>
-                <PostList />
+                <PostList setCurrentId={setCurrentId} />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Form />
+                <Form currentId={currentId} setCurrentId={setCurrentId} />
               </Grid>
             </ThemeProvider>
           </Grid>

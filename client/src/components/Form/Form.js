@@ -7,11 +7,13 @@ import { useStyle } from "./style";
 import { addPost, updatePost } from "../../features/posts/postSlice";
 
 //Todo: fix when call selector twice 🍀
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   //Styles
   const classes = useStyle();
   //Get post from selector
-  const post = useSelector((state) => state.posts.post);
+  const post = useSelector((state) =>
+    currentId ? state.posts.posts.find((p) => p._id === currentId) : null
+  );
   //component state
   const [postData, setPostData] = useState({
     creator: "",
@@ -32,7 +34,7 @@ const Form = () => {
   //Handler functions
   const handlSubmit = (e) => {
     e.preventDefault();
-    if (post._id === 0) {
+    if (currentId === 0) {
       dispatch(addPost(postData));
     } else {
       //dispatch to create post
@@ -43,6 +45,7 @@ const Form = () => {
 
   //clear inputs
   const clear = () => {
+    setCurrentId(0);
     setPostData({
       creator: "",
       title: "",
@@ -59,7 +62,7 @@ const Form = () => {
       >
         {/* Form headers */}
         <Typography variant="h6">
-          {!post ? "Edit " : "Create new "}Post
+          {currentId ? "Edit " : "Create new "}Post
         </Typography>
         {/* form inputs  */}
         <TextField
@@ -92,7 +95,9 @@ const Form = () => {
           label="tags"
           variant="outlined"
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({ ...postData, tags: e.target.value.split(", ") })
+          }
         />
         <div className={classes.fileInput}>
           <FileBase
@@ -111,7 +116,7 @@ const Form = () => {
           fullWidth
           style={{ marginBottom: "10px" }}
         >
-          Submit
+          {currentId ? "Update" : "Submit"}
         </Button>
         {/* clear btn */}
         <Button
