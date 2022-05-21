@@ -16,7 +16,14 @@ export const addPost = createAsyncThunk("posts/addNewPost", async (post) => {
   return response.data;
 });
 
-//Delete post
+//update post action
+export const updatePost = createAsyncThunk("posts/updatePost", async (post) => {
+  const id = post._id;
+  const response = await api.updatePostAPI(id, post);
+  return response.data;
+});
+
+//Delete post action
 export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
   const response = await api.deletePostAPI(id);
   return response.data.id;
@@ -67,6 +74,15 @@ export const postSlice = createSlice({
       .addCase(deletePost.fulfilled, (state, action) => {
         state.status = "successed";
         state.posts = state.posts.filter((post) => post._id !== action.payload);
+      })
+      .addCase(updatePost.pending, (state, action) => {
+        state.status = "loading update post";
+      })
+      .addCase(updatePost, (state, action) => {
+        state.status = "successed";
+        return state.posts.map((post) =>
+          post._id === action.paylod._id ? action.payload : post
+        );
       });
   },
 });

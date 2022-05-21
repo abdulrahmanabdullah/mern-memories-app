@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Paper, Typography, TextField, Button } from "@mui/material";
 import FileBase from "react-file-base64";
 import { useStyle } from "./style";
-import { addPost } from "../../features/posts/postSlice";
+import { addPost, updatePost } from "../../features/posts/postSlice";
 
 //Todo: fix when call selector twice 🍀
 const Form = () => {
@@ -32,8 +32,13 @@ const Form = () => {
   //Handler functions
   const handlSubmit = (e) => {
     e.preventDefault();
-    //dispatch to create post
-    dispatch(addPost(postData));
+    if (post._id === 0) {
+      dispatch(addPost(postData));
+    } else {
+      //dispatch to create post
+      dispatch(updatePost(postData));
+    }
+    clear();
   };
 
   //clear inputs
