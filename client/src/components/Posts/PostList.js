@@ -9,7 +9,7 @@ import { useStyle } from "./style";
 import { Grid, CircularProgress } from "@mui/material";
 import Post from "./Post/Post";
 
-const PostList = ({ setPostId }) => {
+const PostList = () => {
   //Style
   const classes = useStyle();
   //get state from redux store

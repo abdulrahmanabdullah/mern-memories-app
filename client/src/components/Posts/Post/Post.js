@@ -12,7 +12,7 @@ import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../../features/posts/postSlice";
+import { deletePost, selectPost } from "../../../features/posts/postSlice";
 
 import { useStyle } from "./style";
 
@@ -33,7 +33,11 @@ const Post = ({ post }) => {
       </div>
       {/* Edit btn */}
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small">
+        <Button
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => dispatch(selectPost(post._id))}
+        >
           <MoreHorizIcon />
         </Button>
       </div>

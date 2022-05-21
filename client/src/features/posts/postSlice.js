@@ -25,11 +25,19 @@ export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
 export const postSlice = createSlice({
   name: "posts",
   initialState: {
-    status: "idle",
+    status: "idle", // "loading" | "successed" | "failed"
     posts: [],
+    post: {},
     error: null,
   },
-  reducers: {},
+  reducers: {
+    selectPost(state, action) {
+      // receive id from dispatch
+      const id = action.payload;
+      const post = state.posts.find((p) => p._id === id);
+      state.post = post;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchPost.pending, (state, action) => {
@@ -65,6 +73,8 @@ export const postSlice = createSlice({
 
 // export reducer to implement it in store.js file .
 export default postSlice.reducer;
+//export actions
+export const { selectPost } = postSlice.actions;
 //export all posts
 export const allPostSelector = (state) => state.posts.posts;
 // status

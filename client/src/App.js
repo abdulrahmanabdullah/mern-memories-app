@@ -45,7 +45,7 @@ const App = () => {
           >
             <ThemeProvider theme={theme}>
               <Grid item xs={12} sm={7}>
-                <PostList setPostId={setPostId} />
+                <PostList />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Form />
