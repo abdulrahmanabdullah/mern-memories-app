@@ -80,9 +80,9 @@ export const postSlice = createSlice({
       })
       .addCase(updatePost, (state, action) => {
         state.status = "successed";
-        return state.posts.map((post) =>
+        return (state.posts = state.posts.map((post) =>
           post._id === action.paylod._id ? action.payload : post
-        );
+        ));
       });
   },
 });

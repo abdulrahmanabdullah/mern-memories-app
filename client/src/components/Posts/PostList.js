@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  fetchPost,
   allPostSelector,
   postStatusSelector,
 } from "../../features/posts/postSlice";
@@ -12,10 +13,15 @@ import Post from "./Post/Post";
 const PostList = () => {
   //Style
   const classes = useStyle();
+  const dispatch = useDispatch();
   //get state from redux store
   const posts = useSelector(allPostSelector);
   const postStatus = useSelector(postStatusSelector);
   const postErrorMessage = useSelector((state) => state.posts.error);
+
+  useEffect(() => {
+    dispatch(fetchPost());
+  }, [dispatch]);
   //Check request status before get data .
   let content;
   if (postStatus === "loading") {

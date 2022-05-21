@@ -13,17 +13,6 @@ const theme = createTheme();
 const App = () => {
   //component styles
   const classes = useStyle();
-  //component state
-  const [postId, setPostId] = useState(0);
-  const dispatch = useDispatch();
-  //selector
-  const postStatus = useSelector(postStatusSelector);
-  //when component mount fetch all posts.
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPost());
-    }
-  }, [postStatus, postId, dispatch]);
 
   return (
     <Container maxWidth="lg">
