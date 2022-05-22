@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
+import { Container, Grow, Grid } from "@mui/material";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchPost } from "./features/posts/postSlice";
 import { useStyle } from "./style";
 import PostList from "./components/Posts/PostList";
 import Form from "./components/Form/Form";
+import Navbar from "./components/Navbar/Navbar";
 
 const App = () => {
   //component styles
@@ -19,33 +21,28 @@ const App = () => {
   }, [currentId, dispatch]);
 
   return (
-    <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        {/* website title and logo */}
-        <Typography variant="h2" className={classes.heading}>
-          {" "}
-          Social media app{" "}
-        </Typography>
-        <img src="" alt="logo" className={classes.image} height="60" />
-      </AppBar>
-      <Grow in>
-        <Container>
-          <Grid
-            container
-            justifyContent="space-between"
-            spacing={3}
-            alignItems="stretch"
-          >
-            <Grid item xs={12} sm={7}>
-              <PostList setCurrentId={setCurrentId} />
+    <BrowserRouter>
+      <Container maxWidth="lg">
+        <Navbar />
+        <Grow in>
+          <Container>
+            <Grid
+              container
+              justifyContent="space-between"
+              spacing={3}
+              alignItems="stretch"
+            >
+              <Grid item xs={12} sm={7}>
+                <PostList setCurrentId={setCurrentId} />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Form currentId={currentId} setCurrentId={setCurrentId} />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
-    </Container>
+          </Container>
+        </Grow>
+      </Container>
+    </BrowserRouter>
   );
 };
 
