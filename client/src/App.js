@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { fetchPost } from "./features/posts/postSlice";
 import { useStyle } from "./style";
 import PostList from "./components/Posts/PostList";
 import Form from "./components/Form/Form";
-
-const theme = createTheme();
 
 const App = () => {
   //component styles
@@ -39,14 +36,12 @@ const App = () => {
             spacing={3}
             alignItems="stretch"
           >
-            <ThemeProvider theme={theme}>
-              <Grid item xs={12} sm={7}>
-                <PostList setCurrentId={setCurrentId} />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Form currentId={currentId} setCurrentId={setCurrentId} />
-              </Grid>
-            </ThemeProvider>
+            <Grid item xs={12} sm={7}>
+              <PostList setCurrentId={setCurrentId} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
+            </Grid>
           </Grid>
         </Container>
       </Grow>
