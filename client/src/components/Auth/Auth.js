@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { useStyle } from "./style";
 import Input from "./Input";
@@ -34,11 +34,21 @@ const Auth = () => {
   };
 
   //Google callback functions
-  const googleSuccess = (res) => {
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const tokenId = res?.tokenId;
     console.log(res);
   };
-  const googleFailure = () => {};
 
+  const googleFailure = (err) => {
+    console.log(err);
+  };
+
+  //Customes google login button
+  const googleLogin = useGoogleLogin({
+    onSuccess: googleSuccess,
+    onFailure: googleFailure,
+  });
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -91,24 +101,7 @@ const Auth = () => {
                 handleOnChange={handleOnChange}
               />
             )}
-            {/* Google Auth */}
-            <GoogleLogin
-              clientId="590787789414-cvn275c22khj6t2p2b7g4gfj6ch8akhc.apps.googleusercontent.com"
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              render={(propsRender) => (
-                <Button
-                  onClick={propsRender.onClick}
-                  disabled={propsRender.disabled}
-                  fullWidth
-                  color="primary"
-                  className={classes.googleButton}
-                  startIcon={<Icon />}
-                >
-                  Google Sign In
-                </Button>
-              )}
-            />
+            {/* <GoogleLogin onSuccess={googleSuccess} onFailure={googleFailure} /> */}
             <Button
               fullWidth
               type="submit"
@@ -117,6 +110,16 @@ const Auth = () => {
               color="primary"
             >
               {isSignUp ? "Sign up" : "Sign in"}
+            </Button>
+            {/* Google Auth */}
+            <Button
+              style={{ margin: "10px 0px 0px 15px" }}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => googleLogin()}
+            >
+              Google btn
             </Button>
           </Grid>
           <Grid justifyContent="flex-end" container>
