@@ -12,8 +12,15 @@ import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { useStyle } from "./style";
 import Input from "./Input";
-import Icon from "./Icon";
+import { signup } from "../../features/user/userSlice";
 
+const initDataState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassowrd: "",
+};
 const Auth = () => {
   //Component styles
   const classes = useStyle();
@@ -21,13 +28,25 @@ const Auth = () => {
   const dispatch = useDispatch();
   //component state
   const [isSignUp, setIsSignUp] = useState(false);
-
+  const [formData, setFormData] = useState(initDataState);
   const [showPassword, setShowPassword] = useState(false);
   //Callback functions
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      //Dispatch sign up action
+      dispatch(signup(formData));
+    } else {
+      //Dispatch sign in action
+    }
+  };
 
-  const handleOnChange = () => {};
+  //update input values for a specific key:value in formData object.
+  const handleOnChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  //Change isSignUp boolean value
   const handleShowPassword = () => setShowPassword((prevState) => !prevState);
 
   const switchMode = () => {
@@ -51,6 +70,7 @@ const Auth = () => {
     onFailure: googleFailure,
     scope: "email profile",
   });
+
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
