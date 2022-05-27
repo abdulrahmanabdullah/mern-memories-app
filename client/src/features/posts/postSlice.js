@@ -52,7 +52,6 @@ export const postSlice = createSlice({
       })
       .addCase(fetchPost.fulfilled, (state, action) => {
         state.status = "successed";
-        state.posts = [];
         //Merge array and return a new array.
         state.posts = state.posts.concat(action.payload);
         // state.posts = action.payload;

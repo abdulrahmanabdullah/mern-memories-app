@@ -9,7 +9,7 @@ import Auth from "./components/Auth/Auth";
 const App = () => {
   return (
     <BrowserRouter>
-      <GoogleOAuthProvider clientId="189363193948-1b0lp4dnmitqj3ra9lpukk8tb2qohj4t.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="189363193948-fn6mn8svmgjdvkm6e0igj8121b1ka3l6.apps.googleusercontent.com">
         <Container maxWidth="lg">
           <Navbar />
           <Routes>

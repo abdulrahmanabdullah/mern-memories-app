@@ -7,7 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-
+import { useDispatch } from "react-redux";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { useStyle } from "./style";
@@ -17,12 +17,14 @@ import Icon from "./Icon";
 const Auth = () => {
   //Component styles
   const classes = useStyle();
+  //dispatch
+  const dispatch = useDispatch();
   //component state
   const [isSignUp, setIsSignUp] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   //Callback functions
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {};
 
   const handleOnChange = () => {};
 
@@ -35,9 +37,8 @@ const Auth = () => {
 
   //Google callback functions
   const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const tokenId = res?.tokenId;
-    console.log(res);
+    const result = await res?.profileObj;
+    console.log(res.scope);
   };
 
   const googleFailure = (err) => {
@@ -48,6 +49,7 @@ const Auth = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: googleSuccess,
     onFailure: googleFailure,
+    scope: "email profile",
   });
   return (
     <Container component="main" maxWidth="xs">
