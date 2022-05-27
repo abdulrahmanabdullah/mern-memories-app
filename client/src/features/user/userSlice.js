@@ -12,7 +12,9 @@ const initialState = {
 
 //Actions
 export const signup = createAsyncThunk("user/signup", async (data) => {
-  console.log(data);
+  try {
+    const response = await api.signUpAPI(data);
+  } catch (error) {}
 });
 export const userSlice = createSlice({
   name: "user",
