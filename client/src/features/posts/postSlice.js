@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
 // Here We can write actions and reducers for posts
 
@@ -29,32 +29,37 @@ export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
   return response.data.id;
 });
 
+//like post action
+export const likePost = createAsyncThunk(
+  "posts/likepost",
+  async (id, thunkAPI) => {
+    try {
+      const response = await api.likePostAPI(id);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "posts",
   initialState: {
     status: "idle", // "loading" | "successed" | "failed"
     posts: [],
-    post: {},
     error: null,
   },
-  reducers: {
-    selectPost(state, action) {
-      // receive id from dispatch
-      const id = action.payload;
-      const post = state.posts.find((p) => p._id === id);
-      state.post = post;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchPost.pending, (state, action) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(fetchPost.fulfilled, (state, action) => {
         state.status = "successed";
         //Merge array and return a new array.
         state.posts = state.posts.concat(action.payload);
-        // state.posts = action.payload;
       })
       .addCase(fetchPost.rejected, (state, action) => {
         state.status = "failed";
@@ -74,22 +79,44 @@ export const postSlice = createSlice({
         state.status = "successed";
         state.posts = state.posts.filter((post) => post._id !== action.payload);
       })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.status = "falied delete post";
+        state.error = action.payload;
+      })
       .addCase(updatePost.pending, (state, action) => {
         state.status = "loading update post";
       })
-      .addCase(updatePost, (state, action) => {
+      .addCase(updatePost.fulfilled, (state, action) => {
         state.status = "successed";
-        return (state.posts = state.posts.map((post) =>
-          post._id === action.paylod._id ? action.payload : post
-        ));
+        state.error = null;
+        state.posts = state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        );
+      })
+      .addCase(updatePost.rejected, (state, action) => {
+        state.status = "falied";
+        state.error = action.payload;
+      })
+      .addCase(likePost.pending, (state) => {
+        state.status = "pending";
+        state.error = null;
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.status = "done";
+        state.error = null;
+        state.posts = state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        );
+      })
+      .addCase(likePost.rejected, (state, action) => {
+        state.status = "falied";
+        state.error = action.payload;
       });
   },
 });
 
 // export reducer to implement it in store.js file .
 export default postSlice.reducer;
-//export actions
-export const { selectPost } = postSlice.actions;
 //export all posts
 export const allPostSelector = (state) => state.posts.posts;
 // status

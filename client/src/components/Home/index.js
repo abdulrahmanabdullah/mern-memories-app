@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchPost } from "../../features/posts/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPost, postStatusSelector } from "../../features/posts/postSlice";
 
 import { Container, Grow, Grid } from "@mui/material";
 
@@ -9,12 +9,15 @@ import Form from "../Form/Form";
 const Home = () => {
   // state component to pass it as a props to Form and PostList.
   const [currentId, setCurrentId] = useState(0);
+  const postStatus = useSelector(postStatusSelector);
   //dispatch to get all posts
   const dispatch = useDispatch();
   // When component mount get posts OR when posts change.
   useEffect(() => {
-    dispatch(fetchPost());
-  }, [currentId, dispatch]);
+    if (postStatus === "idle") {
+      dispatch(fetchPost());
+    }
+  }, [postStatus, currentId, dispatch]);
   return (
     <>
       <Grow in>

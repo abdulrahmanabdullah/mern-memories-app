@@ -12,7 +12,7 @@ import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../../features/posts/postSlice";
+import { deletePost, likePost } from "../../../features/posts/postSlice";
 
 import { useStyle } from "./style";
 
@@ -70,9 +70,13 @@ const Post = ({ post, setCurrentId }) => {
       </div>
       {/* Like & delete btn */}
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => dispatch(likePost(post._id))}
+        >
           <ThumUpAltIcon />
-          &nbsp;Like &nbsp;
+          &nbsp;Like &nbsp; {post.likeCount}
         </Button>
         <Button
           size="small"
