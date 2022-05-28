@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Paper,
@@ -7,7 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { useStyle } from "./style";
@@ -26,6 +26,12 @@ const Auth = () => {
   const classes = useStyle();
   //dispatch
   const dispatch = useDispatch();
+  //selector
+  const isSuccessed = useSelector((state) => state.user.isSuccessed);
+
+  useEffect(() => {
+    console.log(isSuccessed);
+  }, [isSuccessed]);
   //component state
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState(initDataState);

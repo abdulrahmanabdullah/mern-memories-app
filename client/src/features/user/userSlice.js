@@ -5,22 +5,43 @@ import * as api from "../../api";
 const userProfile = localStorage.getItem("profile");
 // initial state ,
 const initialState = {
+  status: "idle",
   user: userProfile ? userProfile : null,
   isSuccessed: false,
   message: "",
 };
 
 //Actions
-export const signup = createAsyncThunk("user/signup", async (data) => {
-  try {
-    const response = await api.signUpAPI(data);
-  } catch (error) {}
-});
+export const signup = createAsyncThunk(
+  "user/signup",
+  async (data, thunkAPI) => {
+    try {
+      const response = await api.signUpAPI(data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+      // return error;
+    }
+  }
+);
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {},
+  extraReducer(builder) {
+    builder
+      .addCase(signup.pending, (state, action) => {
+        state.status = "Loading";
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.isSuccessed = true;
+        state.user = action.payload;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.status = "failed";
+        state.isSuccessed = false;
+      });
+  },
 });
 
 //Export reducer
