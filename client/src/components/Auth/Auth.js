@@ -24,18 +24,20 @@ const initDataState = {
 const Auth = () => {
   //Component styles
   const classes = useStyle();
-  //dispatch
+  //dispatch signup and signin actions.
   const dispatch = useDispatch();
   //selector
-  const isSuccessed = useSelector((state) => state.user.isSuccessed);
-
-  useEffect(() => {
-    console.log(isSuccessed);
-  }, [isSuccessed]);
+  const isSuccessed = useSelector((state) => state.users.isSuccessed);
   //component state
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [formData, setFormData] = useState(initDataState);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState(initDataState);
+  const [isSignUp, setIsSignUp] = useState(false);
+  // useEffect(() => {
+  //   if (isSignUp) {
+  //     dispatch(signup(formData));
+  //   }
+  // }, [isSignUp, dispatch, formData]);
+
   //Callback functions
   const handleSubmit = (e) => {
     e.preventDefault();

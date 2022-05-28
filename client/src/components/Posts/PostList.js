@@ -32,7 +32,9 @@ const PostList = ({ setCurrentId }) => {
   }
 
   return !posts.length ? (
-    <CircularProgress />
+    <>
+      <CircularProgress />
+    </>
   ) : (
     <Grid
       className={classes.container}
