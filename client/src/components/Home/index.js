@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPost, postStatusSelector } from "../../features/posts/postSlice";
-
 import { Container, Grow, Grid } from "@mui/material";
 
 import PostList from "../Posts/PostList";

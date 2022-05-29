@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
+import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
 import { signup } from "../../features/user/userSlice";
@@ -27,16 +28,21 @@ const Auth = () => {
   //dispatch signup and signin actions.
   const dispatch = useDispatch();
   //selector
-  const isSuccessed = useSelector((state) => state.users.isSuccessed);
+  const status = useSelector((state) => state.users.status);
   //component state
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
   const [isSignUp, setIsSignUp] = useState(false);
-  // useEffect(() => {
-  //   if (isSignUp) {
-  //     dispatch(signup(formData));
-  //   }
-  // }, [isSignUp, dispatch, formData]);
+  useEffect(() => {
+    if (status === "failed") {
+      // show toast here
+      toast.error("wow so easy", {
+        position: "top-center",
+        autoClose: 6000,
+        closeOnClick: true,
+      });
+    }
+  }, [status]);
 
   //Callback functions
   const handleSubmit = (e) => {
