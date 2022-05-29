@@ -7,6 +7,10 @@ export const signup = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await api.signUpAPI(data);
+      // save user in localstorage .
+      if (response.data) {
+        localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
+      }
       return response.data;
     } catch (error) {
       const message =
@@ -19,12 +23,21 @@ export const signup = createAsyncThunk(
     }
   }
 );
-// get user profile from local storage .
-const userProfile = localStorage.getItem("profile");
+
+export const logout = createAsyncThunk("users/logout", async (thunkAPI) => {
+  try {
+    await localStorage.removeItem("profile");
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+// Get user profile from local storage. "This way we can avoid get and set user in useEffect"
+// const userProfile = localStorage.getItem("profile");
 // initial state ,
 const initialState = {
   status: "idle",
-  user: userProfile ? userProfile : null,
+  user: null,
   isSuccessed: false,
   message: "",
 };
@@ -43,13 +56,19 @@ export const userSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.status = "compelete";
         state.isSuccessed = true;
-        state.message = "";
+        state.message = "Create Account 👍";
         state.user = action.payload;
       })
       .addCase(signup.rejected, (state, action) => {
         state.status = "failed";
         state.isSuccessed = false;
         state.message = action.payload;
+      })
+      .addCase(logout.pending, (state) => {})
+      .addCase(logout.fulfilled, (state, action) => {
+        state.status = "compelete";
+        state.user = null;
+        state.message = "Logout";
       });
   },
 });

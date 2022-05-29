@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/user/userSlice";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStyle } from "./style";
 
 const Navbar = () => {
   const classes = useStyle();
-  const user = null;
+  //Get user from redux .
+  // const user = useSelector((state) => state.users.user);
+  //component state
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
+  const dispatch = useDispatch();
+  // navigation
+  const navigate = useNavigate();
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [setUser]);
+
+  //callback functions
+  const logoutBtn = () => {
+    // dispatch to remove profile from localstorage.
+    dispatch(logout());
+    setUser(null);
+    navigate("/");
+  };
   return (
     <div>
       <AppBar className={classes.appBar} position="static" color="inherit">
@@ -25,16 +45,17 @@ const Navbar = () => {
         <Toolbar className={classes.Toolbar}>
           {user ? (
             <div className={classes.profile}>
-              <Avatar className={classes.purple} alt={user.result.name}>
-                {user.result.name.chartAt(0)}
+              <Avatar className={classes.purple} alt={user?.result?.name}>
+                {user?.result?.name?.charAt(0)}
               </Avatar>
               <Typography className={classes.userName} variant="h6">
-                {user.result.name}
+                {user?.result?.name}
               </Typography>
               <Button
                 className={classes.logout}
                 variant="contained"
                 color="secondary"
+                onClick={logoutBtn}
               >
                 {" "}
                 Logout

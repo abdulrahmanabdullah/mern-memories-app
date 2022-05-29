@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
@@ -29,20 +30,30 @@ const Auth = () => {
   const dispatch = useDispatch();
   //selector
   const status = useSelector((state) => state.users.status);
+  const message = useSelector((state) => state.users.message);
   //component state
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
   const [isSignUp, setIsSignUp] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
+    //When failed to create account.
     if (status === "failed") {
       // show toast here
-      toast.error("wow so easy", {
+      toast.error(message, {
         position: "top-center",
         autoClose: 6000,
         closeOnClick: true,
       });
+      //use rest dipsatch OR redirect to login page.
     }
-  }, [status]);
+
+    // When create successful .
+    if (status === "compelete") {
+      toast.success(message);
+      navigate("/");
+    }
+  }, [navigate, message, status]);
 
   //Callback functions
   const handleSubmit = (e) => {
