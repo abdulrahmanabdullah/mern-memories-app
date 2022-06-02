@@ -6,7 +6,7 @@ import {
   updatePost,
   likePost,
 } from "../controllers/postController.js";
-import { signup } from "../controllers/userController.js";
+import { register, login } from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -18,5 +18,6 @@ router.patch("/posts/likepost/:id", likePost);
 router.delete("/posts/:id", deletePost);
 
 //Auth route
-router.post("/user/signup", signup);
+router.post("/user/register", register);
+router.post("/user/login", login);
 export default router;
