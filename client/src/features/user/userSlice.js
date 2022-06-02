@@ -64,11 +64,13 @@ export const userSlice = createSlice({
         state.isSuccessed = false;
         state.message = action.payload;
       })
-      .addCase(logout.pending, (state) => {})
+      .addCase(logout.pending, (state) => {
+        state.status = "logout pending";
+      })
       .addCase(logout.fulfilled, (state, action) => {
-        state.status = "compelete";
+        state.status = "Logout compeleted";
         state.user = null;
-        state.message = "Logout";
+        state.message = action.payload;
       });
   },
 });

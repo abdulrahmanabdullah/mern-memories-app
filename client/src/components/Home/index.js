@@ -5,6 +5,7 @@ import { Container, Grow, Grid } from "@mui/material";
 
 import PostList from "../Posts/PostList";
 import Form from "../Form/Form";
+
 const Home = () => {
   // state component to pass it as a props to Form and PostList.
   const [currentId, setCurrentId] = useState(0);
