@@ -14,7 +14,7 @@ import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
-import { signup } from "../../features/user/userSlice";
+import { register } from "../../features/user/userSlice";
 
 const initDataState = {
   firstName: "",
@@ -26,7 +26,7 @@ const initDataState = {
 const Auth = () => {
   //Component styles
   const classes = useStyle();
-  //dispatch signup and signin actions.
+  //dispatch register and signin actions.
   const dispatch = useDispatch();
   //selector
   const status = useSelector((state) => state.users.status);
@@ -34,7 +34,7 @@ const Auth = () => {
   //component state
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     //When failed to create account.
@@ -46,6 +46,7 @@ const Auth = () => {
         closeOnClick: true,
       });
       //use rest dipsatch OR redirect to login page.
+      navigate("/auth");
     }
 
     // When create successful .
@@ -58,9 +59,9 @@ const Auth = () => {
   //Callback functions
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isSignUp) {
+    if (isRegister) {
       //Dispatch sign up action
-      dispatch(signup(formData));
+      dispatch(register(formData));
     } else {
       //Dispatch sign in action
     }
@@ -71,11 +72,11 @@ const Auth = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //Change isSignUp boolean value
+  //Change isRegister boolean value
   const handleShowPassword = () => setShowPassword((prevState) => !prevState);
 
   const switchMode = () => {
-    setIsSignUp((prevState) => !prevState);
+    setIsRegister((prevState) => !prevState);
     setShowPassword(false);
   };
 
@@ -103,12 +104,12 @@ const Auth = () => {
           <LockOutLinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {isSignUp ? "Sign Up" : "Sign In"}
+          {isRegister ? "Register" : "Login"}
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
             {/* If user already have account, show login form */}
-            {isSignUp && (
+            {isRegister && (
               <>
                 <Input
                   name="firstName"
@@ -140,7 +141,7 @@ const Auth = () => {
               handleonChange={handleOnChange}
               handleShowPassword={handleShowPassword}
             />
-            {isSignUp && (
+            {isRegister && (
               <Input
                 name="confirmPassword"
                 type="password"
@@ -156,7 +157,7 @@ const Auth = () => {
               variant="contained"
               color="primary"
             >
-              {isSignUp ? "Sign up" : "Sign in"}
+              {isRegister ? "Register" : "Login"}
             </Button>
             {/* Google Auth */}
             <Button
@@ -172,7 +173,7 @@ const Auth = () => {
           <Grid justifyContent="flex-end" container>
             <Grid item>
               <Button onClick={switchMode}>
-                {isSignUp
+                {isRegister
                   ? "Already have an account? Sign in"
                   : "Create new Account"}
               </Button>

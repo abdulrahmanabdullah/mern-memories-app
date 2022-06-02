@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
 
-//Actions
-export const signup = createAsyncThunk(
-  "users/signup",
+//Sign up Actions
+export const register = createAsyncThunk(
+  "users/register",
   async (data, thunkAPI) => {
     try {
-      const response = await api.signUpAPI(data);
+      const response = await api.registerAPI(data);
       // save user in localstorage .
       if (response.data) {
         localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
@@ -23,6 +23,23 @@ export const signup = createAsyncThunk(
     }
   }
 );
+//Sign in Actions
+export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
+  try {
+    const response = await api.registerAPI(data);
+    // save user in localstorage .
+    if (response.data) {
+      localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
+    }
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 export const logout = createAsyncThunk("users/logout", async (thunkAPI) => {
   try {
@@ -48,18 +65,18 @@ export const userSlice = createSlice({
   initialState,
   extraReducers(builder) {
     builder
-      .addCase(signup.pending, (state) => {
+      .addCase(register.pending, (state) => {
         state.status = "loading";
         state.isSuccessed = false;
         state.message = "";
       })
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(register.fulfilled, (state, action) => {
         state.status = "compelete";
         state.isSuccessed = true;
         state.message = "Create Account 👍";
         state.user = action.payload;
       })
-      .addCase(signup.rejected, (state, action) => {
+      .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.isSuccessed = false;
         state.message = action.payload;
@@ -71,7 +88,10 @@ export const userSlice = createSlice({
         state.status = "Logout compeleted";
         state.user = null;
         state.message = action.payload;
-      });
+      })
+      .addCase(login.pending, (state) => {})
+      .addCase(login.fulfilled, (state, action) => {})
+      .addCase(login.rejected, (state, action) => {});
   },
 });
 

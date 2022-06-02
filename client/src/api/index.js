@@ -21,4 +21,4 @@ export const likePostAPI = (id) => API.patch(`posts/likepost/${id}`);
 export const deletePostAPI = (id) => API.delete(`posts/${id}`);
 
 //Authentication endpoints
-export const signUpAPI = (data) => API.post("/user/signup", data);
+export const registerAPI = (data) => API.post("/user/signup", data);
