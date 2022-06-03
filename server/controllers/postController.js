@@ -6,7 +6,7 @@ export const getPosts = async (req, res) => {
     const collection = await PostMessage.find();
     return res.status(200).json(collection);
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
@@ -64,6 +64,10 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
+
+    //User id come from middleware.
+    if (!req.userId)
+      return res.status(405).json({ message: "Unauthenticated " });
 
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).send(`no post with this id:${id}`);

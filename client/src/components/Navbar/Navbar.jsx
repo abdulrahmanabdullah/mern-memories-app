@@ -98,7 +98,7 @@ const _Navbar = () => {
             <>
               <button
                 type="button"
-                onClick={handleLogout()}
+                onClick={() => handleLogout()}
                 className=" md:w-30  h-auto inline-block px-2 py-2.5 bg-purple-700 text-white font-medium text-xs leading-tight  rounded shadow-md hover:bg-purple-500 hover:shadow-lg focus:bg-purple-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out md:text-lg"
               >
                 logout

@@ -14,7 +14,7 @@ import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
-import { register } from "../../features/user/userSlice";
+import { login, register } from "../../features/user/userSlice";
 
 const initDataState = {
   firstName: "",
@@ -64,6 +64,7 @@ const Auth = () => {
       dispatch(register(formData));
     } else {
       //Dispatch sign in action
+      dispatch(login(formData));
     }
   };
 

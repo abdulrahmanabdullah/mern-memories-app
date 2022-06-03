@@ -26,7 +26,7 @@ export const register = createAsyncThunk(
 //Sign in Actions
 export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   try {
-    const response = await api.registerAPI(data);
+    const response = await api.loginAPI(data);
     // save user in localstorage .
     if (response.data) {
       localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
@@ -89,9 +89,19 @@ export const userSlice = createSlice({
         state.user = null;
         state.message = action.payload;
       })
-      .addCase(login.pending, (state) => {})
-      .addCase(login.fulfilled, (state, action) => {})
-      .addCase(login.rejected, (state, action) => {});
+      .addCase(login.pending, (state) => {
+        state.status = "loading login";
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = "compelete";
+        state.user = action.payload;
+        state.message = "successful login";
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.status = "falied";
+        state.user = null;
+        state.message = action.payload;
+      });
   },
 });
 
