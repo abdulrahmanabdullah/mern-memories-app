@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const auth = async (req, res, next) => {
   try {
     //get token from headers.
-    const token = req.headers.Authorization.split(" ")[1];
+    const token = req.headers.authorization.split(" ")[1];
     // Is own token or google sdk token
     const isOwnToken = token.length < 500; // Google tokens more than 500.
 
@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
     // call next func
     next();
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 export default auth;

@@ -23,7 +23,7 @@ export const register = createAsyncThunk(
     }
   }
 );
-//Sign in Actions
+//login Actions
 export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   try {
     const response = await api.loginAPI(data);
@@ -98,7 +98,7 @@ export const userSlice = createSlice({
         state.message = "successful login";
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = "falied";
+        state.status = "failed";
         state.user = null;
         state.message = action.payload;
       });
