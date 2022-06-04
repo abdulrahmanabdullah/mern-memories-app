@@ -11,6 +11,7 @@ const Input = ({
   autoFocus,
   handleOnChange,
   handleShowPassword,
+  validationPassword,
 }) => {
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
@@ -23,6 +24,7 @@ const Input = ({
         variant="outlined"
         fullWidth
         onChange={handleOnChange}
+        onBlur={validationPassword}
         InputProps={
           name === "password"
             ? {

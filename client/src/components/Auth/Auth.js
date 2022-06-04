@@ -21,7 +21,7 @@ const initDataState = {
   lastName: "",
   email: "",
   password: "",
-  confirmPassowrd: "",
+  confirmPassword: "",
 };
 const Auth = () => {
   //Component styles
@@ -35,6 +35,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
   const [isRegister, setIsRegister] = useState(false);
+  const [isNotValdation, setIsNotValdation] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     //When failed to create account.
@@ -76,6 +77,21 @@ const Auth = () => {
   //Change isRegister boolean value
   const handleShowPassword = () => setShowPassword((prevState) => !prevState);
 
+  //Check validation password if do not match that means isNotValidation = true, then disabled button
+  const validationPassword = () => {
+    if (formData.password !== formData.confirmPassword) {
+      setIsNotValdation(true);
+      toast.error("Password and confirm password does not match", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        draggable: true,
+      });
+    } else {
+      setIsNotValdation(false);
+    }
+  };
   const switchMode = () => {
     setIsRegister((prevState) => !prevState);
     setShowPassword(false);
@@ -107,7 +123,11 @@ const Auth = () => {
         <Typography component="h1" variant="h5">
           {isRegister ? "Register" : "Login"}
         </Typography>
-        <form onSubmit={handleSubmit} className={classes.form}>
+        <form
+          onSubmit={handleSubmit}
+          className={classes.form}
+          disabled={isNotValdation}
+        >
           <Grid container spacing={2}>
             {/* If user already have account, show login form */}
             {isRegister && (
@@ -129,6 +149,7 @@ const Auth = () => {
                 />
               </>
             )}
+            {/* Login fields */}
             <Input
               type="email"
               name="email"
@@ -136,19 +157,22 @@ const Auth = () => {
               handleOnChange={handleOnChange}
             />
             <Input
-              type={showPassword ? "text" : "password"}
               name="password"
               label="password"
-              handleonChange={handleOnChange}
+              type={showPassword ? "text" : "password"}
+              handleOnChange={handleOnChange}
               handleShowPassword={handleShowPassword}
             />
             {isRegister && (
-              <Input
-                name="confirmPassword"
-                type="password"
-                label="repeat password"
-                handleOnChange={handleOnChange}
-              />
+              <>
+                <Input
+                  name="confirmPassword"
+                  type="password"
+                  label="Confirm password"
+                  handleOnChange={handleOnChange}
+                  validationPassword={validationPassword}
+                />
+              </>
             )}
             {/* <GoogleLogin onSuccess={googleSuccess} onFailure={googleFailure} /> */}
             <Button
@@ -157,6 +181,7 @@ const Auth = () => {
               style={{ margin: "10px 0px 0px 15px" }}
               variant="contained"
               color="primary"
+              disabled={isNotValdation}
             >
               {isRegister ? "Register" : "Login"}
             </Button>
