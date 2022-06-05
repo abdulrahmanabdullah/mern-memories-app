@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
 import { login, register } from "../../features/user/userSlice";
+import axios from "axios";
 
 const initDataState = {
   firstName: "",
@@ -98,8 +99,20 @@ const Auth = () => {
   };
 
   //Google callback functions
-  const googleSuccess = async (res) => {
-    console.log(res);
+  const googleSuccess = async ({ access_token }) => {
+    const userInfo = await axios.get(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
+    //save userInfo.data in localstorage then back to home page with payload data.
+    console.log(userInfo);
+    if (userInfo.data) {
+      //dispatch action to save user data in localstorage.
+      localStorage.setItem(
+        "profile",
+        JSON.stringify({ result: userInfo?.data })
+      );
+    }
   };
 
   const googleFailure = (err) => {
@@ -110,7 +123,6 @@ const Auth = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: googleSuccess,
     onFailure: googleFailure,
-    scope: "email profile",
   });
 
   return (

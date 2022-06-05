@@ -1,4 +1,4 @@
-
 Todo:
-  ☐ Create get user from localstorage with Redux 
+  ☐ Create get user from localstorage with Redux.  
   - Create Dailog when user try to click like without login.
+  - Fix likes api with google auth. (Mondatory).

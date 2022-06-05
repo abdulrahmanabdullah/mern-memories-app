@@ -9,11 +9,13 @@ import Auth from "./components/Auth/Auth";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
+  const cId =
+    "189363193948-fhamkq68ablonm35c5n3ban36oetdm24.apps.googleusercontent.com";
   return (
     <>
       <ToastContainer position="top-center" autoClose={5000} closeOnClick />
       <BrowserRouter>
-        <GoogleOAuthProvider clientId="189363193948-fn6mn8svmgjdvkm6e0igj8121b1ka3l6.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={cId}>
           <Container maxWidth="lg">
             <Navbar />
             <Routes>

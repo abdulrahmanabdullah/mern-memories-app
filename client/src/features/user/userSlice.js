@@ -27,9 +27,11 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   try {
     const response = await api.loginAPI(data);
+    console.log(response);
+
     // save user in localstorage .
     if (response.data) {
-      localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
+      // localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
     }
     return response.data;
   } catch (error) {

@@ -58,7 +58,7 @@ const Form = ({ currentId, setCurrentId }) => {
   };
 
   //If user not login or register show this component
-  if (!user?.result?.name) {
+  if (!user?.result) {
     return (
       <Paper className={classes.paper}>
         <Typography>Please Login to create your own memory.</Typography>
