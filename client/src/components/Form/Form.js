@@ -14,9 +14,12 @@ const Form = ({ currentId, setCurrentId }) => {
   const post = useSelector((state) =>
     currentId ? state.posts.posts.find((p) => p._id === currentId) : null
   );
+
+  //get user from local storage
+  const user = JSON.parse(localStorage.getItem("profile"));
+
   //component state
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -35,10 +38,10 @@ const Form = ({ currentId, setCurrentId }) => {
   const handlSubmit = (e) => {
     e.preventDefault();
     if (currentId === 0) {
-      dispatch(addPost(postData));
+      dispatch(addPost({ ...postData, name: user?.result?.name }));
     } else {
       //dispatch to create post
-      dispatch(updatePost(postData));
+      dispatch(updatePost({ ...postData, name: user?.result?.name }));
     }
     clear();
   };
@@ -47,13 +50,22 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(0);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  //If user not login or register show this component
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography>Please Login to create your own memory.</Typography>
+      </Paper>
+    );
+  }
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -65,15 +77,6 @@ const Form = ({ currentId, setCurrentId }) => {
           {currentId ? "Edit " : "Create new "}Post
         </Typography>
         {/* form inputs  */}
-        <TextField
-          name="creator"
-          label="creator"
-          variant="outlined"
-          value={postData.creator || ""}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        />
         <TextField
           name="title"
           label="title"

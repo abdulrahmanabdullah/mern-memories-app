@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ThumUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
@@ -21,6 +22,37 @@ const Post = ({ post, setCurrentId }) => {
   const classes = useStyle();
   //dispatch
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  //Like component
+  const Like = () => {
+    //check length likes
+    if (post.likes.length > 0) {
+      return post.likes.find(
+        (like) => like === (user?.result?._id || user?.result?.googleId)
+      ) ? (
+        <>
+          <ThumUpAltIcon fontSize="small" />
+          &nbsp; first con
+          {post.likes.length > 2
+            ? `You and other ${post.likes.length - 1}`
+            : `${post.likes.length} like`}
+        </>
+      ) : (
+        <>
+          <ThumbUpAltOutlinedIcon />
+          &nbsp;Like {post.likes.length}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ThumbUpAltOutlinedIcon />
+        &nbsp;like
+      </>
+    );
+  };
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -32,7 +64,7 @@ const Post = ({ post, setCurrentId }) => {
       />
       {/* Card header */}
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -73,10 +105,10 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
+          disabled={!user?.result}
           onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumUpAltIcon />
-          &nbsp;Like &nbsp; {post.likeCount}
+          <Like />
         </Button>
         <Button
           size="small"

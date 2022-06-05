@@ -99,8 +99,7 @@ const Auth = () => {
 
   //Google callback functions
   const googleSuccess = async (res) => {
-    const result = await res?.profileObj;
-    console.log(res.scope);
+    console.log(res);
   };
 
   const googleFailure = (err) => {
