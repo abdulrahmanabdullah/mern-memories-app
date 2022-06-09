@@ -78,7 +78,6 @@ export const likePost = async (req, res) => {
       post.likes.push(req.userId);
     } else {
       //remove like from  post
-      console.log("no");
       post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
 

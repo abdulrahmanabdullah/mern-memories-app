@@ -6,14 +6,14 @@ const auth = async (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     // Is own token or google sdk token
     const isOwnToken = token.length < 500; // Google tokens more than 500.
-
     let decodeData;
     //verify token
     if (token && isOwnToken) {
       decodeData = jwt.verify(token, "test"); // test here is a secret word for own tokens
+      console.log(decodeData);
       req.userId = decodeData?.id;
     } else {
-      decodeData = jwt.verify(token);
+      decodeData = jwt.decode(token);
       req.userId = decodeData?.sub;
     }
     // call next func

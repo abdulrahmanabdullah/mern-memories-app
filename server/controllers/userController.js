@@ -1,8 +1,26 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 import userModel from "../models/userModel";
+import dotenv from "dotenv";
+import { OAuth2Client } from "google-auth-library";
 
+dotenv.config({ path: "../../.env" });
+
+const oAuth2Client = new OAuth2Client(
+  "189363193948-fhamkq68ablonm35c5n3ban36oetdm24.apps.googleusercontent.com",
+  "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",
+  "/" //redirect url
+);
+//Google login
+export const googleAuthLogin = async (req, res) => {
+  try {
+    console.log(req.body.access_token.code);
+    const tokens = await oAuth2Client.getToken(req.body.access_token.code);
+    res.status(200).json(tokens);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 const secret = "test";
 //Register
 export const register = async (req, res) => {
