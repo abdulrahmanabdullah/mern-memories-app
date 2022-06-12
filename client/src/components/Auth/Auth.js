@@ -24,6 +24,24 @@ const initDataState = {
   password: "",
   confirmPassword: "",
 };
+function getGoogleOauthURL() {
+  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  const options = {
+    redirect_uri: "http://localhost:5000/user/google/auth",
+    client_id: process.env.REACT_APP_GOOGLE_AUTH_ID,
+    access_type: "offline",
+    response_type: "code",
+    prompt: "consent",
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ].join(" "),
+  };
+  const qs = new URLSearchParams(options);
+  console.log(qs.toString());
+
+  return `${rootUrl}?${qs}`;
+}
 const Auth = () => {
   //Component styles
   const classes = useStyle();
@@ -126,9 +144,14 @@ const Auth = () => {
 
   //Customes google login button
   const googleLogin = useGoogleLogin({
-    onSuccess: googleSuccess,
+    flow: "auth-code",
+    onSuccess: async ({ code }) => {
+      const tokens = await axios.post("http://localhost:5000/google/auth", {
+        code,
+      });
+      console.log(tokens);
+    },
     onFailure: googleFailure,
-    flow: "implicit",
   });
 
   return (
@@ -191,7 +214,6 @@ const Auth = () => {
                 />
               </>
             )}
-            {/* <GoogleLogin onSuccess={googleSuccess} onFailure={googleFailure} /> */}
             <Button
               fullWidth
               type="submit"
@@ -203,7 +225,7 @@ const Auth = () => {
               {isRegister ? "Register" : "Login"}
             </Button>
             {/* Google Auth */}
-            <Button
+            {/* <Button
               style={{ margin: "10px 0px 0px 15px" }}
               fullWidth
               variant="contained"
@@ -211,7 +233,8 @@ const Auth = () => {
               onClick={() => googleLogin()}
             >
               Google btn
-            </Button>
+            </Button> */}
+            <a href={getGoogleOauthURL()}>Google Oauth</a>
           </Grid>
           <Grid justifyContent="flex-end" container>
             <Grid item>

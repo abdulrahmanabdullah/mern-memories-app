@@ -1,32 +1,29 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel";
-import dotenv from "dotenv";
-import { OAuth2Client } from "google-auth-library";
+import { getGoogleUser, getGoogleUserToken } from "../service/userService";
 
-dotenv.config({ path: "../../.env" });
-
-const oAuth2Client = new OAuth2Client(
-  "189363193948-fhamkq68ablonm35c5n3ban36oetdm24.apps.googleusercontent.com",
-  "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",
-  "/" //redirect url
-);
-//Google login
-export const googleAuthLogin = async (req, res) => {
-  try {
-    console.log(req.body.access_token.code);
-    const tokens = await oAuth2Client.getToken(req.body.access_token.code);
-    res.status(200).json(tokens);
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 const secret = "test";
-//Register
+
+const accessTokenCookieOptions = {
+  maxAge: 900000, // 15 mins
+  httpOnly: true,
+  domain: "localhost",
+  path: "/",
+  sameSite: "lax",
+  secure: false,
+};
+
+const refreshTokenCookieOptions = {
+  ...accessTokenCookieOptions,
+  maxAge: 3.154e10, // 1 year
+};
+
+//Create new user -- register will be name for apis and functions
 export const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   try {
-    // check if email alreay exist return message .
+    //If email alreay exist return a message .
     const oldUser = await userModel.findOne({ email });
     if (oldUser)
       return res.status(400).json({ message: "email already exist" });
@@ -74,5 +71,41 @@ export const login = async (req, res) => {
     return res.status(200).json({ result: existingUser, token });
   } catch (error) {
     res.status(500).json({ message: error });
+  }
+};
+
+//google Oauth region 🎱
+//This handler call from google console and receiving code from reqeust query, with
+// this code we can call google apis to get id token and access token. With these values
+// we call google apis to get user info then save user data into database.
+export const googleOauthHandler = async (req, res) => {
+  const code = req.query.code;
+  try {
+    // Get id and access token
+    const { id_token, access_token } = await getGoogleUserToken(code);
+    //Get user info
+    const googleUser = await getGoogleUser(id_token, access_token);
+    console.log(googleUser);
+    //Save user in database.
+    // const user = await userModel.create({
+    //   email:googleUser.email,
+    //   name:googleUser.name,
+    //   picture:googleUser.picture
+    // })
+    const accessToken = jwt.sign(
+      {
+        ...googleUser,
+        id: googleUser.id,
+      },
+      secret,
+      { expiresIn: "1h" }
+    );
+    res.cookie("accessToken", accessToken, accessTokenCookieOptions);
+    //redirect client to home page
+    res.redirect("http://localhost:3000");
+  } catch (err) {
+    console.log(err.message);
+    //Redirect error page.
+    res.status(500).json("Error", err.message);
   }
 };

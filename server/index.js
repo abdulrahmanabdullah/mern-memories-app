@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import appRouter from "./routes/routers.js";
 
-dotenv.config({ path: "../.env" });
+dotenv.config();
 // create app
 const app = express();
 

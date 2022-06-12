@@ -11,7 +11,7 @@ import auth from "../middleware/auth.js";
 import {
   register,
   login,
-  googleAuthLogin,
+  googleOauthHandler,
 } from "../controllers/userController.js";
 const router = express.Router();
 
@@ -25,5 +25,6 @@ router.delete("/posts/:id", auth, deletePost);
 //Auth route
 router.post("/user/register", register);
 router.post("/user/login", login);
-// router.post("/user/google/auth", googleAuthLogin);
+//This route calling from google api console.
+router.get("/user/google/auth", googleOauthHandler);
 export default router;

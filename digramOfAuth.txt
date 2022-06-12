@@ -1,0 +1,10 @@
+call api session in app component.
+get user if exist and keep it login by session id 
+if not return null and wait until user login or register.
+
+in route
+app.get("/user/sessions", getUserSessions)
+in control 
+getUserSessions looking for user in browser sessions and return user payload.
+if sessions is empty return null 
+

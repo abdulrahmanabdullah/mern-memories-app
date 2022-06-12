@@ -3,3 +3,6 @@ Todo:
   - Create Dailog when user try to click like without login.
   - Fix likes api with google auth. (Mondatory).
   - Create globel state instead one state for each task.
+  - Create Passport middleware.
+  - Absolute import in React.
+  
