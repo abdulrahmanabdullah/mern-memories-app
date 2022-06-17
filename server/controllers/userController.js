@@ -85,7 +85,6 @@ export const googleOauthHandler = async (req, res) => {
     const { id_token, access_token } = await getGoogleUserToken(code);
     //Get user info
     const googleUser = await getGoogleUser(id_token, access_token);
-    console.log(googleUser);
     //Save user in database.
     // const user = await userModel.create({
     //   email:googleUser.email,
@@ -107,5 +106,19 @@ export const googleOauthHandler = async (req, res) => {
     console.log(err.message);
     //Redirect error page.
     res.status(500).json("Error", err.message);
+  }
+};
+
+export const getUsers = async (req, res) => {
+  try {
+    console.log(res.locals);
+    const token = req.headers.authorization.split(" ")[1];
+    let decoded;
+    if (token) {
+      decoded = jwt.verify(token, "test");
+      return res.status(200).json(decoded);
+    }
+  } catch (err) {
+    res.status(401).json({ message: "Unauthorized" });
   }
 };

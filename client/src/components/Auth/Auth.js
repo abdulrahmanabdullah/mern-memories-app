@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
@@ -234,7 +234,14 @@ const Auth = () => {
             >
               Google btn
             </Button> */}
-            <a href={getGoogleOauthURL()}>Google Oauth</a>
+            <Button
+              style={{ margin: "10px 0px 0px 15px" }}
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              <a href={getGoogleOauthURL()}> Countniue with Google </a>
+            </Button>
           </Grid>
           <Grid justifyContent="flex-end" container>
             <Grid item>

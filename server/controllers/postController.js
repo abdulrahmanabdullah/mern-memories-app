@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postSchem";
 
-export const getPosts = async (req, res) => {
+export const getPosts = async (req, res, next) => {
   try {
     const collection = await PostMessage.find();
     return res.status(200).json(collection);

@@ -6,7 +6,6 @@ import FileBase from "react-file-base64";
 import { useStyle } from "./style";
 import { addPost, updatePost } from "../../features/posts/postSlice";
 
-//Todo: fix when call selector twice 🍀
 const Form = ({ currentId, setCurrentId }) => {
   //Styles
   const classes = useStyle();

@@ -8,3 +8,8 @@ in control
 getUserSessions looking for user in browser sessions and return user payload.
 if sessions is empty return null 
 
+localhost:client -ask user profile from ->
+localhost:server -talk to  middleware to -> save session id in locals server
+extract session id from locals server then pass it to database 
+Database find user by session id 
+return user with response to localhost:client  
