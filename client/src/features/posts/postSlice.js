@@ -41,6 +41,19 @@ export const likePost = createAsyncThunk(
     }
   }
 );
+//Search post
+export const postBySearch = createAsyncThunk(
+  "posts/postBySearch",
+  async (searchQuery, thunkAPI) => {
+    try {
+      const { data } = await api.fetchPostBySearchAPI(searchQuery);
+      console.log(data);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const postSlice = createSlice({
   name: "posts",
@@ -111,6 +124,18 @@ export const postSlice = createSlice({
       .addCase(likePost.rejected, (state, action) => {
         state.status = "falied";
         state.error = action.payload;
+      })
+      .addCase(postBySearch.pending, (state) => {
+        state.status = "Loading search";
+      })
+      .addCase(postBySearch.fulfilled, (state, action) => {
+        state.status = "complete fetch post searching";
+        state.error = null;
+        state.posts = action.payload;
+      })
+      .addCase(postBySearch.rejected, (state, action) => {
+        state.status = "failed fetch post by search";
+        state.message = action;
       });
   },
 });

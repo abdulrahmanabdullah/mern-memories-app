@@ -21,6 +21,12 @@ API.interceptors.request.use((req) => {
 });
 //Posts endpoints
 export const fetchPostAPI = () => API.get("/posts");
+export const fetchPostBySearchAPI = (searchQuery) =>
+  API.get(
+    `/posts/search?searchQuery=${searchQuery.search || "none"}&tags=${
+      searchQuery.tags
+    }`
+  );
 
 export const addPostAPI = (post) => API.post("/posts", post);
 

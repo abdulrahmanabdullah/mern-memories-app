@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPost, postStatusSelector } from "../../features/posts/postSlice";
+import {
+  fetchPost,
+  postStatusSelector,
+  postBySearch,
+} from "../../features/posts/postSlice";
 import {
   Container,
   Grow,
@@ -48,8 +52,12 @@ const Home = () => {
   const handleAdd = (tag) => setTags([...tags, tag]);
   const handleDelete = (tag) => setTags(tags.filter((t) => t !== tag));
   const handleSearch = () => {
-    if (search.trim()) {
+    if (search.trim() || tags) {
       //dispatch search
+      dispatch(postBySearch({ search, tags: tags.join(",") }));
+      navigate(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
+      );
     } else {
       navigate("/");
     }
