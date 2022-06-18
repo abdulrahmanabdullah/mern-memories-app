@@ -33,7 +33,7 @@ const Post = ({ post, setCurrentId }) => {
         <>
           <ThumUpAltIcon fontSize="small" />
           &nbsp;
-          {post?.likes.length > 2
+          {post.likes.length > 2
             ? `You and ${post?.likes.length - 1} others`
             : `${post?.likes.length} like${post?.likes.length > 1 ? "s" : ""}`}
         </>

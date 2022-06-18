@@ -2,9 +2,22 @@ import mongoose from "mongoose";
 import PostMessage from "../models/postSchem";
 
 export const getPosts = async (req, res) => {
+  const { page } = req.query;
   try {
-    const collection = await PostMessage.find();
-    return res.status(200).json(collection);
+    const LIMIT = 6;
+    const startIndex = (Number(page) - 1) * LIMIT;
+    const total = await PostMessage.countDocuments({});
+
+    const posts = await PostMessage.find()
+      .sort({ _id: -1 })
+      .limit(LIMIT)
+      .skip(startIndex);
+    // return res.status(200).json(collection);
+    return res.status(200).json({
+      data: posts,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / LIMIT),
+    });
   } catch (error) {
     console.log(error);
   }
@@ -12,14 +25,12 @@ export const getPosts = async (req, res) => {
 
 export const getPostBySearch = async (req, res) => {
   const { searchQuery, tags } = req.query;
-  console.log(searchQuery, tags);
-
   try {
     const title = new RegExp(searchQuery, "i");
     const posts = await PostMessage.find({
       $or: [{ title }, { tags: { $in: tags.split(",") } }],
     });
-    res.json({ data: posts });
+    return res.json({ data: posts });
   } catch (error) {
     res.status(404).json({ message: "Not found post" });
   }

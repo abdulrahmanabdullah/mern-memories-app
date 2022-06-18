@@ -27,8 +27,6 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   try {
     const response = await api.loginAPI(data);
-    console.log(response);
-
     // save user in localstorage .
     if (response.data) {
       localStorage.setItem("profile", JSON.stringify({ ...response?.data }));
@@ -43,21 +41,6 @@ export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   }
 });
 
-export const userAPI = createAsyncThunk("users/userApi", async (thunkAPI) => {
-  try {
-    const res = await api.userAPI();
-    if (res.data) {
-      console.log(res.data);
-    }
-    return res.data;
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
 export const logout = createAsyncThunk("users/logout", async (thunkAPI) => {
   try {
     await localStorage.removeItem("profile");
@@ -82,17 +65,6 @@ export const userSlice = createSlice({
   initialState,
   extraReducers(builder) {
     builder
-      .addCase(userAPI.pending, (state) => {
-        state.status = "Wait to get user";
-      })
-      .addCase(userAPI.fulfilled, (state, action) => {
-        state.status = "Get user compelete";
-        state.user = action.payload;
-      })
-      .addCase(userAPI.rejected, (state, action) => {
-        state.status = "Failed to get user";
-        state.message = action;
-      })
       .addCase(register.pending, (state) => {
         state.status = "loading";
         state.isSuccessed = false;

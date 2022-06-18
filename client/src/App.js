@@ -26,7 +26,14 @@ const App = () => {
               <Route path="/posts" element={<Home />} />
               <Route path="/posts/search" element={<Home />} />
               <Route path="/posts/:id" element={<PostDetails />} />
-              <Route path="/auth" element={<Auth />} />
+              {!user?.result ? (
+                <Route path="/auth" element={<Auth />} />
+              ) : (
+                <Route
+                  path="/auth"
+                  element={<Navigate replace to="/posts" />}
+                />
+              )}
             </Routes>
           </Container>
         </GoogleOAuthProvider>

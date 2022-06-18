@@ -30,6 +30,4 @@ router.post("/user/register", register);
 router.post("/user/login", login);
 //This route calling from google api console.
 router.get("/user/google/auth", googleOauthHandler);
-//get users
-router.get("/users", getUsers);
 export default router;

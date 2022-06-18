@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchPost,
-  postStatusSelector,
-  postBySearch,
-} from "../../features/posts/postSlice";
+import { useDispatch } from "react-redux";
+import { postBySearch } from "../../features/posts/postSlice";
 import {
   Container,
   Grow,
@@ -33,7 +29,6 @@ const Home = () => {
   const [currentId, setCurrentId] = useState(0);
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
-  const postStatus = useSelector(postStatusSelector);
   const query = useQuery();
   const navigate = useNavigate();
   const page = query.get("page");
@@ -42,22 +37,19 @@ const Home = () => {
   //dispatch to get all posts
   const dispatch = useDispatch();
   // When component mount get posts OR when posts change.
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPost());
-    }
-  }, [postStatus, dispatch]);
 
   //Callback functions
   const handleAdd = (tag) => setTags([...tags, tag]);
   const handleDelete = (tag) => setTags(tags.filter((t) => t !== tag));
   const handleSearch = () => {
-    if (search.trim() || tags) {
+    if (search.trim() !== "" || tags.length > 0) {
       //dispatch search
       dispatch(postBySearch({ search, tags: tags.join(",") }));
       navigate(
         `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
       );
+      setSearch("");
+      setTags([]);
     } else {
       navigate("/");
     }

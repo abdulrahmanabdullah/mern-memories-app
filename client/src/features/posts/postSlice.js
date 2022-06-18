@@ -5,16 +5,30 @@ import * as api from "../../api";
 // All actions and reducers for post will be here 👍, we don't need more files.
 
 //fetch all post action
-export const fetchPost = createAsyncThunk("posts/fetchPost", async () => {
-  const response = await api.fetchPostAPI();
-  return response.data;
-});
+export const fetchPost = createAsyncThunk(
+  "posts/fetchPost",
+  async (page, thunkAPI) => {
+    try {
+      const res = await api.fetchPostAPI(page);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
 
 //add new post action
-export const addPost = createAsyncThunk("posts/addNewPost", async (post) => {
-  const response = await api.addPostAPI(post);
-  return response.data;
-});
+export const addPost = createAsyncThunk(
+  "posts/addNewPost",
+  async (post, thunkAPI) => {
+    try {
+      const res = await api.addPostAPI(post);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
 
 //update post action
 export const updatePost = createAsyncThunk(
@@ -31,10 +45,17 @@ export const updatePost = createAsyncThunk(
 );
 
 //Delete post action
-export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
-  const response = await api.deletePostAPI(id);
-  return response.data.id;
-});
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (id, thunkAPI) => {
+    try {
+      const response = await api.deletePostAPI(id);
+      return response.data.id;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
 
 //like post action
 export const likePost = createAsyncThunk(
@@ -54,6 +75,8 @@ export const postBySearch = createAsyncThunk(
   async (searchQuery, thunkAPI) => {
     try {
       const { data } = await api.fetchPostBySearchAPI(searchQuery);
+      if (data.data.length === 0)
+        return thunkAPI.rejectWithValue("Found 0 matches");
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -78,7 +101,10 @@ export const postSlice = createSlice({
       .addCase(fetchPost.fulfilled, (state, action) => {
         state.status = "successed";
         //Merge array and return a new array.
-        state.posts = state.posts.concat(action.payload);
+        state.posts = []; // This solve duplicated posts with search posts.
+        state.posts = state.posts.concat(action.payload.data);
+        state.currentPage = action.payload.currentPage;
+        state.numberOfPages = action.payload.numberOfPages;
       })
       .addCase(fetchPost.rejected, (state, action) => {
         state.status = "failed";
@@ -117,11 +143,11 @@ export const postSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(likePost.pending, (state) => {
-        state.status = "pending";
+        // state.status = "pending";
         state.error = null;
       })
       .addCase(likePost.fulfilled, (state, action) => {
-        state.status = "done";
+        // state.status = "successed";
         state.error = null;
         state.posts = state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
@@ -132,23 +158,19 @@ export const postSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(postBySearch.pending, (state) => {
-        state.status = "Loading search";
+        state.status = "loading";
       })
       .addCase(postBySearch.fulfilled, (state, action) => {
-        state.status = "complete fetch post searching";
+        state.status = "successed";
         state.error = null;
         state.posts = action.payload;
       })
       .addCase(postBySearch.rejected, (state, action) => {
-        state.status = "failed fetch post by search";
-        state.message = action;
+        state.status = "failed";
+        state.message = action.payload;
       });
   },
 });
 
 // export reducer to implement it in store.js file .
 export default postSlice.reducer;
-//export all posts
-export const allPostSelector = (state) => state.posts.posts;
-// status
-export const postStatusSelector = (state) => state.posts.status;
