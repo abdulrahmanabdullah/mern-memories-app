@@ -26,35 +26,35 @@ const Post = ({ post, setCurrentId }) => {
 
   //Like component
   const Like = () => {
-    //check length likes
-    if (post.likes.length > 0) {
-      return post.likes.find(
+    if (post?.likes?.length > 0) {
+      return post?.likes.find(
         (like) => like === (user?.result?._id || user?.result?.googleId)
       ) ? (
         <>
           <ThumUpAltIcon fontSize="small" />
-          &nbsp; first con
-          {post.likes.length > 2
-            ? `You and other ${post.likes.length - 1}`
-            : `${post.likes.length} like`}
+          &nbsp;
+          {post?.likes.length > 2
+            ? `You and ${post?.likes.length - 1} others`
+            : `${post?.likes.length} like${post?.likes.length > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
-          <ThumbUpAltOutlinedIcon />
-          &nbsp;Like {post.likes.length}
+          <ThumbUpAltOutlinedIcon fontSize="small" />
+          &nbsp;{post?.likes.length}{" "}
+          {post?.likes.length === 1 ? "Like" : "Likes"}
         </>
       );
     }
-
     return (
       <>
-        <ThumbUpAltOutlinedIcon />
-        &nbsp;like
+        <ThumbUpAltOutlinedIcon fontSize="small" />
+        &nbsp;Like
       </>
     );
   };
+
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia
         className={classes.media}
         image={
@@ -69,16 +69,18 @@ const Post = ({ post, setCurrentId }) => {
           {moment(post.createdAt).fromNow()}
         </Typography>
       </div>
-      {/* Edit btn */}
-      <div className={classes.overlay2}>
-        <Button
-          style={{ color: "white" }}
-          size="small"
-          onClick={() => setCurrentId(post._id)}
-        >
-          <MoreHorizIcon />
-        </Button>
-      </div>
+      {/* Edit btn enable if user own his post otherwise disable it */}
+      {user?.result?._id === post.creator && (
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            size="small"
+            onClick={() => setCurrentId(post._id)}
+          >
+            <MoreHorizIcon />
+          </Button>
+        </div>
+      )}
       {/* Title */}
       <Typography
         className={classes.title}
@@ -113,6 +115,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
+          disabled={user?.result?._id === post.creator ? false : true}
           onClick={() => dispatch(deletePost(post._id))}
         >
           <DeleteIcon />

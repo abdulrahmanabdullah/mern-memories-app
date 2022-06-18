@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Pagination, PaginationItem } from "@mui/material";
 import { useStyle } from "./style";
 import { Link } from "react-router-dom";
 
-const Paginate = () => {
+const Paginate = ({ page }) => {
   const classes = useStyle();
+
+  useEffect(() => {}, [page]);
   return (
     <Pagination
       classes={{ ul: classes.ul }}

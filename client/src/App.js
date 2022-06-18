@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
+
   const cId =
     "189363193948-fhamkq68ablonm35c5n3ban36oetdm24.apps.googleusercontent.com";
   return (
@@ -25,10 +26,7 @@ const App = () => {
               <Route path="/posts" element={<Home />} />
               <Route path="/posts/search" element={<Home />} />
               <Route path="/posts/:id" element={<PostDetails />} />
-              <Route
-                path="/auth"
-                element={!user ? <Auth /> : <Navigate replace to="/posts" />}
-              />
+              <Route path="/auth" element={<Auth />} />
             </Routes>
           </Container>
         </GoogleOAuthProvider>

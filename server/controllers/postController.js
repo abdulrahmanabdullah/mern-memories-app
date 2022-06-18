@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postSchem";
 
-export const getPosts = async (req, res, next) => {
+export const getPosts = async (req, res) => {
   try {
     const collection = await PostMessage.find();
     return res.status(200).json(collection);
@@ -99,9 +99,9 @@ export const likePost = async (req, res) => {
     const updatePost = await PostMessage.findByIdAndUpdate(id, post, {
       new: true,
     });
-
     return res.status(200).json(updatePost);
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };

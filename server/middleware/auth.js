@@ -10,7 +10,6 @@ const auth = async (req, res, next) => {
     //verify token
     if (token && isOwnToken) {
       decodeData = jwt.verify(token, "test"); // test here is a secret word for own tokens
-      console.log(decodeData);
       req.userId = decodeData?.id;
     } else {
       decodeData = jwt.decode(token);

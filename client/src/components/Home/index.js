@@ -46,7 +46,7 @@ const Home = () => {
     if (postStatus === "idle") {
       dispatch(fetchPost());
     }
-  }, [postStatus, currentId, dispatch]);
+  }, [postStatus, dispatch]);
 
   //Callback functions
   const handleAdd = (tag) => setTags([...tags, tag]);
@@ -64,7 +64,7 @@ const Home = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.keyPress === 13) {
+    if (e.charCode === 13) {
       // When user press enter
       handleSearch();
     }
@@ -118,7 +118,7 @@ const Home = () => {
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
               <Paper elevation={6} className={classes.pagination}>
-                <Pagination />
+                <Pagination page={page} />
               </Paper>
             </Grid>
           </Grid>

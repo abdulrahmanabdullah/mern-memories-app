@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/user/userSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import logo from "../../assets/react-logo.svg";
+import logo from "../../assets/memories-Logo.png";
 const Navbar = () => {
   //component state
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -35,10 +35,11 @@ const Navbar = () => {
       space-y-1 "
         >
           {/* <!-- website title --> */}
-          <Link to="/">
-            <h4 className="text-xs tracking-normal font-medium leading-loose sm:text-lg  md:text-xl">
-              social media app
+          <Link to="/" className="flex center ">
+            <h4 className="pt-2 pr-1 text-xs  tracking-normal font-medium leading-loose sm:text-lg  md:text-xl">
+              Memories
             </h4>
+            <img src={logo} alt="memorize icon" className="max-h-10" />
           </Link>
           {user ? (
             <>

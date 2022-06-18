@@ -17,11 +17,18 @@ export const addPost = createAsyncThunk("posts/addNewPost", async (post) => {
 });
 
 //update post action
-export const updatePost = createAsyncThunk("posts/updatePost", async (post) => {
-  const id = post._id;
-  const response = await api.updatePostAPI(id, post);
-  return response.data;
-});
+export const updatePost = createAsyncThunk(
+  "posts/updatePost",
+  async (post, thunkAPI) => {
+    try {
+      const id = post._id;
+      const response = await api.updatePostAPI(id, post);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 //Delete post action
 export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
@@ -47,7 +54,6 @@ export const postBySearch = createAsyncThunk(
   async (searchQuery, thunkAPI) => {
     try {
       const { data } = await api.fetchPostBySearchAPI(searchQuery);
-      console.log(data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
