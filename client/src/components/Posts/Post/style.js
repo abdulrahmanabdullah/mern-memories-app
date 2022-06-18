@@ -2,13 +2,8 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyle = makeStyles((theme) => ({
   media: {
-    height: 0,
-    paddingTop: "56.25%",
+    height: "150px",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    backgroundBlendMode: "darken",
-  },
-  border: {
-    border: "solid",
   },
   fullHeightCard: {
     height: "100%",
@@ -20,6 +15,11 @@ export const useStyle = makeStyles((theme) => ({
     borderRadius: "15px",
     height: "100%",
     position: "relative",
+  },
+  baseCard: {
+    display: "flex",
+    width: "100%",
+    flexDirection: "column",
   },
   overlay: {
     position: "absolute",
@@ -36,13 +36,22 @@ export const useStyle = makeStyles((theme) => ({
   grid: {
     display: "flex",
   },
+  title: {
+    padding: "0 10px",
+    width: "100%",
+    justifyContent: "start",
+  },
+  message: {
+    width: "100%",
+    justifyContent: "start",
+    margin: "10px",
+  },
   details: {
     display: "flex",
-    justifyContent: "space-between",
-    margin: "20px",
-  },
-  title: {
-    padding: "0 16px",
+    justifyContent: "start",
+    width: "100%",
+    margin: "10px",
+    padding: "10px",
   },
   cardActions: {
     padding: "0 16px 8px 16px",

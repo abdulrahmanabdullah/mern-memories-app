@@ -38,7 +38,7 @@ function getGoogleOauthURL() {
     ].join(" "),
   };
   const qs = new URLSearchParams(options);
-  console.log(qs.toString());
+  // console.log(qs.toString());
 
   return `${rootUrl}?${qs}`;
 }
