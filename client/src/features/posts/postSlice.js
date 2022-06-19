@@ -5,11 +5,23 @@ import * as api from "../../api";
 // All actions and reducers for post will be here 👍, we don't need more files.
 
 //fetch all post action
-export const fetchPost = createAsyncThunk(
+export const fetchPosts = createAsyncThunk(
   "posts/fetchPost",
   async (page, thunkAPI) => {
     try {
-      const res = await api.fetchPostAPI(page);
+      const res = await api.fetchPostsAPI(page);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+//Fetch post by id
+export const fetchPost = createAsyncThunk(
+  "posts/fetchPosts",
+  async (id, thunkAPI) => {
+    try {
+      const res = await api.fetchPostAPI(id);
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -89,16 +101,17 @@ export const postSlice = createSlice({
   initialState: {
     status: "idle", // "loading" | "successed" | "failed"
     posts: [],
+    post: null,
     error: null,
   },
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchPost.pending, (state, action) => {
+      .addCase(fetchPosts.pending, (state, action) => {
         state.status = "loading";
         state.error = null;
       })
-      .addCase(fetchPost.fulfilled, (state, action) => {
+      .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = "successed";
         //Merge array and return a new array.
         state.posts = []; // This solve duplicated posts with search posts.
@@ -106,9 +119,19 @@ export const postSlice = createSlice({
         state.currentPage = action.payload.currentPage;
         state.numberOfPages = action.payload.numberOfPages;
       })
-      .addCase(fetchPost.rejected, (state, action) => {
+      .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(fetchPost.pending, (state, action) => {
+        state.status = "fetchPost.loading";
+      })
+      .addCase(fetchPost.fulfilled, (state, action) => {
+        state.status = "fetchPost.successed";
+        state.post = action.payload;
+      })
+      .addCase(fetchPost.rejected, (state, action) => {
+        state.status = "fetchPost.failed";
       })
       .addCase(addPost.pending, (state, action) => {
         state.status = "upload post";

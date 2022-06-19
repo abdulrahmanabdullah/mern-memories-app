@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination, PaginationItem } from "@mui/material";
-import { fetchPost } from "../features/posts/postSlice";
+import { fetchPosts } from "../features/posts/postSlice";
 import { useStyle } from "./style";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const Paginate = ({ page }) => {
   const dispatch = useDispatch();
   const { numberOfPages } = useSelector((state) => state.posts);
   useEffect(() => {
-    dispatch(fetchPost(page));
+    dispatch(fetchPosts(page));
   }, [page, dispatch]);
 
   return (

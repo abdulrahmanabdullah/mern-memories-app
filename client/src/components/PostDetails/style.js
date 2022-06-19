@@ -20,6 +20,13 @@ export const useStyle = makeStyles((theme) => ({
     margin: "10px",
     flex: 1,
   },
+  skeleton: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   imageSection: {
     marginLeft: "20px",
     [theme.breakpoints.down("sm")]: {
