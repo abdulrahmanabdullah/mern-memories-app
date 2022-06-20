@@ -27,6 +27,14 @@ export const useStyle = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  postsSection: {
+    margin: "15px",
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+  },
   imageSection: {
     marginLeft: "20px",
     [theme.breakpoints.down("sm")]: {
