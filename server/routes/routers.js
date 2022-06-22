@@ -7,6 +7,7 @@ import {
   deletePost,
   updatePost,
   likePost,
+  postComment,
 } from "../controllers/postController.js";
 import auth from "../middleware/auth.js";
 
@@ -26,6 +27,7 @@ router.post("/posts", auth, createPost);
 router.patch("/posts/:id", auth, updatePost);
 router.patch("/posts/likepost/:id", auth, likePost);
 router.delete("/posts/:id", auth, deletePost);
+router.post("/posts/:id/comment", auth, postComment);
 
 //Auth route
 router.post("/user/register", register);

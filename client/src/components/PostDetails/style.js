@@ -39,6 +39,16 @@ export const useStyle = makeStyles((theme) => ({
     marginLeft: "20px",
     [theme.breakpoints.down("sm")]: {
       marginLeft: 0,
+      maxHeight: "300px",
+    },
+  },
+  imagePost: {
+    borderRadius: "20px",
+    objectFit: "cover",
+    width: "100%",
+    maxHeight: "500px",
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: "250px",
     },
   },
   recommendedPosts: {
@@ -58,10 +68,11 @@ export const useStyle = makeStyles((theme) => ({
   commentsOuterContainer: {
     display: "flex",
     justifyContent: "space-between",
+    flexDirection: "column",
   },
   commentsInnerContainer: {
     height: "200px",
-    overflowY: "auto",
     marginRight: "30px",
+    overflowY: "auto",
   },
 }));

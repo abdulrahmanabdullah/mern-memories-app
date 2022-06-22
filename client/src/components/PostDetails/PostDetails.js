@@ -16,6 +16,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import moment from "moment";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useStyle } from "./style";
+import CommentSection from "./CommentSection";
 
 const PostDetails = () => {
   const classes = useStyle();
@@ -32,9 +33,9 @@ const PostDetails = () => {
   //Search by tags
   // useEffect(() => {
   //   if (post) {
-  //     dispatch(postBySearch(post.tags.join(",")));
+  //     dispatch(postBySearch({ search: "none", tags: post?.tags.join(",") }));
   //   }
-  // }, [post]);
+  // }, [dispatch, post]);
 
   //This for skelton loading.
   const isLoading = status === "fetchPost.loading";
@@ -80,7 +81,7 @@ const PostDetails = () => {
                 >
                   {post?.tags.map((tag) => (
                     <Link
-                      to={`/post/serach?searchQuery=none&tags=${tag}`}
+                      to={`../posts/serach?searchQuery=none&tags=${tag}`}
                       style={{ textDecoration: "none", color: "#3f51b5" }}
                     >
                       {` #${tag} `}
@@ -105,15 +106,12 @@ const PostDetails = () => {
                 <Typography variant="body1">
                   {moment(post?.createdAt).fromNow()}
                 </Typography>
-                <Divider style={{ margin: "20px 0" }} />
-                {/* <CommentSection post={post} /> */}
-                <Divider style={{ margin: "20px 0" }} />
                 {/* End section tag */}
               </div>
               {/* Image */}
               <div className={classes.imageSection}>
                 <img
-                  className={classes.media}
+                  className={classes.imagePost}
                   style={{ objectFit: "contain" }}
                   src={
                     post?.selectedFile ||
@@ -126,6 +124,10 @@ const PostDetails = () => {
             </>
           )}
         </div>
+        {/* Comment  */}
+        <Divider style={{ margin: "20px 0" }} />
+        <CommentSection post={post} />
+        <Divider style={{ margin: "20px 0" }} />
         {/* Similar Post, you might like this post */}
         {recommendedPosts?.length && (
           <ImageList sx={{ width: "100%", height: "auto" }}>

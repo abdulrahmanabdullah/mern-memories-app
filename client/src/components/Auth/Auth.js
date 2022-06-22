@@ -8,14 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
 import { login, register } from "../../features/user/userSlice";
-import axios from "axios";
 
 const initDataState = {
   firstName: "",
@@ -116,44 +114,6 @@ const Auth = () => {
     setShowPassword(false);
   };
 
-  //Google callback functions
-  const googleSuccess = async (res) => {
-    // const tokens = await axios.post("http://localhost:5000/user/google/auth", {
-    //   access_token,
-    // });
-    console.log(res);
-    const userInfo = await axios.get(
-      "https://www.googleapis.com/oauth2/v3/userinfo",
-      { headers: { Authorization: `Bearer ${res?.access_token}` } }
-    );
-    console.log(userInfo);
-    //save userInfo.data in localstorage then back to home page with payload data.
-    if (userInfo.data) {
-      //dispatch action to save user data in localstorage.
-      localStorage.setItem(
-        "profile",
-        JSON.stringify({ result: userInfo?.data, token: res?.access_token })
-      );
-    }
-    navigate("/");
-  };
-
-  const googleFailure = (err) => {
-    console.log(err);
-  };
-
-  //Customes google login button
-  const googleLogin = useGoogleLogin({
-    flow: "auth-code",
-    onSuccess: async ({ code }) => {
-      const tokens = await axios.post("http://localhost:5000/google/auth", {
-        code,
-      });
-      console.log(tokens);
-    },
-    onFailure: googleFailure,
-  });
-
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -224,16 +184,7 @@ const Auth = () => {
             >
               {isRegister ? "Register" : "Login"}
             </Button>
-            {/* Google Auth */}
-            {/* <Button
-              style={{ margin: "10px 0px 0px 15px" }}
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => googleLogin()}
-            >
-              Google btn
-            </Button> */}
+            {/* Google OAuth linke. */}
             <Button
               style={{ margin: "10px 0px 0px 15px" }}
               fullWidth

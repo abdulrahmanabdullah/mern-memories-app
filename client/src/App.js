@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import React from "react";
 import { Container } from "@mui/material";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -12,31 +11,24 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  const cId =
-    "189363193948-fhamkq68ablonm35c5n3ban36oetdm24.apps.googleusercontent.com";
   return (
     <>
       <ToastContainer position="top-center" autoClose={5000} closeOnClick />
       <BrowserRouter>
-        <GoogleOAuthProvider clientId={cId}>
-          <Container maxWidth="lg">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Navigate replace to="/posts" />} />
-              <Route path="/posts" element={<Home />} />
-              <Route path="/posts/search" element={<Home />} />
-              <Route path="/post/:id" element={<PostDetails />} />
-              {!user?.result ? (
-                <Route path="/auth" element={<Auth />} />
-              ) : (
-                <Route
-                  path="/auth"
-                  element={<Navigate replace to="/posts" />}
-                />
-              )}
-            </Routes>
-          </Container>
-        </GoogleOAuthProvider>
+        <Container maxWidth="lg">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/posts" />} />
+            <Route path="/posts" element={<Home />} />
+            <Route path="/posts/search" element={<Home />} />
+            <Route path="/post/:id" element={<PostDetails />} />
+            {!user?.result ? (
+              <Route path="/auth" element={<Auth />} />
+            ) : (
+              <Route path="/auth" element={<Navigate replace to="/posts" />} />
+            )}
+          </Routes>
+        </Container>
       </BrowserRouter>
     </>
   );

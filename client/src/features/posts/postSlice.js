@@ -86,12 +86,30 @@ export const postBySearch = createAsyncThunk(
   "posts/postBySearch",
   async (searchQuery, thunkAPI) => {
     try {
+      console.log(searchQuery);
       const { data } = await api.fetchPostBySearchAPI(searchQuery);
       if (data.data.length === 0)
         return thunkAPI.rejectWithValue("Found 0 matches");
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+//Comment
+export const postComment = createAsyncThunk(
+  "posts/postComment",
+  //Async Thunk accept one praramter. And for that reasone I pass it as a object.
+  async (post, thunkAPI) => {
+    try {
+      const { name, comment, id } = post;
+      const { data } = await api.postCommentAPI(id, {
+        value: name + ":" + comment,
+      });
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
     }
   }
 );
@@ -103,6 +121,7 @@ export const postSlice = createSlice({
     posts: [],
     post: null,
     error: null,
+    comments: [],
   },
   reducers: {},
   extraReducers(builder) {
@@ -191,6 +210,21 @@ export const postSlice = createSlice({
       .addCase(postBySearch.rejected, (state, action) => {
         state.status = "failed";
         state.message = action.payload;
+      })
+      .addCase(postComment.pending, (state, action) => {
+        state.status = "commentPost.pending";
+      })
+      .addCase(postComment.fulfilled, (state, action) => {
+        state.status = "commentPost.successed";
+        // state.posts = [...state.posts];
+        state.posts = state.posts.map((post) => {
+          if (post._id === action.payload._id) return action.payload;
+          return post;
+        });
+      })
+      .addCase(postComment.rejected, (state, action) => {
+        state.status = "commentPost.failed";
+        state.error = action.payload;
       });
   },
 });
