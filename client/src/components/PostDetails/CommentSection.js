@@ -7,8 +7,10 @@ import { postComment } from "../../features/posts/postSlice";
 const CommentSection = ({ post }) => {
   const classes = useStyle();
   //Compoent state
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(post?.comments);
+  const [state, setState] = useState({
+    comment: "",
+    comments: post?.comments,
+  });
   const commentRef = useRef();
   //Get user from localstorage to pass id to backend.
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -16,19 +18,27 @@ const CommentSection = ({ post }) => {
 
   //load comments when component mount and updated.
   React.useEffect(() => {
-    setComments(post?.comments);
+    setState((prev) => ({ ...prev, comments: post?.comments }));
   }, [post]);
   //Callbacks func
   const handleComment = async () => {
     const { payload } = await dispatch(
-      postComment({ name: user?.result?.name, comment, id: post._id })
+      postComment({
+        name: user?.result?.name,
+        comment: state?.comment,
+        id: post._id,
+      })
     );
     commentRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "end",
     });
-    setComments(payload.comments);
-    setComment("");
+
+    setState((prevState) => ({
+      ...prevState,
+      comment: "",
+      comments: payload.comments,
+    }));
   };
   return (
     <div>
@@ -37,7 +47,7 @@ const CommentSection = ({ post }) => {
           <Typography gutterBottom variant="h6">
             Comments
           </Typography>
-          {comments?.map((e, i) => (
+          {state?.comments?.map((e, i) => (
             <Typography
               key={i}
               gutterBottom
@@ -64,8 +74,10 @@ const CommentSection = ({ post }) => {
             variant="outlined"
             label="comment"
             multiline
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={state.comment}
+            onChange={(e) =>
+              setState((prev) => ({ ...prev, comment: e.target.value }))
+            }
           />
           <br />
           <Button

@@ -1,8 +1,8 @@
 Todo:
-  ☐ Create get user from localstorage with Redux.  
-  - Create Dailog when user try to click like without login.
-  - Fix likes api with google auth. (Mondatory).
-  - Create globel state instead one state for each task.
+  - Create globel state instead one state for each task.@done
+  - Theme provider.
+  - i18 file.
+  - Add card effect on mouse howver.
+  - Create new route in backend for search by tags.
   - Create Passport middleware.
-  - Absolute import in React.
   

@@ -72,8 +72,9 @@ const PostDetails = () => {
                   color="textSecondary"
                   component="h2"
                 >
-                  {post?.tags.map((tag) => (
+                  {post?.tags.map((tag, i) => (
                     <Link
+                      key={i}
                       to={`../posts/serach?searchQuery=none&tags=${tag}`}
                       style={{ textDecoration: "none", color: "#3f51b5" }}
                     >
@@ -129,7 +130,7 @@ const PostDetails = () => {
                 You might also likes:
               </ListSubheader>
             </ImageListItem>
-            {recommendedPosts.map((item) => (
+            {recommendedPosts?.map((item) => (
               <ImageListItem key={item._id}>
                 <img
                   style={{ objectFit: "contain", height: "250px" }}
@@ -160,4 +161,4 @@ const PostDetails = () => {
   );
 };
 
-export default PostDetails;
+export default React.memo(PostDetails);
