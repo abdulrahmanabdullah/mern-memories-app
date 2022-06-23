@@ -23,8 +23,9 @@ const CommentSection = ({ post }) => {
     const { payload } = await dispatch(
       postComment({ name: user?.result?.name, comment, id: post._id })
     );
-    commentRef.current.scrollIntoView({
+    commentRef.current?.scrollIntoView({
       behavior: "smooth",
+      block: "end",
     });
     setComments(payload.comments);
     setComment("");
@@ -47,9 +48,8 @@ const CommentSection = ({ post }) => {
               :&nbsp;{e.split(":")[1]}
             </Typography>
           ))}
-          <div ref={commentRef} />
         </div>
-        <div />
+        <div ref={commentRef}></div>
       </div>
       {user?.result && (
         <div style={{ width: "80%", position: "relative", left: "5%" }}>

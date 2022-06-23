@@ -71,7 +71,7 @@ export const useStyle = makeStyles((theme) => ({
     flexDirection: "column",
   },
   commentsInnerContainer: {
-    height: "200px",
+    height: "250px",
     marginRight: "30px",
     overflowY: "auto",
   },
