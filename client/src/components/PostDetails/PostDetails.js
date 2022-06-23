@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPost, postBySearch } from "../../features/posts/postSlice";
+import { fetchPost } from "../../features/posts/postSlice";
 import {
   Paper,
   Skeleton,
@@ -30,18 +30,11 @@ const PostDetails = () => {
     dispatch(fetchPost(id));
   }, [dispatch, id]);
 
-  //Search by tags
-  // useEffect(() => {
-  //   if (post) {
-  //     dispatch(postBySearch({ search: "none", tags: post?.tags.join(",") }));
-  //   }
-  // }, [dispatch, post]);
-
   //This for skelton loading.
   const isLoading = status === "fetchPost.loading";
 
   //Recommended Posts
-  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
+  const recommendedPosts = posts?.filter(({ _id }) => _id !== post?._id);
 
   //callbacks functions
   const openPost = (id) => navigate(`/post/${id}`);

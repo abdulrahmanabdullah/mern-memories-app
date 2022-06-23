@@ -25,8 +25,6 @@ const CommentSection = ({ post }) => {
     );
     commentRef.current.scrollIntoView({
       behavior: "smooth",
-      block: "nearest",
-      inline: "start",
     });
     setComments(payload.comments);
     setComment("");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postBySearch } from "../../features/posts/postSlice";
 import {
@@ -32,7 +32,6 @@ const Home = () => {
   const query = useQuery();
   const navigate = useNavigate();
   const page = query.get("page");
-  const searchQuery = query.get("searchQuery");
 
   //dispatch to get all posts
   const dispatch = useDispatch();

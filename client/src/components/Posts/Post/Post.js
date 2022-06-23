@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deletePost, likePost } from "../../../features/posts/postSlice";
+import { deletePost } from "../../../features/posts/postSlice";
 
 import { useStyle } from "./style";
 import Like from "./Like";
@@ -28,6 +28,7 @@ const Post = ({ post, setCurrentId }) => {
   const navigate = useNavigate();
   //callback func
   const openPost = () => navigate(`/post/${post._id}`);
+
   return (
     <Card raised elevation={6} className={classes.card}>
       <ButtonBase
@@ -88,15 +89,8 @@ const Post = ({ post, setCurrentId }) => {
       </ButtonBase>
       {/* Like & delete btn */}
       <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          disabled={!user?.result}
-          onClick={() => dispatch(likePost(post._id))}
-        >
-          {/* Like component */}
-          <Like post={post} user={user} />
-        </Button>
+        {/* Like component */}
+        <Like post={post} user={user} />
         <Button
           size="small"
           color="primary"
