@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import { useStyle } from "./style";
@@ -51,7 +51,11 @@ const Auth = () => {
   const [formData, setFormData] = useState(initDataState);
   const [isRegister, setIsRegister] = useState(false);
   const [isNotValdation, setIsNotValdation] = useState(false);
+  //React router
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
+
   useEffect(() => {
     //When failed to create account.
     if (status === "failed") {
@@ -61,16 +65,17 @@ const Auth = () => {
         autoClose: 6000,
         closeOnClick: true,
       });
-      //use rest dipsatch OR redirect to login page.
+      //redirect to login page.
       navigate("/auth");
     }
 
     // When create successful .
     if (status === "compelete") {
       toast.success(message);
-      navigate("/");
+      //Navigate user to previous page.
+      navigate(location.state.prevPath);
     }
-  }, [navigate, message, status]);
+  }, [navigate, message, status, location]);
 
   //Callback functions
   const handleSubmit = (e) => {

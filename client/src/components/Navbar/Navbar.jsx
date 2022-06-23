@@ -107,7 +107,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/auth">
+              <Link to="/auth" state={{ prevPath: location.pathname }}>
                 <button className=" md:w-30  h-auto inline-block px-2 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight  rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out md:text-lg">
                   Login
                 </button>
