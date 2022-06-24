@@ -17,7 +17,7 @@ export const useStyle = makeStyles((theme) => ({
   },
   logoAndTitle: {
     display: "flex",
-    flex: "0.6",
+    flex: ".5",
     fontWeight: 500,
     letterSpacing: ".3rem",
     color: "inherit",

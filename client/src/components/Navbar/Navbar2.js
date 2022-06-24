@@ -14,7 +14,7 @@ import {
   Tooltip,
   MenuItem,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useStyle } from "./style";
 import logo from "../../assets/memories-Logo.png";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -22,19 +22,31 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import AdbIcon from "@mui/icons-material/Adb";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const MyAppBar = () => {
   const classes = useStyle();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location, setUser]);
+
   //callbacks func
   const handleOpenNavMenu = (e) => {
     setAnchorElUser(e.currentTarget);
   };
   const handleCloseNavMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setUser(null);
   };
   const settings = ["Profile", "Dashboard", "SignIn"];
   return (
@@ -53,13 +65,21 @@ const MyAppBar = () => {
               Memories
             </Typography>
           </div>
-          <Typography variant="h4" noWrap>
-            {" "}
-            Abdulrahman Abdullah
+          <Typography variant="h4" noWrap style={{ flex: "0.7" }}>
+            {user?.result?.name}
           </Typography>
-          <Box sx={{ flexGrow: 0 }}>
-            <LoginOutlinedIcon fontSize="large" />
-          </Box>
+          {/* Login and logout logic */}
+          {user ? (
+            <IconButton color="inherit" onClick={handleLogout}>
+              <LogoutOutlinedIcon fontSize="large" />
+            </IconButton>
+          ) : (
+            <Link to="/auth" state={{ prevPath: location.pathname }}>
+              <IconButton color="inherit">
+                <LoginOutlinedIcon fontSize="large" />
+              </IconButton>
+            </Link>
+          )}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="open settings">
               <IconButton
