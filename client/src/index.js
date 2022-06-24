@@ -8,7 +8,10 @@ import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {},
+});
+
 root.render(
   <Provider store={store}>
     <>

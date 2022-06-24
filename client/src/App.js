@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar2 from "./components/Navbar/Navbar2.js";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -16,7 +17,8 @@ const App = () => {
       <ToastContainer position="top-center" autoClose={5000} closeOnClick />
       <BrowserRouter>
         <Container maxWidth="lg">
-          <Navbar />
+          {/* <Navbar /> */}
+          <Navbar2 />
           <Routes>
             <Route path="/" element={<Navigate replace to="/posts" />} />
             <Route path="/posts" element={<Home />} />

@@ -1,8 +1,10 @@
 Todo:
   - Create globel state instead one state for each task.@done
+  - rebuild Navbar with Drawer.
   - Theme provider.
   - i18 file.
   - Add card effect on mouse howver.
   - Create new route in backend for search by tags.
   - Create Passport middleware.
+  - Reduce React code, Back to Medium website.
   
