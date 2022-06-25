@@ -2,12 +2,12 @@ import React from "react";
 import { Container } from "@mui/material";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Navbar from "./components/Navbar/Navbar.jsx";
+import NavbarTliwan from "./components/Navbar/NavbarTliwa.jsx";
 import Home from "./components/Home";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar2 from "./components/Navbar/Navbar2.js";
+import Navbar from "./components/Navbar/Navbar.js";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -16,9 +16,9 @@ const App = () => {
     <>
       <ToastContainer position="top-center" autoClose={5000} closeOnClick />
       <BrowserRouter>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           {/* <Navbar /> */}
-          <Navbar2 />
+          <Navbar />
           <Routes>
             <Route path="/" element={<Navigate replace to="/posts" />} />
             <Route path="/posts" element={<Home />} />

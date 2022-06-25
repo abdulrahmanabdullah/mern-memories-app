@@ -5,8 +5,6 @@ import {
   AppBar,
   Typography,
   Toolbar,
-  Avatar,
-  Button,
   Container,
   IconButton,
   Box,
@@ -25,7 +23,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const MyAppBar = () => {
+const Navbar = () => {
   const classes = useStyle();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -114,90 +112,9 @@ const MyAppBar = () => {
             </Menu>
           </Box>
         </Toolbar>
-        {/* Logo Icon for small screen */}
       </Container>
     </AppBar>
   );
 };
 
-const Navbar2 = () => {
-  const classes = useStyle();
-  //Get user from redux .
-  // const user = useSelector((state) => state.users.user);
-  //component state
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
-  const dispatch = useDispatch();
-  // navigation
-  const navigate = useNavigate();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [setUser]);
-
-  //callback functions
-  const logoutBtn = () => {
-    // dispatch to remove profile from localstorage.
-    dispatch(logout());
-    setUser(null);
-    navigate("/");
-  };
-  return <MyAppBar />;
-  <AppBar
-    className={classes.appBarNav}
-    component="nav"
-    position="static"
-    color="inherit"
-    style={{ flexDirection: "row" }}
-  >
-    {/* website title and logo */}
-    <div className={classes.brandContainer}>
-      <Typography
-        variant="h4"
-        component={Link}
-        to="/"
-        className={classes.heading}
-      >
-        Memories
-      </Typography>
-      <img
-        src={logo}
-        alt="Memories Icon"
-        className={classes.image}
-        height="60"
-      />
-    </div>
-    {/* Toolbar user region */}
-    {user && (
-      <div className={classes.profile}>
-        <Avatar className={classes.purple} alt={user?.result?.name}>
-          {user?.result?.name?.charAt(0)}
-        </Avatar>
-        <Typography className={classes.userName} variant="h6">
-          {user?.result?.name}
-        </Typography>
-      </div>
-    )}
-    <Toolbar className={classes.Toolbar}>
-      <Brightness4Icon style={{ margin: "10px" }} />
-      {user ? (
-        <div>
-          <Button
-            className={classes.logout}
-            variant="contained"
-            color="secondary"
-            onClick={logoutBtn}
-          >
-            {" "}
-            Logout
-          </Button>
-        </div>
-      ) : (
-        <Button component={Link} to="/auth" variant="contained" color="primary">
-          Sign In{" "}
-        </Button>
-      )}
-    </Toolbar>
-  </AppBar>;
-};
-
-export default Navbar2;
+export default Navbar;

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../features/user/userSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/memories-Logo.png";
-const Navbar = () => {
+const NavbarTliwan = () => {
   //component state
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [darkMode, setDarkMode] = useState(false);
@@ -120,4 +120,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarTliwan;
