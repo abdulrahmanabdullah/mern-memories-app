@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/user/userSlice";
+import { toggleTheme } from "../../features/themeSlice";
 import {
   AppBar,
   Typography,
@@ -20,7 +21,7 @@ import {
 } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-
+import ColorModeContext from "../../themeContext";
 import { useStyle } from "./style";
 import logo from "../../assets/memories-Logo.png";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -31,14 +32,7 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 //Drawer Component
 const DrawerNav = () => {
-  const classes = useStyle();
-  const theme = useTheme();
-  console.log(theme);
-
-  const [state, setState] = useState({
-    right: false,
-    left: false,
-  });
+  const colorMode = useContext(ColorModeContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
@@ -48,7 +42,6 @@ const DrawerNav = () => {
     ) {
       return;
     }
-    setState({ ...state, [anchor]: open });
     setIsOpen((prev) => !prev);
   };
   const drawerList = (anchor) => (
@@ -72,8 +65,12 @@ const DrawerNav = () => {
           variant="outlined"
           aria-label="outlined button group"
         >
-          <Button>Light</Button>
-          <Button>Dark</Button>
+          <Button onClick={() => colorMode.toggleColorMode("light")}>
+            Light
+          </Button>
+          <Button onClick={() => colorMode.toggleColorMode("dark")}>
+            Dark
+          </Button>
         </ButtonGroup>
         {/* Direction */}
         {/* Language */}
