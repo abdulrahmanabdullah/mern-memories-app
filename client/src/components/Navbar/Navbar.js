@@ -8,24 +8,101 @@ import {
   Container,
   IconButton,
   Box,
-  Menu,
   Tooltip,
-  MenuItem,
+  Drawer,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Divider,
+  ButtonGroup,
 } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+
 import { useStyle } from "./style";
 import logo from "../../assets/memories-Logo.png";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import AdbIcon from "@mui/icons-material/Adb";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import MenuIcon from "@mui/icons-material/Menu";
 
+//Drawer Component
+const DrawerNav = () => {
+  const classes = useStyle();
+  const theme = useTheme();
+  console.log(theme);
+
+  const [state, setState] = useState({
+    right: false,
+    left: false,
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+    setIsOpen((prev) => !prev);
+  };
+  const drawerList = (anchor) => (
+    <Box
+      role="presentation"
+      sx={{ width: 350, p: 1 }}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, )}
+    >
+      <Typography variant="h4" component="p">
+        Settings
+      </Typography>
+      <Divider />
+      <Box sx={{ width: "100%", my: 1, px: 3 }}>
+        {/* Mode Light OR Dark */}
+        <Typography variant="body2" sx={{ py: 1 }}>
+          Mode
+        </Typography>
+        <ButtonGroup
+          fullWidth
+          variant="outlined"
+          aria-label="outlined button group"
+        >
+          <Button>Light</Button>
+          <Button>Dark</Button>
+        </ButtonGroup>
+        {/* Direction */}
+        {/* Language */}
+      </Box>
+    </Box>
+  );
+  return (
+    <div>
+      <React.Fragment key="right">
+        <IconButton
+          onClick={toggleDrawer("right", isOpen)}
+          sx={{ p: 0 }}
+          color="inherit"
+        >
+          <SettingsApplicationsIcon fontSize="large" />
+          <Drawer
+            anchor="right"
+            open={isOpen}
+            onClose={toggleDrawer("right", isOpen)}
+          >
+            {drawerList("right")}
+          </Drawer>
+        </IconButton>
+      </React.Fragment>
+    </div>
+  );
+};
 const Navbar = () => {
   const classes = useStyle();
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const location = useLocation();
@@ -35,18 +112,10 @@ const Navbar = () => {
   }, [location, setUser]);
 
   //callbacks func
-  const handleOpenNavMenu = (e) => {
-    setAnchorElUser(e.currentTarget);
-  };
-  const handleCloseNavMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const handleLogout = () => {
     dispatch(logout());
     setUser(null);
   };
-  const settings = ["Profile", "Dashboard", "SignIn"];
   return (
     <AppBar position="static" className={classes.appBar}>
       <Container maxWidth="xl">
@@ -80,36 +149,8 @@ const Navbar = () => {
           )}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="open settings">
-              <IconButton
-                onClick={handleOpenNavMenu}
-                sx={{ p: 0 }}
-                color="inherit"
-              >
-                <SettingsApplicationsIcon fontSize="large" />
-              </IconButton>
+              <DrawerNav />
             </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseNavMenu}
-            >
-              {settings.map((s) => (
-                <MenuItem key={s} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{s}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>

@@ -7,17 +7,13 @@ import store from "./store";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-const theme = createTheme({
-  palette: {},
-});
+//Context dark and light theme
+// const ColorModeColorContext = React.createContext({
+//   toggleColorMode: () => {},
+// });
 
 root.render(
   <Provider store={store}>
-    <>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </>
+    <App />
   </Provider>
 );
