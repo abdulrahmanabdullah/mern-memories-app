@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/user/userSlice";
-import { toggleTheme } from "../../features/themeSlice";
 import {
   AppBar,
   Typography,
@@ -12,30 +11,27 @@ import {
   Tooltip,
   Drawer,
   Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
   Divider,
   ButtonGroup,
 } from "@mui/material";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
-import ColorModeContext from "../../themeContext";
+import { useTheme } from "@mui/styles";
+import { Link, useLocation } from "react-router-dom";
+import ThemeContext from "../../themeContext";
 import { useStyle } from "./style";
 import logo from "../../assets/memories-Logo.png";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-
+//TODO: Fix Drawer direction when change left to right and rtl to ltr.
 //Drawer Component
 const DrawerNav = () => {
-  const colorMode = useContext(ColorModeContext);
+  const themeContext = useContext(ThemeContext);
+  const theme = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
+    console.log("direction = ", anchor);
+
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -45,12 +41,7 @@ const DrawerNav = () => {
     setIsOpen((prev) => !prev);
   };
   const drawerList = (anchor) => (
-    <Box
-      role="presentation"
-      sx={{ width: 350, p: 1 }}
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, )}
-    >
+    <Box role="presentation" sx={{ width: 350, p: 1 }}>
       <Typography variant="h4" component="p">
         Settings
       </Typography>
@@ -65,33 +56,71 @@ const DrawerNav = () => {
           variant="outlined"
           aria-label="outlined button group"
         >
-          <Button onClick={() => colorMode.toggleColorMode("light")}>
+          <Button onClick={() => themeContext.toggleColorMode("light")}>
             Light
           </Button>
-          <Button onClick={() => colorMode.toggleColorMode("dark")}>
+          <Button onClick={() => themeContext.toggleColorMode("dark")}>
             Dark
           </Button>
         </ButtonGroup>
-        {/* Direction */}
         {/* Language */}
+      </Box>
+      {/* Direction */}
+      <Box sx={{ width: "100%", my: 1, px: 3 }}>
+        {/* Mode Light OR Dark */}
+        <Typography variant="body2" sx={{ py: 1 }}>
+          Direction
+        </Typography>
+        <ButtonGroup
+          fullWidth
+          variant="outlined"
+          aria-label="outlined button group"
+        >
+          <Button
+            onClick={() => {
+              document.dir = "ltr";
+              themeContext.toggleDirection("ltr");
+            }}
+          >
+            Left
+          </Button>
+          <Button
+            onClick={() => {
+              document.dir = "rtl";
+              themeContext.toggleDirection("rtl");
+            }}
+          >
+            Right
+          </Button>
+        </ButtonGroup>
       </Box>
     </Box>
   );
+  const slideDirection = theme.direction === "ltr" ? "left" : "right";
+
   return (
     <div>
-      <React.Fragment key="right">
+      <React.Fragment key="left">
         <IconButton
-          onClick={toggleDrawer("right", isOpen)}
+          onClick={toggleDrawer(slideDirection, isOpen)}
           sx={{ p: 0 }}
           color="inherit"
         >
           <SettingsApplicationsIcon fontSize="large" />
           <Drawer
-            anchor="right"
+            anchor={slideDirection}
+            PaperProps={{
+              style: {
+                borderRadius: 0,
+                left: slideDirection === "right" ? 0 : "unset",
+                right: slideDirection === "right" ? "unset" : 0,
+                direction: "ltr",
+              },
+            }}
             open={isOpen}
-            onClose={toggleDrawer("right", isOpen)}
+            onClose={toggleDrawer(slideDirection, isOpen)}
           >
-            {drawerList("right")}
+            {drawerList(slideDirection)}
           </Drawer>
         </IconButton>
       </React.Fragment>

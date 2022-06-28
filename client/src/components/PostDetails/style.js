@@ -75,4 +75,9 @@ export const useStyle = makeStyles((theme) => ({
     marginRight: "30px",
     overflowY: "auto",
   },
+  writeCommentsArea: {
+    width: "80%",
+    position: "relative",
+    left: "5%",
+  },
 }));

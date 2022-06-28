@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
-const ColorModeContext = createContext({
+const ThemeContext = createContext({
   toggleColorMode: () => {},
+  toggleDirection: () => {},
 });
-export default ColorModeContext;
+export default ThemeContext;
