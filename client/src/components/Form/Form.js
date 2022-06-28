@@ -5,8 +5,10 @@ import { Paper, Typography, TextField, Button } from "@mui/material";
 import FileBase from "react-file-base64";
 import { useStyle } from "./style";
 import { addPost, updatePost } from "../../features/posts/postSlice";
+import { useTranslation } from "react-i18next";
 
 const Form = ({ currentId, setCurrentId }) => {
+  const { t } = useTranslation();
   //Styles
   const classes = useStyle();
   //Get post from selector
@@ -60,7 +62,7 @@ const Form = ({ currentId, setCurrentId }) => {
   if (!user?.result) {
     return (
       <Paper className={classes.paper}>
-        <Typography>Please Login to create your own memory.</Typography>
+        <Typography>{t("pleaseLogin")}.</Typography>
       </Paper>
     );
   }
@@ -77,14 +79,14 @@ const Form = ({ currentId, setCurrentId }) => {
         </Typography>
         {/* form inputs  */}
         <TextField
-          name="title"
+          name={t("title")}
           label="title"
           variant="outlined"
           value={postData.title || ""}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
         <TextField
-          name="message"
+          name={t("message")}
           label="message"
           variant="outlined"
           value={postData.message || ""}

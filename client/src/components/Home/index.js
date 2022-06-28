@@ -16,13 +16,14 @@ import Pagination from "../Pagination";
 import PostList from "../Posts/PostList";
 import Form from "../Form/Form";
 import { useStyle } from "./style";
-
+import { useTranslation } from "react-i18next";
 //React hooks
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
 const Home = () => {
+  const { t } = useTranslation();
   //Component style
   const classes = useStyle();
   // state component to pass it as a props to Form and PostList.
@@ -85,7 +86,7 @@ const Home = () => {
                   fullWidth
                   name="search"
                   variant="outlined"
-                  label="Search query"
+                  label={t("search query")}
                   value={search}
                   onKeyPress={handleKeyPress}
                   onChange={(e) => setSearch(e.target.value)}
@@ -95,7 +96,7 @@ const Home = () => {
                   value={tags}
                   onAdd={handleAdd}
                   onDelete={handleDelete}
-                  label="Search Tags"
+                  label={t("searchTag")}
                   variant="outlined"
                 />
                 <Button
@@ -104,7 +105,7 @@ const Home = () => {
                   color="primary"
                   onClick={handleSearch}
                 >
-                  Search
+                  {t("search")}
                 </Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />

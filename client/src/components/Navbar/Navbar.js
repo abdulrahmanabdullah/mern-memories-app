@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/user/userSlice";
+import { useTranslation } from "react-i18next";
 import {
   AppBar,
   Typography,
@@ -27,7 +28,7 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 const DrawerNav = () => {
   const themeContext = useContext(ThemeContext);
   const theme = useTheme();
-
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
     console.log("direction = ", anchor);
@@ -94,6 +95,20 @@ const DrawerNav = () => {
           </Button>
         </ButtonGroup>
       </Box>
+      {/* Language */}
+      <Box sx={{ width: "100%", my: 1, px: 3 }}>
+        <Typography variant="body2" sx={{ py: 1 }}>
+          Language
+        </Typography>
+        <ButtonGroup
+          fullWidth
+          variant="outlined"
+          aria-label="outlined button group"
+        >
+          <Button onClick={() => i18n.changeLanguage("en")}>English</Button>
+          <Button onClick={() => i18n.changeLanguage("ar")}>Arabic</Button>
+        </ButtonGroup>
+      </Box>
     </Box>
   );
   const slideDirection = theme.direction === "ltr" ? "left" : "right";
@@ -132,6 +147,7 @@ const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
@@ -155,7 +171,7 @@ const Navbar = () => {
               height="60"
             />
             <Typography variant="h4" noWrap component={Link} to="/">
-              Memories
+              {t("memories")}
             </Typography>
           </div>
           <Typography variant="h4" noWrap style={{ flex: "0.7" }}>
