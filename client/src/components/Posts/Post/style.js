@@ -20,6 +20,7 @@ export const useStyle = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     flexDirection: "column",
+    maxHeight: "200px",
   },
   overlay: {
     position: "absolute",

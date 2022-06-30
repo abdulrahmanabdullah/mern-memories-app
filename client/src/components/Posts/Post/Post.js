@@ -34,7 +34,7 @@ const Post = ({ post, setCurrentId }) => {
       <CardMedia
         component="img"
         className={classes.media}
-        style={{ objectFit: "contain" }}
+        style={{ objectFit: "" }}
         image={
           post.selectedFile ||
           "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
@@ -76,7 +76,7 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
         {/* Message */}
         <CardContent className={classes.message}>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component="p" noWrap>
             {post.message}
           </Typography>
         </CardContent>
