@@ -9,6 +9,7 @@ const PostList = ({ setCurrentId }) => {
   const classes = useStyle();
   //get state from redux store
   const { posts, status, message } = useSelector((state) => state.posts);
+
   // Here I'm using switch to avoiding duplicate Component wherease search component it's simaler PostList component.
   switch (status) {
     case "fetchPosts.loading":
