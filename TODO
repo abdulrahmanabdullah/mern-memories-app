@@ -3,8 +3,7 @@ Todo:
   - rebuild Navbar with Drawer.@done
   - Theme provider.@done
   - i18 file.@done
+  - Add card effect on mouse hover.@done
   - Create Passport middleware.
-  - Add card effect on mouse hover.
   - Create new route in backend for search by tags.
   - Reduce React code, Back to Medium website.
-  
