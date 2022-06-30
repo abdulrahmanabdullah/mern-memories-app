@@ -10,9 +10,12 @@ export const useStyle = makeStyles((theme) => ({
   card: {
     display: "flex",
     width: "100%",
+    flexDirection: "column-reverse",
+    [theme.breakpoints.down("md")]: {
+      flexWrap: "wrap",
+    },
     [theme.breakpoints.down("sm")]: {
       flexWrap: "wrap",
-      flexDirection: "column",
     },
   },
   section: {

@@ -36,7 +36,6 @@ const Home = () => {
 
   //dispatch to get all posts
   const dispatch = useDispatch();
-  // When component mount get posts OR when posts change.
 
   //Callback functions
   const handleAdd = (tag) => setTags([...tags, tag]);
