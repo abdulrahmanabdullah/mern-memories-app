@@ -75,19 +75,19 @@ const Form = ({ currentId, setCurrentId }) => {
       >
         {/* Form headers */}
         <Typography variant="h6">
-          {currentId ? "Edit " : "Create new "}Post
+          {currentId ? t("edit") : t("createPost")}
         </Typography>
         {/* form inputs  */}
         <TextField
-          name={t("title")}
-          label="title"
+          name="title"
+          label={t("title")}
           variant="outlined"
           value={postData.title || ""}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
         <TextField
-          name={t("message")}
-          label="message"
+          name="message"
+          label={t("message")}
           variant="outlined"
           value={postData.message || ""}
           onChange={(e) =>
@@ -96,7 +96,7 @@ const Form = ({ currentId, setCurrentId }) => {
         />
         <TextField
           name="tags"
-          label="tags"
+          label={t("tags")}
           variant="outlined"
           value={postData.tags}
           onChange={(e) =>
@@ -120,7 +120,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth
           style={{ marginBottom: "10px" }}
         >
-          {currentId ? "Update" : "Submit"}
+          {currentId ? t("update") : t("submit")}
         </Button>
         {/* clear btn */}
         <Button
@@ -130,7 +130,7 @@ const Form = ({ currentId, setCurrentId }) => {
           color="secondary"
           fullWidth
         >
-          Clear
+          {t("clear")}
         </Button>
       </form>
     </Paper>

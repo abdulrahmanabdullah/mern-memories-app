@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import LockOutLinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import { useStyle } from "./style";
@@ -39,6 +40,7 @@ function getGoogleOauthURL() {
   return `${rootUrl}?${qs}`;
 }
 const Auth = () => {
+  const { t } = useTranslation();
   //Component styles
   const classes = useStyle();
   //dispatch register and signin actions.
@@ -121,7 +123,7 @@ const Auth = () => {
           <LockOutLinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {isRegister ? "Register" : "Login"}
+          {isRegister ? t("register") : t("login")}
         </Typography>
         <form
           onSubmit={handleSubmit}
@@ -134,7 +136,7 @@ const Auth = () => {
               <>
                 <Input
                   name="firstName"
-                  label="first name"
+                  label={t("firstName")}
                   autoFocus
                   handleOnChange={handleOnChange}
                   fullWidth
@@ -142,7 +144,7 @@ const Auth = () => {
                 />
                 <Input
                   name="lastName"
-                  label="last name"
+                  label={t("lastName")}
                   handleOnChange={handleOnChange}
                   fullWidth
                   half
@@ -153,12 +155,12 @@ const Auth = () => {
             <Input
               type="email"
               name="email"
-              label="email"
+              label={t("email")}
               handleOnChange={handleOnChange}
             />
             <Input
               name="password"
-              label="password"
+              label={t("password")}
               type={showPassword ? "text" : "password"}
               handleOnChange={handleOnChange}
               handleShowPassword={handleShowPassword}
@@ -168,7 +170,7 @@ const Auth = () => {
                 <Input
                   name="confirmPassword"
                   type="password"
-                  label="Confirm password"
+                  label={t("confirmPassword")}
                   handleOnChange={handleOnChange}
                   validationPassword={validationPassword}
                 />
@@ -182,7 +184,7 @@ const Auth = () => {
               color="primary"
               disabled={isNotValdation}
             >
-              {isRegister ? "Register" : "Login"}
+              {isRegister ? t("register") : t("login")}
             </Button>
             {/* Google OAuth linke. */}
             <Button
@@ -194,12 +196,10 @@ const Auth = () => {
               <a href={getGoogleOauthURL()}> Countniue with Google </a>
             </Button>
           </Grid>
-          <Grid justifyContent="flex-end" container>
+          <Grid justifyContent="flex-start" container>
             <Grid item>
               <Button onClick={switchMode}>
-                {isRegister
-                  ? "Already have an account? Sign in"
-                  : "Create new Account"}
+                {isRegister ? t("alreadyHaveAccount") : t("createAccount")}
               </Button>
             </Grid>
           </Grid>

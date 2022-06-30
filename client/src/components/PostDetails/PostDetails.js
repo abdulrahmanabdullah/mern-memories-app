@@ -17,8 +17,10 @@ import moment from "moment";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useStyle } from "./style";
 import CommentSection from "./CommentSection";
+import { useTranslation } from "react-i18next";
 
 const PostDetails = () => {
+  const { t } = useTranslation();
   const classes = useStyle();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -88,7 +90,7 @@ const PostDetails = () => {
                 </Typography>
                 {/* Creator */}
                 <Typography variant="h6">
-                  Created by:
+                  {t("createdBy")}
                   <Link
                     to={`/creators/${post?.name}`}
                     style={{ textDecoration: "none", color: "#3f51b5" }}
@@ -126,9 +128,7 @@ const PostDetails = () => {
         {recommendedPosts?.length && (
           <ImageList sx={{ width: "100%", height: "auto" }}>
             <ImageListItem key="Subheader" cols={2}>
-              <ListSubheader component="div">
-                You might also likes:
-              </ListSubheader>
+              <ListSubheader component="div">{t("youMightAlso")}</ListSubheader>
             </ImageListItem>
             {recommendedPosts?.map((item) => (
               <ImageListItem key={item._id}>

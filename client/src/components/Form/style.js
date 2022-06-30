@@ -16,7 +16,7 @@ export const useStyle = makeStyles((theme) => ({
   },
   fileInput: {
     width: "97%",
-    margin: "10px 0",
+    margin: "5px 0",
   },
   buttonSubmit: {
     marginBottom: 10,

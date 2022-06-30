@@ -43,14 +43,14 @@ const DrawerNav = () => {
   };
   const drawerList = (anchor) => (
     <Box role="presentation" sx={{ width: 350, p: 1 }}>
-      <Typography variant="h4" component="p">
-        Settings
+      <Typography variant="h4" component="p" sx={{ textAlign: "center" }}>
+        {t("settings")}
       </Typography>
       <Divider />
       <Box sx={{ width: "100%", my: 1, px: 3 }}>
         {/* Mode Light OR Dark */}
-        <Typography variant="body2" sx={{ py: 1 }}>
-          Mode
+        <Typography variant="body2" sx={{ py: 1, textAlign: "center" }}>
+          {t("mode")}
         </Typography>
         <ButtonGroup
           fullWidth
@@ -58,19 +58,19 @@ const DrawerNav = () => {
           aria-label="outlined button group"
         >
           <Button onClick={() => themeContext.toggleColorMode("light")}>
-            Light
+            {t("light")}
           </Button>
           <Button onClick={() => themeContext.toggleColorMode("dark")}>
-            Dark
+            {t("dark")}
           </Button>
         </ButtonGroup>
         {/* Language */}
       </Box>
-      {/* Direction */}
+      {/* Change direction By language */}
       <Box sx={{ width: "100%", my: 1, px: 3 }}>
         {/* Mode Light OR Dark */}
-        <Typography variant="body2" sx={{ py: 1 }}>
-          Direction
+        <Typography variant="body2" sx={{ py: 1, textAlign: "center" }}>
+          {t("language")}
         </Typography>
         <ButtonGroup
           fullWidth
@@ -81,37 +81,25 @@ const DrawerNav = () => {
             onClick={() => {
               document.dir = "ltr";
               themeContext.toggleDirection("ltr");
+              i18n.changeLanguage("en");
             }}
           >
-            Left
+            {t("english")}
           </Button>
           <Button
             onClick={() => {
               document.dir = "rtl";
               themeContext.toggleDirection("rtl");
+              i18n.changeLanguage("ar");
             }}
           >
-            Right
+            {t("arabic")}
           </Button>
-        </ButtonGroup>
-      </Box>
-      {/* Language */}
-      <Box sx={{ width: "100%", my: 1, px: 3 }}>
-        <Typography variant="body2" sx={{ py: 1 }}>
-          Language
-        </Typography>
-        <ButtonGroup
-          fullWidth
-          variant="outlined"
-          aria-label="outlined button group"
-        >
-          <Button onClick={() => i18n.changeLanguage("en")}>English</Button>
-          <Button onClick={() => i18n.changeLanguage("ar")}>Arabic</Button>
         </ButtonGroup>
       </Box>
     </Box>
   );
-  const slideDirection = theme.direction === "ltr" ? "left" : "right";
+  const slideDirection = t("drawerDirection");
 
   return (
     <div>
@@ -127,8 +115,6 @@ const DrawerNav = () => {
             PaperProps={{
               style: {
                 borderRadius: 0,
-                left: slideDirection === "right" ? 0 : "unset",
-                right: slideDirection === "right" ? "unset" : 0,
                 direction: "ltr",
               },
             }}

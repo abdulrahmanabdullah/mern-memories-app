@@ -31,40 +31,40 @@ const Post = ({ post, setCurrentId }) => {
 
   return (
     <Card raised elevation={6} className={classes.card}>
+      <CardMedia
+        component="img"
+        className={classes.media}
+        style={{ objectFit: "contain" }}
+        image={
+          post.selectedFile ||
+          "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+        }
+        title={post.title}
+      ></CardMedia>
+      {/* Card header */}
+      <div className={classes.overlay}>
+        <Typography variant="h6">{post.name}</Typography>
+        <Typography variant="body2">
+          {moment(post.createdAt).fromNow()}
+        </Typography>
+      </div>
+      {/* Edit btn enable if user own his post otherwise disable it */}
+      {user?.result?._id === post.creator && (
+        <div className={classes.overlay2}>
+          <Button
+            style={{ color: "white" }}
+            size="medium"
+            onClick={() => setCurrentId(post._id)}
+          >
+            <EditSharpIcon fontSize="large" />
+          </Button>
+        </div>
+      )}
       <ButtonBase
         onClick={openPost}
         component="span"
         className={classes.baseCard}
       >
-        <CardMedia
-          component="img"
-          className={classes.media}
-          style={{ objectFit: "contain" }}
-          image={
-            post.selectedFile ||
-            "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-          }
-          title={post.title}
-        ></CardMedia>
-        {/* Card header */}
-        <div className={classes.overlay}>
-          <Typography variant="h6">{post.name}</Typography>
-          <Typography variant="body2">
-            {moment(post.createdAt).fromNow()}
-          </Typography>
-        </div>
-        {/* Edit btn enable if user own his post otherwise disable it */}
-        {user?.result?._id === post.creator && (
-          <div className={classes.overlay2}>
-            <Button
-              style={{ color: "white" }}
-              size="medium"
-              onClick={() => setCurrentId(post._id)}
-            >
-              <EditSharpIcon fontSize="large" />
-            </Button>
-          </div>
-        )}
         {/* Title */}
         <Typography
           className={classes.title}

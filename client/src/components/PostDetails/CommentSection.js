@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { Typography, TextField, Button } from "@mui/material";
 import { useStyle } from "./style";
 import { postComment } from "../../features/posts/postSlice";
-
+import { useTranslation } from "react-i18next";
 const CommentSection = ({ post }) => {
+  const { t } = useTranslation();
   const classes = useStyle();
   //Compoent state
   const [state, setState] = useState({
@@ -45,7 +46,7 @@ const CommentSection = ({ post }) => {
       <div className={classes.commentsOuterContainer}>
         <div className={classes.commentsInnerContainer}>
           <Typography gutterBottom variant="h6">
-            Comments
+            {t("comments")}
           </Typography>
           {state?.comments?.map((e, i) => (
             <Typography
@@ -64,15 +65,14 @@ const CommentSection = ({ post }) => {
       {user?.result && (
         <div className={classes.writeCommentsArea}>
           <Typography gutterBottom variant="h6">
-            {" "}
-            Write a comment
+            {t("writeComment")}
           </Typography>
           <TextField
             style={{ justifyContent: "center" }}
             fullWidth
             rows={4}
             variant="outlined"
-            label="comment"
+            label={t("comment")}
             multiline
             value={state.comment}
             onChange={(e) =>
@@ -87,7 +87,7 @@ const CommentSection = ({ post }) => {
             color="primary"
             onClick={handleComment}
           >
-            Comment
+            {t("comment")}
           </Button>
         </div>
       )}
