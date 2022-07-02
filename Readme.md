@@ -45,7 +45,7 @@ Let's talk about file structures:
 ```
 ├── src
 │   ├── api
-│   │   ├── index.js :point_right:
+│   │   ├── index.js 👉 All routes called here
 │   ├── assets
 │   │   ├── memories logo
 │   ├── components
@@ -55,16 +55,17 @@ Let's talk about file structures:
 │   │   ├── Navbar
 │   │   ├── PostDetails
 │   │   ├── Posts
-│   ├── features :point_right:Redux toolkit
+|   │   │   ├── Post 👉 Card
+│   ├── features 👉 Redux toolkit
 │   │   ├── Post
-|   │   │   ├── postSlice.js :point_right:Reducer and actions for posts
+|   │   │   ├── postSlice.js 👉 Reducer and actions for posts
 │   │   ├── user
-|   │   │   ├── userSlice.js :point_right: Reducer and actions for Authentication
-│   ├── index.js :point_right: entry React point)
-│   ├── style.js :point_right: application main styles
-│   ├── App.js :point_right:entry application point
-│   ├── store.js :point_right:Reducers
-│   ├── themeContext.js :point_right:React context to apply themeProvider
+|   │   │   ├── userSlice.js 👉 Reducer and actions for Authentication
+│   ├── index.js 👉 entry React point
+│   ├── style.js 👉 application main styles
+│   ├── App.js 👉 entry application point
+│   ├── store.js 👉 Reducers
+│   ├── themeContext.js 👉 React context to apply themeProvider
 ```
 
 ## React 18 , Mui library V5 , Redux toolkit , Google Auth SDK , Validation password, Like and unlike post if user authenticated also appears how likes each post, Use Pagination material ui, Use Location,Navigate and prevPath with routes in react-route-dom v6, use ImageListItem Mui to show recommended posts and toggle them mode, toggle direction and change language, Search by tags also by words, Use object state to avoid unnecessary re-renders .
