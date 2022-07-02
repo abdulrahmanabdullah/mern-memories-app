@@ -24,10 +24,18 @@ _**file structure**_ 🌴
 │   ├── Readme.md
 ```
 
-# 🔔 Requirements
+# 📌 Requirements
 
 - Node js >= 16.15.0
 - npm >= 8.5.5
+- React >= 17
+
+you can run this commands to check which version on your machine
+
+```
+node -v
+npm -v
+```
 
 ---
 
@@ -40,30 +48,53 @@ npm install
 npm start
 ```
 
-Let's talk about file structures:
+### I will explain client folder to you by files structure and write what's file contains, also I'll describe what the job they have done.
 
-```
+```bash
 ├── src
 │   ├── api
 │   │   ├── index.js 👉 All routes called here
 │   ├── assets
 │   │   ├── memories logo
 │   ├── components
-│   │   ├── Auth
-│   │   ├── Form
-│   │   ├── Home
-│   │   ├── Navbar
+│   │   ├── Auth 👉 Login & Register and OAuth2.
+|   │   │   ├── Auth.js
+|   │   │   ├── Icon.js
+|   │   │   ├── Input.js
+|   │   │   ├── style.js
+│   │   ├── Form 👉 inputs for edit,create,upload and submit post
+|   │   │   ├── Form.js
+|   │   │   ├── style.js
+│   │   ├── Home 👉 Home page and pagination and search called here.
+|   │   │   ├── index.js
+|   │   │   ├── style.js
+│   │   ├── Navbar 👉 AppBar and settings website goes here.
+|   │   │   ├── Navbar.js
+|   │   │   ├── style.js
 │   │   ├── PostDetails
-│   │   ├── Posts
-|   │   │   ├── Post 👉 Card
+|   │   │   ├── PostDetails.js 👉 To show post in single page.
+|   │   │   ├── CommentSection.js 👉  Comment component
+|   │   │   ├── style.js 👉 Post details style.
+│   │   ├── Posts 👉 fetch all posts and designed card for each component.
+|   │   │   ├── PostList.js
+|   │   │   ├── style.js
+|   │   │   ├── Post  👉 card component.
+|   |   │   │   ├── Post.js
+|   |   │   │   ├── Like.js 👉 Responsible for Like and unlike action
+|   |   │   │   ├── style.js
 │   ├── features 👉 Redux toolkit
-│   │   ├── Post
-|   │   │   ├── postSlice.js 👉 Reducer and actions for posts
-│   │   ├── user
-|   │   │   ├── userSlice.js 👉 Reducer and actions for Authentication
+│   │   ├── Post 👉 Reducer and actions for posts.
+|   │   │   ├── postSlice.js
+│   │   ├── user 👉 Reducer and actions for user authentication
+│   ├── i18n
+|   │   ├── en 👉 English translation
+|   |   │   ├── en.json
+|   │   ├── ar 👉 Arabic translation
+|   |   │   ├── ar.json
+|   │   │   ├── userSlice.js
 │   ├── index.js 👉 entry React point
-│   ├── style.js 👉 application main styles
 │   ├── App.js 👉 entry application point
+│   ├── style.js 👉 application main styles
 │   ├── store.js 👉 Reducers
 │   ├── themeContext.js 👉 React context to apply themeProvider
 ```
