@@ -33,6 +33,20 @@ const App = () => {
     () =>
       createTheme({
         direction: appDirection,
+        typography: {
+          fontFamily: [
+            "Roboto",
+            "Amiri",
+            "raleway",
+            "-apple-system",
+            "Arial",
+            "sans-serif",
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+          ].join(","),
+          letterSpacing: "normal",
+        },
         palette: {
           primary: { main: "#f4c236", light: "#3A5BA0" },
           background: {

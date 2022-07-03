@@ -15,7 +15,6 @@ import {
   Divider,
   ButtonGroup,
 } from "@mui/material";
-import { useTheme } from "@mui/styles";
 import { Link, useLocation } from "react-router-dom";
 import ThemeContext from "../../themeContext";
 import { useStyle } from "./style";
@@ -27,7 +26,6 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 //Drawer Component
 const DrawerNav = () => {
   const themeContext = useContext(ThemeContext);
-  const theme = useTheme();
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
@@ -166,6 +164,7 @@ const Navbar = () => {
             />
             <Typography
               className={classes.txtColor}
+              style={{ textDecoration: "none" }}
               variant="h4"
               noWrap
               component={Link}
