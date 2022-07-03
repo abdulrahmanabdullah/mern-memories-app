@@ -35,8 +35,8 @@ const App = () => {
         direction: appDirection,
         typography: {
           fontFamily: [
-            "Roboto",
-            "Amiri",
+            '"Roboto"',
+            '"Amiri"',
             "raleway",
             "-apple-system",
             "Arial",
@@ -44,6 +44,7 @@ const App = () => {
             '"Apple Color Emoji"',
             '"Segoe UI Emoji"',
             '"Segoe UI Symbol"',
+            '"Cairo"',
           ].join(","),
           letterSpacing: "normal",
         },

@@ -79,6 +79,7 @@ const Form = ({ currentId, setCurrentId }) => {
         </Typography>
         {/* form inputs  */}
         <TextField
+          required
           name="title"
           label={t("title")}
           variant="outlined"
@@ -86,6 +87,7 @@ const Form = ({ currentId, setCurrentId }) => {
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
         <TextField
+          required
           name="message"
           label={t("message")}
           variant="outlined"
@@ -95,6 +97,7 @@ const Form = ({ currentId, setCurrentId }) => {
           }
         />
         <TextField
+          required
           name="tags"
           label={t("tags")}
           variant="outlined"
