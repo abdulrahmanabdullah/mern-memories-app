@@ -20,7 +20,6 @@ export const useStyle = makeStyles((theme) => ({
     flex: ".5",
     fontWeight: 500,
     letterSpacing: ".3rem",
-    color: "inherit",
     textDecoration: "none",
     marginRight: 2,
     fontFamily: "monospace",
@@ -85,5 +84,9 @@ export const useStyle = makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+  },
+  txtColor: {
+    color: theme.palette.mode === "dark" ? "#ffffff" : "rgb(62 50 35)",
+    // "rgb(62 50 35)",
   },
 }));

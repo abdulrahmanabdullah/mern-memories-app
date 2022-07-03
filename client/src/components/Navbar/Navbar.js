@@ -57,10 +57,16 @@ const DrawerNav = () => {
           variant="outlined"
           aria-label="outlined button group"
         >
-          <Button onClick={() => themeContext.toggleColorMode("light")}>
+          <Button
+            color="buttonGroup"
+            onClick={() => themeContext.toggleColorMode("light")}
+          >
             {t("light")}
           </Button>
-          <Button onClick={() => themeContext.toggleColorMode("dark")}>
+          <Button
+            color="buttonGroup"
+            onClick={() => themeContext.toggleColorMode("dark")}
+          >
             {t("dark")}
           </Button>
         </ButtonGroup>
@@ -78,6 +84,7 @@ const DrawerNav = () => {
           aria-label="outlined button group"
         >
           <Button
+            color="buttonGroup"
             onClick={() => {
               document.dir = "ltr";
               themeContext.toggleDirection("ltr");
@@ -87,6 +94,7 @@ const DrawerNav = () => {
             {t("english")}
           </Button>
           <Button
+            color="buttonGroup"
             onClick={() => {
               document.dir = "rtl";
               themeContext.toggleDirection("rtl");
@@ -107,7 +115,7 @@ const DrawerNav = () => {
         <IconButton
           onClick={toggleDrawer(slideDirection, isOpen)}
           sx={{ p: 0 }}
-          color="inherit"
+          color="appbarContentColors"
         >
           <SettingsApplicationsIcon fontSize="large" />
           <Drawer
@@ -156,21 +164,32 @@ const Navbar = () => {
               className={classes.image}
               height="60"
             />
-            <Typography variant="h4" noWrap component={Link} to="/">
+            <Typography
+              className={classes.txtColor}
+              variant="h4"
+              noWrap
+              component={Link}
+              to="/"
+            >
               {t("memories")}
             </Typography>
           </div>
-          <Typography variant="h4" noWrap style={{ flex: "0.7" }}>
+          <Typography
+            className={classes.txtColor}
+            variant="h4"
+            noWrap
+            style={{ flex: "0.7" }}
+          >
             {user?.result?.name}
           </Typography>
           {/* Login and logout logic */}
           {user ? (
-            <IconButton color="inherit" onClick={handleLogout}>
+            <IconButton color="appbarContentColors" onClick={handleLogout}>
               <LogoutOutlinedIcon fontSize="large" />
             </IconButton>
           ) : (
             <Link to="/auth" state={{ prevPath: location.pathname }}>
-              <IconButton color="inherit">
+              <IconButton color="appbarContentColors">
                 <LoginOutlinedIcon fontSize="large" />
               </IconButton>
             </Link>

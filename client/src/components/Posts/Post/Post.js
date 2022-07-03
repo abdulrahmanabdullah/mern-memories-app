@@ -96,7 +96,7 @@ const Post = ({ post, setCurrentId }) => {
         <Like post={post} user={user} />
         <Button
           size="small"
-          color="primary"
+          color="custom"
           disabled={user?.result?._id === post.creator ? false : true}
           onClick={() => dispatch(deletePost(post._id))}
         >

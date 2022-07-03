@@ -117,6 +117,7 @@ const Form = ({ currentId, setCurrentId }) => {
           size="large"
           type="submit"
           variant="contained"
+          color="custom"
           fullWidth
           style={{ marginBottom: "10px" }}
         >

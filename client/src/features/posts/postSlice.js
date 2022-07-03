@@ -126,11 +126,11 @@ export const postSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchPosts.pending, (state, action) => {
-        state.status = "fetchPosts.loading";
+        state.status = "loading";
         state.error = null;
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.status = "fetchPosts.successed";
+        state.status = "successed";
         //Merge array and return a new array.
         state.posts = []; // This solve duplicated posts with search posts.
         state.posts = state.posts.concat(action.payload.data);
@@ -142,24 +142,24 @@ export const postSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(fetchPost.pending, (state, action) => {
-        state.status = "fetchPost.loading";
+        state.status = "loading";
       })
       .addCase(fetchPost.fulfilled, (state, action) => {
-        state.status = "fetchPost.successed";
+        state.status = "successed";
         state.post = action.payload;
       })
       .addCase(fetchPost.rejected, (state, action) => {
         state.status = "fetchPost.failed";
       })
       .addCase(addPost.pending, (state, action) => {
-        state.status = "fetchPosts.loading";
+        state.status = "loading";
       })
       .addCase(addPost.fulfilled, (state, action) => {
-        state.status = "fetchPosts.successed";
+        state.status = "successed";
         state.posts.push(action.payload);
       })
       .addCase(deletePost.pending, (state, action) => {
-        state.status = "loading ...";
+        state.status = "loading";
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         state.status = "successed";
@@ -170,7 +170,7 @@ export const postSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(updatePost.pending, (state, action) => {
-        state.status = "loading update post";
+        state.status = "loading";
       })
       .addCase(updatePost.fulfilled, (state, action) => {
         state.status = "successed";
@@ -199,10 +199,10 @@ export const postSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(postBySearch.pending, (state) => {
-        state.status = "searchPost.loading";
+        state.status = "loading";
       })
       .addCase(postBySearch.fulfilled, (state, action) => {
-        state.status = "searchPost.successed";
+        state.status = "successed";
         state.error = null;
         state.posts = action.payload;
       })

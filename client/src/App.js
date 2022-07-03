@@ -34,9 +34,23 @@ const App = () => {
       createTheme({
         direction: appDirection,
         palette: {
+          primary: { main: "#f4c236", light: "#3A5BA0" },
           background: {
-            default: mode === "dark" ? "#121212" : "#fff",
+            default: mode === "dark" ? "#121212" : "#ede9e4",
           },
+          secondary: {
+            main: "#d5cec3",
+          },
+          // Custom component colors
+          appbarContentColors: {
+            main: mode === "dark" ? "#fffff" : "#3E3223",
+          },
+          buttonGroup: { main: mode === "dark" ? "#f4c236" : "#000" },
+          custom: {
+            main: "#91826e",
+            contrastText: "#fff",
+          },
+          contrastThreshold: 3,
           mode,
         },
       }),

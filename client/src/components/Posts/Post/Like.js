@@ -26,27 +26,27 @@ const Like = ({ post, user }) => {
       onClick={handleLike}
       disabled={!userId}
     >
-      {likes.length > 0 ? (
+      {likes?.length > 0 ? (
         <>
-          {likes.find((l) => l === userId) ? (
+          {likes?.find((l) => l === userId) ? (
             <>
               <ThumUpAltIcon fontSize="small" />
               &nbsp;
               {likes.length > 2
-                ? `You and ${likes.length - 1} others`
-                : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
+                ? `You and ${likes?.length - 1} others`
+                : `${likes?.length} like${likes?.length > 1 ? "s" : ""}`}
             </>
           ) : (
             <>
               <ThumbUpAltOutlinedIcon fontSize="small" />
-              &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
+              &nbsp;{likes?.length} {likes?.length === 1 ? "Like" : "Likes"}
             </>
           )}
         </>
       ) : (
         <>
           <ThumbUpAltOutlinedIcon fontSize="small" />
-          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes?.length} {likes?.length === 1 ? "Like" : "Likes"}
         </>
       )}
     </Button>

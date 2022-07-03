@@ -6,7 +6,7 @@ It's a MERN application which is build with using Mongodb,Express,ReactJs and No
 
 ---
 
-# 😄 Motivation
+# ☺️ Motivation
 
 Challenge and motivation are the things which make better a person. I was looking for something advanced and challenge me to raise me in the second level.I found this project on [this channel]("https://www.youtube.com/watch?v=VsUzmlZfYNg") and I **rebuilt it from scratch** with using last updated library and added some features like Redux toolkit,i18n,theme provider, sessions and cookies to protect route and passportJS.
 
@@ -50,7 +50,7 @@ npm start
 
 ### I will explain client folder to you by files structure and write what's file contains, also I'll describe what the job they have done.
 
-```bash
+```
 ├── src
 │   ├── api
 │   │   ├── index.js 👉 All routes called here

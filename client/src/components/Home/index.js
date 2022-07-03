@@ -64,12 +64,15 @@ const Home = () => {
   return (
     <>
       <Grow in>
-        <Container className={classes.gridContainer} maxWidth="xl">
+        <Container maxWidth="xl">
           <Grid
             container
             justifyContent="space-between"
             spacing={3}
             alignItems="stretch"
+            sx={{
+              flexDirection: { xs: "column-reverse", sm: "row", md: "row" },
+            }}
           >
             <Grid item xs={12} sm={6} md={9}>
               <PostList setCurrentId={setCurrentId} />
@@ -101,7 +104,7 @@ const Home = () => {
                 <Button
                   variant="contained"
                   fullWidth
-                  color="primary"
+                  color="custom"
                   onClick={handleSearch}
                 >
                   {t("search")}
