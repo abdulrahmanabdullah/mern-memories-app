@@ -86,7 +86,6 @@ export const useStyle = makeStyles((theme) => ({
     backgroundColor: deepPurple[500],
   },
   txtColor: {
-    color: theme.palette.mode === "dark" ? "#ffffff" : "rgb(62 50 35)",
-    // "rgb(62 50 35)",
+    color: theme.palette.mode === "dark" ? "#ffffff" : "#ffffff",
   },
 }));

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPost } from "../../features/posts/postSlice";
 import {
@@ -8,7 +8,6 @@ import {
   Divider,
   ImageList,
   ImageListItem,
-  ListSubheader,
   ImageListItemBar,
   IconButton,
 } from "@mui/material";
@@ -20,6 +19,8 @@ import CommentSection from "./CommentSection";
 import { useTranslation } from "react-i18next";
 
 const PostDetails = () => {
+  //Scroll to top when user click to any post on - may you like posts .
+  const topPageRef = useRef();
   const { t } = useTranslation();
   const classes = useStyle();
   const dispatch = useDispatch();
@@ -39,7 +40,13 @@ const PostDetails = () => {
   const recommendedPosts = posts?.filter(({ _id }) => _id !== post?._id);
 
   //callbacks functions
-  const openPost = (id) => navigate(`/post/${id}`);
+  const openPost = (id) => {
+    topPageRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+    navigate(`/post/${id}`);
+  };
 
   return (
     <>
@@ -47,7 +54,7 @@ const PostDetails = () => {
         style={{ marginTop: "10px", padding: "20px", borderRadius: "15px" }}
         elevation={6}
       >
-        <div className={classes.card}>
+        <div className={classes.card} ref={topPageRef}>
           {/* Change content beside values */}
           {isLoading ? (
             <div className={classes.skeleton}>
@@ -123,17 +130,21 @@ const PostDetails = () => {
         {/* Comment  */}
         <Divider style={{ margin: "20px 0" }} />
         <CommentSection post={post} />
-        <Divider style={{ margin: "20px 0" }} />
-        {/* Similar Post, you might like this post */}
-        {recommendedPosts?.length && (
-          <ImageList sx={{ width: "100%", height: "auto" }}>
-            <ImageListItem key="Subheader" cols={2}>
-              <ListSubheader component="div">{t("youMightAlso")}</ListSubheader>
-            </ImageListItem>
+      </Paper>
+      {/* Similar Post, you might like this post */}
+      {recommendedPosts?.length && (
+        <>
+          <h5 className={classes.subHeader}>{t("youMightAlso")}</h5>
+          <ImageList sx={{ width: "100%", height: "100%" }}>
+            <ImageListItem key="Subheader" cols={2}></ImageListItem>
             {recommendedPosts?.map((item) => (
               <ImageListItem key={item._id}>
                 <img
-                  style={{ objectFit: "contain", height: "250px" }}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "360px",
+                  }}
                   src={item.selectedFile}
                   srcSet={item.selectedFile}
                   alt={item.title}
@@ -155,8 +166,8 @@ const PostDetails = () => {
               </ImageListItem>
             ))}
           </ImageList>
-        )}
-      </Paper>
+        </>
+      )}
     </>
   );
 };

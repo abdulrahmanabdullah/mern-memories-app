@@ -82,5 +82,18 @@ export const useStyle = makeStyles((theme) => ({
     width: "80%",
     position: "relative",
     left: "5%",
+    // "& .Mui-focused": {
+    //   border: "white",
+    //   borderWidth: "3px",
+    //   "& .MuiOutlinedInput-notchedOutline": {
+    //     border: "0.1px solid white",
+    //     borderWidth: "3px",
+    //   },
+    // },
+  },
+  subHeader: {
+    padding: "5px",
+    fontSize: "1.5rem",
+    fontWeight: "100",
   },
 }));

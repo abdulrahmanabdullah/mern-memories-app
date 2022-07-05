@@ -25,12 +25,11 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 //TODO: Fix Drawer direction when change left to right and rtl to ltr.
 //Drawer Component
 const DrawerNav = () => {
+  const classes = useStyle();
   const themeContext = useContext(ThemeContext);
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log("direction = ", anchor);
-
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -113,9 +112,11 @@ const DrawerNav = () => {
         <IconButton
           onClick={toggleDrawer(slideDirection, isOpen)}
           sx={{ p: 0 }}
-          color="appbarContentColors"
         >
-          <SettingsApplicationsIcon fontSize="large" />
+          <SettingsApplicationsIcon
+            fontSize="large"
+            className={classes.txtColor}
+          />
           <Drawer
             anchor={slideDirection}
             PaperProps={{
@@ -183,13 +184,19 @@ const Navbar = () => {
           </Typography>
           {/* Login and logout logic */}
           {user ? (
-            <IconButton color="appbarContentColors" onClick={handleLogout}>
-              <LogoutOutlinedIcon fontSize="large" />
+            <IconButton onClick={handleLogout}>
+              <LogoutOutlinedIcon
+                fontSize="large"
+                className={classes.txtColor}
+              />
             </IconButton>
           ) : (
             <Link to="/auth" state={{ prevPath: location.pathname }}>
-              <IconButton color="appbarContentColors">
-                <LoginOutlinedIcon fontSize="large" />
+              <IconButton>
+                <LoginOutlinedIcon
+                  fontSize="large"
+                  className={classes.txtColor}
+                />
               </IconButton>
             </Link>
           )}

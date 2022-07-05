@@ -33,7 +33,7 @@ const Post = ({ post, setCurrentId }) => {
       riased="true"
       elevation={6}
       className={classes.card}
-      sx={{ ":hover": { boxShadow: 20 } }}
+      sx={{ ":hover": { boxShadow: 20 }, borderRadius: "30px" }}
     >
       <CardMedia
         component="img"
@@ -63,6 +63,7 @@ const Post = ({ post, setCurrentId }) => {
           </Button>
         </div>
       )}
+      {/* Card Title & mes & tags */}
       <ButtonBase
         onClick={openPost}
         component="span"

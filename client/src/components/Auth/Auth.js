@@ -181,7 +181,7 @@ const Auth = () => {
               type="submit"
               style={{ margin: "10px 0px 0px 15px" }}
               variant="contained"
-              color="primary"
+              color="custom"
               disabled={isNotValdation}
             >
               {isRegister ? t("register") : t("login")}
@@ -191,7 +191,7 @@ const Auth = () => {
               style={{ margin: "10px 0px 0px 15px" }}
               fullWidth
               variant="contained"
-              color="primary"
+              color="custom"
             >
               <a href={getGoogleOauthURL()}> Countniue with Google </a>
             </Button>

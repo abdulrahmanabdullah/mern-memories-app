@@ -15,12 +15,14 @@ export const useStyle = makeStyles((theme) => ({
     borderRadius: "15px",
     height: "100%",
     position: "relative",
+    // backgroundColor: theme.palette.mode === "dark" ? "#000000" : "#fff",
   },
   baseCard: {
     display: "flex",
     width: "100%",
     flexDirection: "column",
     maxHeight: "200px",
+    boxShadow: "-2px -37px 45px -5px rgba(118,126,252,0.75)",
   },
   overlay: {
     position: "absolute",

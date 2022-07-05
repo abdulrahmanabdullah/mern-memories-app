@@ -1,6 +1,11 @@
 import React from "react";
 import { create } from "jss";
-import { createTheme, ThemeProvider, Container } from "@mui/material";
+import {
+  createTheme,
+  ThemeProvider,
+  Container,
+  GlobalStyles,
+} from "@mui/material";
 import { StylesProvider, jssPreset } from "@mui/styles";
 import rtl from "jss-rtl";
 import { CssBaseline } from "@mui/material/";
@@ -49,20 +54,23 @@ const App = () => {
           letterSpacing: "normal",
         },
         palette: {
-          primary: { main: "#f4c236", light: "#3A5BA0" },
-          background: {
-            default: mode === "dark" ? "#121212" : "#ede9e4",
-          },
+          primary: { main: mode === "dark" ? "#0a0909" : "#767efc" },
           secondary: {
             main: "#d5cec3",
           },
+          background: {
+            paper: mode === "dark" ? "#0a0900" : "#fff",
+          },
+
           // Custom component colors
           appbarContentColors: {
             main: mode === "dark" ? "#fffff" : "#3E3223",
           },
           buttonGroup: { main: mode === "dark" ? "#f4c236" : "#000" },
+          likeColor: { main: mode === "dark" ? "#855e95" : "#767efc" },
+          paginationColor: { main: mode === "dark" ? "#fff" : "#767efc" },
           custom: {
-            main: "#91826e",
+            main: "#9c6db0",
             contrastText: "#fff",
           },
           contrastThreshold: 3,
@@ -82,6 +90,16 @@ const App = () => {
           <BrowserRouter>
             <ThemeProvider theme={theme}>
               <CssBaseline />
+              <GlobalStyles
+                styles={{
+                  body: {
+                    background:
+                      theme.palette.mode === "dark"
+                        ? "linear-gradient(190deg,#233a4e, #9c6db0)fixed"
+                        : "linear-gradient(#767efc, #fec9ca)fixed",
+                  },
+                }}
+              />
               <Container maxWidth="xl">
                 {/* <Navbar /> */}
                 <Navbar props />

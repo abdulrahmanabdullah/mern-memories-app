@@ -22,7 +22,7 @@ const Like = ({ post, user }) => {
   return (
     <Button
       size="small"
-      color="primary"
+      color="likeColor"
       onClick={handleLike}
       disabled={!userId}
     >

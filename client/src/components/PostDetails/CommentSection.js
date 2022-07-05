@@ -84,7 +84,7 @@ const CommentSection = ({ post }) => {
             style={{ marginTop: "10px" }}
             variant="contained"
             fullWidth
-            color="primary"
+            color="custom"
             onClick={handleComment}
           >
             {t("comment")}

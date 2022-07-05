@@ -128,10 +128,10 @@ const Form = ({ currentId, setCurrentId }) => {
         </Button>
         {/* clear btn */}
         <Button
+          style={{ backgroundColor: "#9c6db0cf", text: "#fff" }}
           onClick={() => clear()}
           size="samll"
           variant="contained"
-          color="secondary"
           fullWidth
         >
           {t("clear")}
