@@ -2,4 +2,5 @@ server/node_modules
 client/node_modules
 .vscode
 server/.env
+server/id_rsa_priv.pem
 client/.env
