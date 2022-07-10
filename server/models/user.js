@@ -7,4 +7,4 @@ const user = mongoose.Schema({
   salt: String,
 });
 
-export default mongoose.model("Customer", user);
+export default mongoose.model("User", user);

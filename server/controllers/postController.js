@@ -99,7 +99,7 @@ export const likePost = async (req, res) => {
     const { id } = req.params;
 
     //User id come from middleware.
-    if (!req.userId) return res.json({ message: "Unauthenticated " });
+    if (!req.user._id) return res.json({ message: "Unauthenticated " });
 
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).send(`no post with this id:${id}`);

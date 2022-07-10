@@ -23,17 +23,11 @@ export default function (passport) {
         },
         function (err, user) {
           if (err) {
-            console.log("inside err ");
-
             return done(err, false);
           }
           if (user) {
-            console.log("inside user");
-
             return done(null, user);
           } else {
-            console.log("inside else user");
-
             return done(null, false);
           }
         }

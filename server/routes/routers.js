@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import {
   getPosts,
   getPost,
@@ -23,11 +24,31 @@ const router = express.Router();
 router.get("/posts", getPosts);
 router.get("/post/:id", getPost);
 router.get("/posts/search", getPostBySearch);
-router.post("/posts", auth, createPost);
-router.patch("/posts/:id", auth, updatePost);
-router.patch("/posts/likepost/:id", auth, likePost);
-router.delete("/posts/:id", auth, deletePost);
-router.post("/posts/:id/comment", auth, postComment);
+router.post(
+  "/posts",
+  passport.authenticate("jwt", { session: false }),
+  createPost
+);
+router.patch(
+  "/posts/:id",
+  passport.authenticate("jwt", { session: false }),
+  updatePost
+);
+router.patch(
+  "/posts/likepost/:id",
+  passport.authenticate("jwt", { session: false }),
+  likePost
+);
+router.delete(
+  "/posts/:id",
+  passport.authenticate("jwt", { session: false }),
+  deletePost
+);
+router.post(
+  "/posts/:id/comment",
+  passport.authenticate("jwt", { session: false }),
+  postComment
+);
 
 //Auth route
 router.post("/user/register", register);

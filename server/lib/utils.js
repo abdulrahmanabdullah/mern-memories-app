@@ -22,7 +22,7 @@ const PrivateKey = fs.readFileSync(pathToKey, "utf8");
  * This function uses the crypto library to decrypt the hash using the salt and then compares
  * the decrypted hash/salt with the password that the user provided at login
  */
-export async function validPassword(password, hash, salt) {
+export function validPassword(password, hash, salt) {
   try {
     let hashVrify = crypto
       .pbkdf2Sync(password, salt, 1000, 64, "sha512")
@@ -33,7 +33,7 @@ export async function validPassword(password, hash, salt) {
   }
 }
 
-export async function genPassword(password) {
+export function genPassword(password) {
   let salt = crypto.randomBytes(64).toString("hex");
   let genHash = crypto
     .pbkdf2Sync(password, salt, 1000, 64, "sha512")

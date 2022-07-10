@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import Customer from "../models/user";
+import User from "../models/user";
 import { validPassword, genPassword, issueJwt } from "../lib/utils";
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router.get(
 //Passort local stratgey .
 router.post("/nlogin", async (req, res, nex) => {
   try {
-    const user = await Customer.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.body.username });
     if (!user) return res.status(405).json({ message: "User not found!!" });
     const isValid = await validPassword(
       req.body.password,
@@ -49,7 +49,7 @@ router.post("/reg", async (req, res, next) => {
   const saltHash = await genPassword(req.body.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
-  const newUser = new Customer({
+  const newUser = new User({
     username: req.body.username,
     hash,
     salt,
