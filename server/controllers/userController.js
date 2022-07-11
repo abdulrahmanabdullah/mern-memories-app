@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { genPassword, validPassword, issueJwt } from "../lib/utils";
 import { getGoogleUser, getGoogleUserToken } from "../service/userService";
+import mongoose from "mongoose";
 
 const secret = "test";
 
@@ -38,26 +39,8 @@ export const register = async (req, res) => {
     if (hadEmail) {
       return res.status(400).json({ message: "email already exist" });
     }
-    // newUser.save().then(user=> res.status(200).json({success:true,user}))
     await newUser.save();
     return res.status(200).json({ success: true, newUser });
-    // const oldUser = await userModel.findOne({ email });
-    // if (oldUser)
-    //   return res.status(400).json({ message: "email already exist" });
-    // // hashed password with 12 salt generation
-    // const hashedPassword = await bcrypt.hash(password, 12);
-    // // create new user .
-    // const result = await userModel.create({
-    //   email,
-    //   password: hashedPassword,
-    //   name: `${firstName} ${lastName}`,
-    // });
-    // // create jwt
-    // const token = jwt.sign({ email: result.email, id: result._id }, secret, {
-    //   expiresIn: "1h",
-    // });
-    // // send token and result to frontend
-    // res.status(200).json({ result, token });
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -79,30 +62,33 @@ export const login = async (req, res) => {
       const userJwt = issueJwt(user);
       return res.status(200).json({
         success: true,
-        token: userJwt.token,
-        result: user,
-        expiresIn: userJwt.expires,
+        token: userJwt.token.split(" ")[1],
+        id: user._id,
+        name: user.username,
       });
     } else {
       return res
         .status(401)
         .json({ success: false, message: "Invalid Credentials" });
     }
-    // const isPasswordCorrect = await bcrypt.compare(
-    //   password,
-    //   user.password
-    // );
-    // if (!isPasswordCorrect)
-    //   return res.status(404).json({ message: "Invalid Credentials " });
-    // // token
-    // const token = jwt.sign(
-    //   { email: user.email, id: user._id },
-    //   secret,
-    //   { expiresIn: "1h" }
-    // );
-    // return res.status(200).json({ result: user, token });
   } catch (error) {
     res.status(500).json({ message: error });
+  }
+};
+
+//Send username to client
+export const userInfo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    //Check if Id isValid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ message: "Invalid Id " });
+    }
+    const user = await User.findById({ _id: id });
+    //If found user
+    res.status(200).json({ success: true, name: user.username });
+  } catch (error) {
+    res.status(405).json({ message: error.message });
   }
 };
 

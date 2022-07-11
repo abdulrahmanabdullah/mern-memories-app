@@ -11,13 +11,11 @@ const Form = ({ currentId, setCurrentId }) => {
   const { t } = useTranslation();
   //Styles
   const classes = useStyle();
+  const { isLogout, user } = useSelector((state) => state?.users);
   //Get post from selector
   const post = useSelector((state) =>
     currentId ? state.posts.posts.find((p) => p._id === currentId) : null
   );
-
-  //get user from local storage
-  const user = JSON.parse(localStorage.getItem("profile"));
 
   //component state
   const [postData, setPostData] = useState({
@@ -33,16 +31,21 @@ const Form = ({ currentId, setCurrentId }) => {
     if (post) {
       setPostData(post);
     }
-  }, [post]);
+  }, [post, isLogout]);
+  // useEffect(() => {
+  //   if (status === "logout.compelete") {
+  //     user = null;
+  //   }
+  // }, [status, user]);
 
   //Handler functions
   const handlSubmit = (e) => {
     e.preventDefault();
     if (currentId === 0) {
-      dispatch(addPost({ ...postData, name: user?.result?.name }));
+      dispatch(addPost({ ...postData, name: user?.name }));
     } else {
       //dispatch to create post
-      dispatch(updatePost({ ...postData, name: user?.result?.name }));
+      dispatch(updatePost({ ...postData, name: user?.name }));
     }
     clear();
   };
@@ -59,7 +62,7 @@ const Form = ({ currentId, setCurrentId }) => {
   };
 
   //If user not login or register show this component
-  if (!user?.result) {
+  if (isLogout) {
     return (
       <Paper className={classes.paper}>
         <Typography>{t("pleaseLogin")}.</Typography>

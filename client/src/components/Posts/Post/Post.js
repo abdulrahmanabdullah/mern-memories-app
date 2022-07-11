@@ -12,7 +12,7 @@ import {
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deletePost } from "../../../features/posts/postSlice";
 import { useStyle } from "./style";
@@ -21,8 +21,8 @@ import Like from "./Like";
 const Post = ({ post, setCurrentId }) => {
   //component style
   const classes = useStyle();
-  // user Auth
-  const user = JSON.parse(localStorage.getItem("profile"));
+  // user Auth From Redux
+  const { user } = useSelector((state) => state?.users);
   //dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </Box>
       {/* Edit btn enable if user own his post otherwise disable it */}
-      {user?.result?._id === post.creator && (
+      {user?.id === post.creator && (
         <div className={classes.overlay2}>
           <Button
             style={{ color: "white" }}
@@ -98,7 +98,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="custom"
-          disabled={user?.result?._id === post.creator ? false : true}
+          disabled={user?.id === post.creator ? false : true}
           onClick={() => dispatch(deletePost(post._id))}
         >
           <DeleteIcon />
@@ -107,5 +107,4 @@ const Post = ({ post, setCurrentId }) => {
     </Card>
   );
 };
-
 export default Post;

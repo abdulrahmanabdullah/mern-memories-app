@@ -46,8 +46,11 @@ const Auth = () => {
   //dispatch register and signin actions.
   const dispatch = useDispatch();
   //selector
-  const status = useSelector((state) => state.users.status);
-  const message = useSelector((state) => state.users.message);
+  // const status = useSelector((state) => state.users.status);
+  const { status, message, isLogin, isLogout } = useSelector(
+    (state) => state?.users
+  );
+  // const message = useSelector((state) => state.users.message);
   //component state
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
@@ -67,14 +70,13 @@ const Auth = () => {
         closeOnClick: true,
       });
     }
-
-    // When create successful .
-    if (status === "compelete") {
+    // When login user successfully.
+    if (isLogin) {
       toast.success(message);
       //Navigate user to previous page OR go to home when user came from outside of our website.
       navigate(location?.state?.prevPath || "/");
     }
-  }, [navigate, message, status, location]);
+  }, [isLogin, isLogout, navigate, message, status, location]);
 
   //Callback functions
   const handleSubmit = (e) => {
@@ -82,6 +84,9 @@ const Auth = () => {
     if (isRegister) {
       //Dispatch sign up action
       dispatch(register(formData));
+      toast.success(message);
+      //Navigate user to previous page OR go to home when user came from outside of our website.
+      navigate("/");
     } else {
       //Dispatch sign in action
       dispatch(login(formData));

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/user/userSlice";
 import { useTranslation } from "react-i18next";
 import {
@@ -19,8 +19,6 @@ import { Link, useLocation } from "react-router-dom";
 import ThemeContext from "../../themeContext";
 import { useStyle } from "./style";
 import logo from "../../assets/memories-Logo.png";
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 //TODO: Fix Drawer direction when change left to right and rtl to ltr.
 //Drawer Component
@@ -137,19 +135,18 @@ const DrawerNav = () => {
 };
 const Navbar = () => {
   const classes = useStyle();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
+  const { isLogout, user } = useSelector((state) => state?.users);
+
   const location = useLocation();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location, setUser]);
+  useEffect(() => {}, [location]);
 
   //callbacks func
   const handleLogout = () => {
     dispatch(logout());
-    setUser(null);
+    // setUser(null);
   };
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -180,24 +177,26 @@ const Navbar = () => {
             noWrap
             style={{ flex: "0.7" }}
           >
-            {user?.result?.name}
+            {user?.name}
           </Typography>
           {/* Login and logout logic */}
-          {user ? (
-            <IconButton onClick={handleLogout}>
-              <LogoutOutlinedIcon
+          {!isLogout ? (
+            <Button color="buttonLogin" variant="text" onClick={handleLogout}>
+              {/* <LogoutOutlinedIcon
                 fontSize="large"
                 className={classes.txtColor}
-              />
-            </IconButton>
+              /> */}
+              Logout
+            </Button>
           ) : (
             <Link to="/auth" state={{ prevPath: location.pathname }}>
-              <IconButton>
-                <LoginOutlinedIcon
+              <Button color="buttonLogin" variant="text">
+                {/* <LoginOutlinedIcon
                   fontSize="large"
                   className={classes.txtColor}
-                />
-              </IconButton>
+                /> */}
+                LogIn
+              </Button>
             </Link>
           )}
           <Box sx={{ flexGrow: 0 }}>

@@ -4,6 +4,11 @@ Todo:
   - Theme provider.@done
   - i18 file.@done
   - Add card effect on mouse hover.@done
-  - Create Passport middleware.
+  - Create Passport middleware. @done
+  - Get user from Redux. @done
+  - Redirect user when register. @done
+  - Verify emai with passport.
+  - Forget password.
+  - Login with email OR username.
   - Create new route in backend for search by tags.
   - Reduce React code, Back to Medium website.

@@ -10,6 +10,7 @@ import { StylesProvider, jssPreset } from "@mui/styles";
 import rtl from "jss-rtl";
 import { CssBaseline } from "@mui/material/";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 import Auth from "./components/Auth/Auth";
@@ -18,8 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar/Navbar.js";
 import ThemeContext from "./themeContext.js";
 const App = () => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-
+  const { user } = useSelector((state) => state?.users);
   const [mode, setMode] = React.useState("light");
   const [appDirection, setAppDirection] = React.useState("ltr");
   const themeContext = React.useMemo(
@@ -67,6 +67,7 @@ const App = () => {
             main: mode === "dark" ? "#fffff" : "#3E3223",
           },
           buttonGroup: { main: mode === "dark" ? "#f4c236" : "#000" },
+          buttonLogin: { main: "#fff" },
           likeColor: { main: mode === "dark" ? "#855e95" : "#767efc" },
           paginationColor: { main: mode === "dark" ? "#fff" : "#767efc" },
           custom: {
@@ -108,7 +109,8 @@ const App = () => {
                   <Route path="/posts" element={<Home />} />
                   <Route path="/posts/search" element={<Home />} />
                   <Route path="/post/:id" element={<PostDetails />} />
-                  {!user?.result ? (
+                  {/* <Route path="/auth" element={<Auth />} /> */}
+                  {!user ? (
                     <Route path="/auth" element={<Auth />} />
                   ) : (
                     <Route

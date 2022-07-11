@@ -7,7 +7,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
 const Like = ({ post, user }) => {
   const [likes, setLikes] = useState(post?.likes);
-  const userId = user?.result?._id || user?.result?.googleId;
+  const userId = user?.id || user?.result?.googleId;
   const hasLikedPost = post?.likes?.find((like) => like === userId);
   const dispatch = useDispatch();
   //Callback functions

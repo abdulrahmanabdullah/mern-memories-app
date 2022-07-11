@@ -107,13 +107,13 @@ export const likePost = async (req, res) => {
     const post = await PostMessage.findById(id);
 
     //Like and remove like from post
-    const index = post.likes.findIndex((id) => id === String(req.userId));
+    const index = post.likes.findIndex((id) => id === String(req.user._id));
     if (index === -1) {
       // like post
-      post.likes.push(req.userId);
+      post.likes.push(req.user._id);
     } else {
       //remove like from  post
-      post.likes = post.likes.filter((id) => id !== String(req.userId));
+      post.likes = post.likes.filter((id) => id !== String(req.user._id));
     }
 
     const updatePost = await PostMessage.findByIdAndUpdate(id, post, {

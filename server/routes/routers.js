@@ -16,7 +16,7 @@ import {
   register,
   login,
   googleOauthHandler,
-  getUsers,
+  userInfo,
 } from "../controllers/userController.js";
 const router = express.Router();
 
@@ -53,6 +53,7 @@ router.post(
 //Auth route
 router.post("/user/register", register);
 router.post("/user/login", login);
+router.get("/user/me/:id", userInfo);
 //This route calling from google api console.
 router.get("/user/google/auth", googleOauthHandler);
 export default router;

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Typography, TextField, Button } from "@mui/material";
 import { useStyle } from "./style";
 import { postComment } from "../../features/posts/postSlice";
@@ -13,8 +13,8 @@ const CommentSection = ({ post }) => {
     comments: post?.comments,
   });
   const commentRef = useRef();
-  //Get user from localstorage to pass id to backend.
-  const user = JSON.parse(localStorage.getItem("profile"));
+  //Get user from Redux to pass id to backend.
+  const { user } = useSelector((state) => state?.users);
   const dispatch = useDispatch();
 
   //load comments when component mount and updated.
@@ -25,7 +25,7 @@ const CommentSection = ({ post }) => {
   const handleComment = async () => {
     const { payload } = await dispatch(
       postComment({
-        name: user?.result?.name,
+        name: user?.name,
         comment: state?.comment,
         id: post._id,
       })
@@ -62,7 +62,7 @@ const CommentSection = ({ post }) => {
         </div>
         <div ref={commentRef}></div>
       </div>
-      {user?.result && (
+      {user?.name && (
         <div className={classes.writeCommentsArea}>
           <Typography gutterBottom variant="h6">
             {t("writeComment")}
