@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:5000" });
+const API = axios.create({
+  withCredentials: true,
+  baseURL: "http://localhost:5000",
+});
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
     req.headers.Authorization = `Bearer ${
@@ -11,7 +14,8 @@ API.interceptors.request.use((req) => {
 });
 
 //Posts endpoints
-export const fetchPostsAPI = (page) => API.get(`/posts?page=${page}`);
+export const fetchPostsAPI = (page) =>
+  API.get(`/posts?page=${page}`, { withCredentials: true });
 export const fetchPostAPI = (id) => API.get(`/post/${id}`);
 export const fetchPostBySearchAPI = (searchQuery) =>
   API.get(
@@ -29,3 +33,5 @@ export const postCommentAPI = (id, value) =>
 //Authentication endpoints
 export const registerAPI = (data) => API.post("/user/register", data);
 export const loginAPI = (data) => API.post("/user/login", data);
+export const fetchUserAPI = () => API.get("/", { withCredentials: true });
+export const logoutAPI = () => API.post("/logout", { withCredentials: true });

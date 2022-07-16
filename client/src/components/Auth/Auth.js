@@ -23,22 +23,22 @@ const initDataState = {
   password: "",
   confirmPassword: "",
 };
-function getGoogleOauthURL() {
-  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
-  const options = {
-    redirect_uri: "http://localhost:5000/user/google/auth",
-    client_id: process.env.REACT_APP_GOOGLE_AUTH_ID,
-    access_type: "offline",
-    response_type: "code",
-    prompt: "consent",
-    scope: [
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-    ].join(" "),
-  };
-  const qs = new URLSearchParams(options);
-  return `${rootUrl}?${qs}`;
-}
+// function getGoogleOauthURL() {
+//   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+//   const options = {
+//     redirect_uri: "http://localhost:5000/user/google/auth",
+//     client_id: process.env.REACT_APP_GOOGLE_AUTH_ID,
+//     access_type: "offline",
+//     response_type: "code",
+//     prompt: "consent",
+//     scope: [
+//       "https://www.googleapis.com/auth/userinfo.profile",
+//       "https://www.googleapis.com/auth/userinfo.email",
+//     ].join(" "),
+//   };
+//   const qs = new URLSearchParams(options);
+//   return `${rootUrl}?${qs}`;
+// }
 const Auth = () => {
   const { t } = useTranslation();
   //Component styles
@@ -121,6 +121,9 @@ const Auth = () => {
     setShowPassword(false);
   };
 
+  const googleAuth = () => {
+    window.open("http://localhost:5000/google", "_self");
+  };
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -197,8 +200,10 @@ const Auth = () => {
               fullWidth
               variant="contained"
               color="custom"
+              onClick={googleAuth}
             >
-              <a href={getGoogleOauthURL()}> Countniue with Google </a>
+              Google
+              {/* <a href={getGoogleOauthURL()}> Countniue with Google </a> */}
             </Button>
           </Grid>
           <Grid justifyContent="flex-start" container>

@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { genPassword, validPassword, issueJwt } from "../lib/utils";
-import { getGoogleUser, getGoogleUserToken } from "../service/userService";
 import mongoose from "mongoose";
 
 const secret = "test";
@@ -76,67 +75,16 @@ export const login = async (req, res) => {
   }
 };
 
-//Send username to client
-export const userInfo = async (req, res) => {
-  try {
-    const { id } = req.params;
-    //Check if Id isValid
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ message: "Invalid Id " });
-    }
-    const user = await User.findById({ _id: id });
-    //If found user
-    res.status(200).json({ success: true, name: user.username });
-  } catch (error) {
-    res.status(405).json({ message: error.message });
-  }
-};
-
-//google Oauth region 🎱
-//This handler call from google console and receiving code from reqeust query, with
-// this code we can call google apis to get id token and access token. With these values
-// we call google apis to get user info then save user data into database.
-export const googleOauthHandler = async (req, res) => {
-  const code = req.query.code;
-  try {
-    // Get id and access token
-    const { id_token, access_token } = await getGoogleUserToken(code);
-    //Get user info
-    const googleUser = await getGoogleUser(id_token, access_token);
-    //Save user in database.
-    // const user = await userModel.create({
-    //   email:googleUser.email,
-    //   name:googleUser.name,
-    //   picture:googleUser.picture
-    // })
-    const accessToken = jwt.sign(
-      {
-        ...googleUser,
-        id: googleUser.id,
-      },
-      secret,
-      { expiresIn: "1h" }
-    );
-    res.cookie("accessToken", accessToken, accessTokenCookieOptions);
-    //redirect client to home page
-    res.redirect("http://localhost:3000");
-  } catch (err) {
-    console.log(err.message);
-    //Redirect error page.
-    res.status(500).json("Error", err.message);
-  }
-};
-
-export const getUsers = async (req, res) => {
-  try {
-    console.log(res.locals);
-    const token = req.headers.authorization.split(" ")[1];
-    let decoded;
-    if (token) {
-      decoded = jwt.verify(token, "test");
-      return res.status(200).json(decoded);
-    }
-  } catch (err) {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-};
+// export const getUsers = async (req, res) => {
+//   try {
+//     console.log(res.locals);
+//     const token = req.headers.authorization.split(" ")[1];
+//     let decoded;
+//     if (token) {
+//       decoded = jwt.verify(token, "test");
+//       return res.status(200).json(decoded);
+//     }
+//   } catch (err) {
+//     res.status(401).json({ message: "Unauthorized" });
+//   }
+// };

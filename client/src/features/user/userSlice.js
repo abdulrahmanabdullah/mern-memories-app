@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
 
+// Get user profile from local storage. "This way we can avoid get and set user in useEffect"
+const loadUser = JSON.parse(localStorage.getItem("profile")) || null;
+
 //Sign up Actions
 export const register = createAsyncThunk(
   "users/register",
@@ -38,16 +41,34 @@ export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+export const fetchUser = createAsyncThunk(
+  "users/fetchUser",
+  async (thunkAPI) => {
+    try {
+      const response = await api.fetchUserAPI();
+      const { data } = response;
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const logout = createAsyncThunk("users/logout", async (thunkAPI) => {
   try {
     await localStorage.removeItem("profile");
+    await api.logoutAPI();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
-// Get user profile from local storage. "This way we can avoid get and set user in useEffect"
-const loadUser = JSON.parse(localStorage.getItem("profile")) || null;
 // initial state ,
 const initialState = {
   status: "idle",
@@ -103,6 +124,23 @@ export const userSlice = createSlice({
         state.user = null;
         state.isLogin = false;
         state.isLogout = false;
+        state.message = action.payload;
+      })
+      .addCase(fetchUser.pending, (state, action) => {
+        state.status = "loading login";
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.status = "compelete";
+        state.user = action.payload;
+        state.message = "successful login";
+        state.isLogin = true;
+        state.isLogout = false;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.user = null;
+        state.isLogin = false;
+        state.isLogout = true;
         state.message = action.payload;
       });
   },

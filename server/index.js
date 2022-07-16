@@ -2,16 +2,13 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import cookeParser from "cookie-parser";
+import cookieSession from "cookie-session";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import appRouter from "./routes/routers.js";
-import deserializeUser from "./middleware/deserializeUser.js";
-import authUser from "./routes/auth.js";
 import session from "express-session";
-import MongoStore from "connect-mongo";
+import appRouter from "./routes/routers.js";
+import authUser from "./routes/auth.js";
 import "./config/database.js"; //Config database
 import "./models/user";
-import Customer from "./models/user";
 import passport from "passport";
 import passportConfig from "./config/passportConfig";
 
@@ -24,35 +21,40 @@ dotenv.config();
 
 //Create the Express Application.
 const app = express();
-
-//This will initialize the passport object on every request.
-
 passportConfig(passport);
-app.use(passport.initialize());
-/**
- * -------------- MONGOOSE CONNECTION----------------
- */
-// const CONNECTION_URL = process.env.CONNECTION_URL_DEV;
-// mongoose.connect("mongodb://localhost:27017/db", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// const connection = mongoose.connection;
 
-// connection.on("err", (err) => {
-//   console.log(`mongoose throw this :: ${err}`);
-// });
-// Instead of using body-parser middleware, use the new Express implementation of the same thing
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: ["memories"],
+//     maxAge: 24 * 60 * 60 * 100,
+//   })
+// );
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:5000"],
+    methods: "GET,POST,PATCH,DELETE,PUT",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: false }));
 app.use(cookeParser());
-
+app.use(
+  session({
+    secret: "some",
+  })
+);
+app.use(passport.initialize());
+// app.use(passport.authenticate("session"));
+//This will initialize the passport object on every request.
+app.use(passport.session());
+// Instead of using body-parser middleware, use the new Express implementation of the same thing
 /**
  * -------------- ROUTES ----------------
  */
 app.use("/", appRouter);
-app.use("/", authUser);
 
 /**
  * -------------- SERVER ----------------

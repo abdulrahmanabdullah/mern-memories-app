@@ -7,6 +7,9 @@ Todo:
   - Create Passport middleware. @done
   - Get user from Redux. @done
   - Redirect user when register. @done
+  - Logout session. @done
+  - Protect routes.
+  - Move user routes in userControll file.
   - Verify emai with passport.
   - Forget password.
   - Login with email OR username.

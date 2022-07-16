@@ -10,7 +10,7 @@ import { StylesProvider, jssPreset } from "@mui/styles";
 import rtl from "jss-rtl";
 import { CssBaseline } from "@mui/material/";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 import Auth from "./components/Auth/Auth";
@@ -18,10 +18,23 @@ import PostDetails from "./components/PostDetails/PostDetails";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar/Navbar.js";
 import ThemeContext from "./themeContext.js";
+import { fetchUser } from "./features/user/userSlice";
 const App = () => {
   const { user } = useSelector((state) => state?.users);
+  const dispatch = useDispatch();
   const [mode, setMode] = React.useState("light");
   const [appDirection, setAppDirection] = React.useState("ltr");
+  React.useEffect(() => {
+    // const getUser = async () => {
+    //   fetch("http://localhost:5000/", {
+    //     credentials: "include",
+    //   }).then((res) => res.json());
+    // };
+    if (!user) {
+      dispatch(fetchUser());
+    }
+    // getUser();
+  }, []);
   const themeContext = React.useMemo(
     () => ({
       toggleColorMode: (action) => {
