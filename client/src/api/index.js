@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const API = axios.create({
-  withCredentials: true,
   baseURL: "http://localhost:5000",
 });
 API.interceptors.request.use((req) => {
@@ -33,5 +32,4 @@ export const postCommentAPI = (id, value) =>
 //Authentication endpoints
 export const registerAPI = (data) => API.post("/user/register", data);
 export const loginAPI = (data) => API.post("/user/login", data);
-export const fetchUserAPI = () => API.get("/", { withCredentials: true });
 export const logoutAPI = () => API.post("/logout", { withCredentials: true });

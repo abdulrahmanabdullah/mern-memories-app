@@ -20,11 +20,12 @@ const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: PublicKey,
   algorithms: ["RS256"],
+  passReqToCallback: true,
 };
 export default function (passport) {
   passport.use(
     // The JWT payload is passed into the verify callback
-    new JwtStrategy(options, function (jwt_payload, done) {
+    new JwtStrategy(options, function (req, jwt_payload, done) {
       User.findOne(
         {
           _id: jwt_payload.sub,
@@ -34,6 +35,7 @@ export default function (passport) {
             return done(err, false);
           }
           if (user) {
+            req.user = user;
             return done(null, user);
           } else {
             return done(null, false);

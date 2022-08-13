@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
+import Cookies from "js-cookie";
 
 // Get user profile from local storage. "This way we can avoid get and set user in useEffect"
 const loadUser = JSON.parse(localStorage.getItem("profile")) || null;
@@ -42,24 +43,6 @@ export const login = createAsyncThunk("users/login", async (data, thunkAPI) => {
   }
 });
 
-export const fetchUser = createAsyncThunk(
-  "users/fetchUser",
-  async (thunkAPI) => {
-    try {
-      const response = await api.fetchUserAPI();
-      const { data } = response;
-      return data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
 export const logout = createAsyncThunk("users/logout", async (thunkAPI) => {
   try {
     await localStorage.removeItem("profile");
@@ -82,6 +65,21 @@ const initialState = {
 export const userSlice = createSlice({
   name: "users",
   initialState,
+  reducers: {
+    fetchMe(state) {
+      const auth = Cookies.get("auth");
+      if (auth) {
+        const convertData = JSON.parse(auth);
+        localStorage.setItem("profile", JSON.stringify({ ...convertData }));
+        Cookies.remove("auth");
+        state.status = "compelete";
+        state.user = { ...convertData };
+        state.message = "successful login";
+        state.isLogin = true;
+        state.isLogout = false;
+      }
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(register.pending, (state) => {
@@ -125,26 +123,10 @@ export const userSlice = createSlice({
         state.isLogin = false;
         state.isLogout = false;
         state.message = action.payload;
-      })
-      .addCase(fetchUser.pending, (state, action) => {
-        state.status = "loading login";
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = "compelete";
-        state.user = action.payload;
-        state.message = "successful login";
-        state.isLogin = true;
-        state.isLogout = false;
-      })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.user = null;
-        state.isLogin = false;
-        state.isLogout = true;
-        state.message = action.payload;
       });
   },
 });
 
-//Export reducer
+//Export reducer and actions
+export const { fetchMe } = userSlice.actions;
 export default userSlice.reducer;

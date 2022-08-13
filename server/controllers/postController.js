@@ -1,34 +1,21 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postSchem";
-import passport from "passport";
-/***
- * Helper middleware for authenctication user when login with jwt strategy OR google and github strategy.
- * @param request to receive request with crediales
- * @param next when one of authentication success, otherwise return unauthorize whiche mean user doesn't login or register.
- */
-export const isLogin = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(405).json({ message: "Unauthorize" });
-  }
-};
 
-//When user login data saved in cookies .
-export const homePage = (req, res) => {
-  //Login with google .
-  if (req.user) {
-    console.log("yes ");
-    return res.status(200).json({
-      success: true,
-      name: req.user.username,
-      id: req.user._id,
-    });
-  } else {
-    console.log("Nooooop 😫");
-    res.status(405).json({ success: false, message: "failed" });
-  }
-};
+// //When user login data saved in cookies .
+// export const homePage = (req, res) => {
+//   //Login with google .
+//   if (req.user) {
+//     console.log("yes ");
+//     return res.status(200).json({
+//       success: true,
+//       name: req.user.username,
+//       id: req.user._id,
+//     });
+//   } else {
+//     console.log("Nooooop 😫");
+//     res.status(405).json({ success: false, message: "failed" });
+//   }
+// };
 
 export const getPosts = async (req, res) => {
   const { page } = req.query;
@@ -127,7 +114,6 @@ export const deletePost = async (req, res) => {
 //Like post
 export const likePost = async (req, res) => {
   console.log("Likes => ", req.user);
-  res.header("Access-Control-Allow-Origin", "*");
   try {
     const { id } = req.params;
     //User id come from middleware.

@@ -18,23 +18,17 @@ import PostDetails from "./components/PostDetails/PostDetails";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar/Navbar.js";
 import ThemeContext from "./themeContext.js";
-import { fetchUser } from "./features/user/userSlice";
+import { fetchMe } from "./features/user/userSlice";
 const App = () => {
   const { user } = useSelector((state) => state?.users);
   const dispatch = useDispatch();
   const [mode, setMode] = React.useState("light");
   const [appDirection, setAppDirection] = React.useState("ltr");
   React.useEffect(() => {
-    // const getUser = async () => {
-    //   fetch("http://localhost:5000/", {
-    //     credentials: "include",
-    //   }).then((res) => res.json());
-    // };
     if (!user) {
-      dispatch(fetchUser());
+      dispatch(fetchMe());
     }
-    // getUser();
-  }, []);
+  });
   const themeContext = React.useMemo(
     () => ({
       toggleColorMode: (action) => {
