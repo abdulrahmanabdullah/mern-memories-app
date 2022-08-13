@@ -17,8 +17,12 @@ import passportConfig from "./config/passportConfig";
 //Access variable that saved in the .env file.
 dotenv.config();
 
-//Create the Express Application.
+/**
+ * --------- EXPRESS SETUP --------
+ */
 const app = express();
+
+//Passport configuration.
 passportConfig(passport);
 
 app.use(
@@ -28,15 +32,14 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: false }));
 app.use(cookeParser());
-app.use(session({ secret: "mySecret" }));
-app.use(passport.initialize());
-// app.use(passport.authenticate("session"));
+app.use(session({ secret: process.env.SESSION_SECRET }));
 //This will initialize the passport object on every request.
-// app.use(passport.session());
-// Instead of using body-parser middleware, use the new Express implementation of the same thing
+app.use(passport.initialize());
+
 /**
  * -------------- ROUTES ----------------
  */

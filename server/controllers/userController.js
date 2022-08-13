@@ -1,9 +1,5 @@
-import jwt from "jsonwebtoken";
 import User from "../models/user";
 import { genPassword, validPassword, issueJwt } from "../lib/utils";
-import mongoose from "mongoose";
-
-const secret = "test";
 
 const accessTokenCookieOptions = {
   maxAge: 900000, // 15 mins
@@ -74,17 +70,3 @@ export const login = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
-
-// export const getUsers = async (req, res) => {
-//   try {
-//     console.log(res.locals);
-//     const token = req.headers.authorization.split(" ")[1];
-//     let decoded;
-//     if (token) {
-//       decoded = jwt.verify(token, "test");
-//       return res.status(200).json(decoded);
-//     }
-//   } catch (err) {
-//     res.status(401).json({ message: "Unauthorized" });
-//   }
-// };

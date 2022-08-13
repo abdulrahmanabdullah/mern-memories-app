@@ -79,30 +79,14 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-// passport.deserializeUser(async (_id, done) => {
-//   console.log("deserializer User");
-//   await User.findById({ _id }, (err, user) => {
-//     console.log("Find user by id");
-//     return done(null, user);
-//   });
-// if (!currentUser) done(err, null);
-// console.log(currentUser);
-// done(null, currentUser);
-// });
-// passport.serializeUser(function (user, cb) {
-//   process.nextTick(function () {
-//     cb(null, { id: user.id, username: user.username, name: user.name });
-//   });
+// passport.serializeUser((user, done) => {
+//   done(null, user);
 // });
 
-passport.deserializeUser(function (user, done) {
-  console.log("Im called man", user);
-  // process.nextTick(function () {
-  //   return cb(null, user);
-  // });
-  User.findById({ _id: user._id }).then((item) => done(null, item));
-});
+// passport.deserializeUser(function (user, done) {
+//   console.log("Im called man", user);
+//   // process.nextTick(function () {
+//   //   return cb(null, user);
+//   // });
+//   User.findById({ _id: user._id }).then((item) => done(null, item));
+// });

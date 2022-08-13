@@ -32,11 +32,6 @@ const Form = ({ currentId, setCurrentId }) => {
       setPostData(post);
     }
   }, [post, isLogout]);
-  // useEffect(() => {
-  //   if (status === "logout.compelete") {
-  //     user = null;
-  //   }
-  // }, [status, user]);
 
   //Handler functions
   const handlSubmit = (e) => {

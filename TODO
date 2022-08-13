@@ -8,7 +8,7 @@ Todo:
   - Get user from Redux. @done
   - Redirect user when register. @done
   - Logout session. @done
-  - Protect routes.
+  - Protect routes. @done
   - Move user routes in userControll file.
   - Verify emai with passport.
   - Forget password.

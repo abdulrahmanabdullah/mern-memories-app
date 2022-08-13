@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
-// Here We can write actions and reducers for posts
 
-// All actions and reducers for post will be here 👍, we don't need more files.
+/**
+ * --- All actions and reducers for post will be here 👍, we don't need more files---
+ */
 
 //fetch all post action
 export const fetchPosts = createAsyncThunk(

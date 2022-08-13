@@ -2,6 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../api";
 import Cookies from "js-cookie";
 
+/**
+ *      ------------------- REDUX OF USER ----------------
+ * Here you'll find all logic and functions for user authentication
+ * Register, Login, logout.
+ */
+
 // Get user profile from local storage. "This way we can avoid get and set user in useEffect"
 const loadUser = JSON.parse(localStorage.getItem("profile")) || null;
 
@@ -67,7 +73,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     fetchMe(state) {
-      const auth = Cookies.get("auth");
+      const auth = Cookies.get("tempAuth");
       if (auth) {
         const convertData = JSON.parse(auth);
         localStorage.setItem("profile", JSON.stringify({ ...convertData }));

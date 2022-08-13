@@ -1,26 +1,8 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postSchem";
 
-// //When user login data saved in cookies .
-// export const homePage = (req, res) => {
-//   //Login with google .
-//   if (req.user) {
-//     console.log("yes ");
-//     return res.status(200).json({
-//       success: true,
-//       name: req.user.username,
-//       id: req.user._id,
-//     });
-//   } else {
-//     console.log("Nooooop 😫");
-//     res.status(405).json({ success: false, message: "failed" });
-//   }
-// };
-
 export const getPosts = async (req, res) => {
   const { page } = req.query;
-  console.log("Posts => ", req.user);
-
   try {
     const LIMIT = 6;
     const startIndex = (Number(page) - 1) * LIMIT;
@@ -30,7 +12,6 @@ export const getPosts = async (req, res) => {
       .sort({ _id: -1 })
       .limit(LIMIT)
       .skip(startIndex);
-    // return res.status(200).json(collection);
     return res.status(200).json({
       data: posts,
       currentPage: Number(page),
@@ -113,7 +94,6 @@ export const deletePost = async (req, res) => {
 };
 //Like post
 export const likePost = async (req, res) => {
-  console.log("Likes => ", req.user);
   try {
     const { id } = req.params;
     //User id come from middleware.
