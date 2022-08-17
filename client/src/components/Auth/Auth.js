@@ -6,6 +6,8 @@ import {
   Grid,
   Button,
   Typography,
+  Divider,
+  Chip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -15,7 +17,7 @@ import { toast } from "react-toastify";
 import { useStyle } from "./style";
 import Input from "./Input";
 import { login, register } from "../../features/user/userSlice";
-
+import GoogleIcon from "../../assets/GoogleIcon";
 const initDataState = {
   firstName: "",
   lastName: "",
@@ -23,22 +25,6 @@ const initDataState = {
   password: "",
   confirmPassword: "",
 };
-// function getGoogleOauthURL() {
-//   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
-//   const options = {
-//     redirect_uri: "http://localhost:5000/user/google/auth",
-//     client_id: process.env.REACT_APP_GOOGLE_AUTH_ID,
-//     access_type: "offline",
-//     response_type: "code",
-//     prompt: "consent",
-//     scope: [
-//       "https://www.googleapis.com/auth/userinfo.profile",
-//       "https://www.googleapis.com/auth/userinfo.email",
-//     ].join(" "),
-//   };
-//   const qs = new URLSearchParams(options);
-//   return `${rootUrl}?${qs}`;
-// }
 const Auth = () => {
   const { t } = useTranslation();
   //Component styles
@@ -46,11 +32,9 @@ const Auth = () => {
   //dispatch register and signin actions.
   const dispatch = useDispatch();
   //selector
-  // const status = useSelector((state) => state.users.status);
   const { status, message, isLogin, isLogout } = useSelector(
     (state) => state?.users
   );
-  // const message = useSelector((state) => state.users.message);
   //component state
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(initDataState);
@@ -121,9 +105,6 @@ const Auth = () => {
     setShowPassword(false);
   };
 
-  const googleAuth = () => {
-    window.open("http://localhost:5000/google", "_self");
-  };
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -194,20 +175,30 @@ const Auth = () => {
             >
               {isRegister ? t("register") : t("login")}
             </Button>
-            {/* Google OAuth linke. */}
-            <Button
-              style={{ margin: "10px 0px 0px 15px" }}
-              fullWidth
-              variant="contained"
-              color="custom"
-              onClick={googleAuth}
+            {/* Soical media login */}
+            <Grid item style={{ width: "100%" }}>
+              <Divider>
+                <Chip label="or sign in with " />
+              </Divider>
+            </Grid>
+            <Grid
+              container
+              spacing={2}
+              direction="row"
+              justifyContent="center"
+              alignContent="center"
             >
-              Google
-              {/* <a href={getGoogleOauthURL()}> Countniue with Google </a> */}
-            </Button>
+              <Grid item>
+                <a href="http://localhost:5000/google" target="_self">
+                  <GoogleIcon />
+                </a>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid justifyContent="flex-start" container>
+          {/* Links to Login OR Register  */}
+          <Grid justifyContent="center" container>
             <Grid item>
+              {isRegister ? t("loginWords") : t("createWords")}
               <Button onClick={switchMode}>
                 {isRegister ? t("alreadyHaveAccount") : t("createAccount")}
               </Button>
@@ -218,5 +209,4 @@ const Auth = () => {
     </Container>
   );
 };
-
 export default Auth;

@@ -77,7 +77,7 @@ export const userSlice = createSlice({
       if (auth) {
         const convertData = JSON.parse(auth);
         localStorage.setItem("profile", JSON.stringify({ ...convertData }));
-        Cookies.remove("auth");
+        Cookies.remove("tempAuth");
         state.status = "compelete";
         state.user = { ...convertData };
         state.message = "successful login";

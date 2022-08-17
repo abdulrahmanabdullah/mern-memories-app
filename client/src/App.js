@@ -81,6 +81,10 @@ const App = () => {
             main: "#9c6db0",
             contrastText: "#fff",
           },
+          googleBtn: {
+            main: "#fff",
+            contrastText: "#000",
+          },
           contrastThreshold: 3,
           mode,
         },
