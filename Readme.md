@@ -4,18 +4,13 @@ It is a platform for memories that you can share,like and delete.Also it has the
 
 It's a MERN application which is build with using Mongodb,Express,ReactJs and NodeJs.
 
----
-
 # ☺️ Motivation
 
-Challenge and motivation are the things which make better a person. I was looking for something advanced and challenge me to raise me in the second level.I found this project on [this channel]("https://www.youtube.com/watch?v=VsUzmlZfYNg") and I **rebuilt it from scratch** with using last updated library and added some features like Redux toolkit,i18n,theme provider, sessions and cookies to protect route and passportJS.
-
----
+Challenge and motivation are the things which make better a person. I was looking for something advanced and challenge me to raise me in the second level.I found this project on [this channel]("https://www.youtube.com/watch?v=VsUzmlZfYNg") and I **rebuilt it from scratch** with using last updated library and added some features like Redux toolkit,i18n,theme provider, sessions, authenication to protect routes with JWT strategy and soical media login with passportJS.
 
 # 📖 Contents
 
-This app features two folders. First, we have a directory for our frontend client,and second, we have a directory for our node server that contains all of the backend code.
-_**file structure**_ 🌴
+This app features two folders. First, we have a directory for our frontend client side which it's build with React,and second, we have a directory for our node server that contains all of the backend code.
 
 ```
 ├── Project
@@ -37,13 +32,13 @@ node -v
 npm -v
 ```
 
----
-
 # client getting started
 
 After clone project run this commands:
 
 ```
+cd projectFolder
+cd client
 npm install
 npm start
 ```
@@ -97,6 +92,26 @@ npm start
 │   ├── style.js 👉 application main styles
 │   ├── store.js 👉 Reducers
 │   ├── themeContext.js 👉 React context to apply themeProvider
+```
+
+---
+
+<p style="text-align:center;font-size:2rem;margin-top:20px;" > Server Side </p>
+
+# server content
+
+# 📌 Requirements
+
+- Node js >= 16.15.0
+
+# Server getting started
+
+after clone project run this commands:
+
+```
+cd projectFolder && cd server
+npm install
+npm start
 ```
 
 ## React 18 , Mui library V5 , Redux toolkit , Google Auth SDK , Validation password, Like and unlike post if user authenticated also appears how likes each post, Use Pagination material ui, Use Location,Navigate and prevPath with routes in react-route-dom v6, use ImageListItem Mui to show recommended posts and toggle them mode, toggle direction and change language, Search by tags also by words, Use object state to avoid unnecessary re-renders .
