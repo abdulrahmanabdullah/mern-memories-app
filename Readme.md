@@ -94,11 +94,9 @@ npm start
 │   ├── themeContext.js 👉 React context to apply themeProvider
 ```
 
----
+# Server
 
-<p style="text-align:center;font-size:2rem;margin-top:20px;" > Server Side </p>
-
-# server content
+Our server is responsible for connecting to the database and routing incoming requests to the users.
 
 # 📌 Requirements
 
@@ -114,6 +112,33 @@ npm install
 npm start
 ```
 
-## React 18 , Mui library V5 , Redux toolkit , Google Auth SDK , Validation password, Like and unlike post if user authenticated also appears how likes each post, Use Pagination material ui, Use Location,Navigate and prevPath with routes in react-route-dom v6, use ImageListItem Mui to show recommended posts and toggle them mode, toggle direction and change language, Search by tags also by words, Use object state to avoid unnecessary re-renders .
+# Database :convenience_store:
 
-## Express , Mongoe db , Middleware , Post models and User modles.
+Here I'm using [NoSQL](https://www.mongodb.com/nosql-explained) database that store data in a format other than relational tables like MongoDB. In our database we created two documents first one for [posts](./server/models/postSchem.js) and the seconde one for [users](./server/models/user.js).
+
+# Routes 🔄
+
+We have two main routes. First one for posts and the other one for user.
+In post routes we built all functionality to manage post create,edit,delete,update and like post. (e.g post routes)
+
+```
+request.get("/posts"); // To fetch all posts
+request.get("/post/:id"); // To fetch post by id param
+request.post("/posts",middleWare,createPost); //  Only authenticated user can create new post
+```
+
+And in user route we have register,login and logout routes.(e.g user routes)
+
+```
+request.post("/user/register", userPayload);
+request.post("/user/login", userPayload);
+request.post("/user/logout");
+```
+
+# Authentication :handshake:
+
+Here I'm using [JWT](https://jwt.io/introduction) for authentication with RS256 algorithm and public/private keys to encrypted token. [public key](./server/id_rsa_pub.pem).Thanks to [PassportJS](https://www.passportjs.org/) to make this easy.
+
+# License
+
+The code in this project is free software under the [AGPL License version 3 or later](./LICENSE.md).

@@ -12,6 +12,7 @@ Todo:
   - Move user routes in userControll file.
   - Verify emai with passport.
   - Forget password.
-  - Login with email OR username.
+  - Login with email. @done  
   - Create new route in backend for search by tags.
   - Reduce React code, Back to Medium website.
+  - Connect mongodb image with docker.
