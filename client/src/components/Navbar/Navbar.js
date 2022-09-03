@@ -182,19 +182,11 @@ const Navbar = () => {
           {/* Login and logout logic */}
           {!isLogout ? (
             <Button color="buttonLogin" variant="text" onClick={handleLogout}>
-              {/* <LogoutOutlinedIcon
-                fontSize="large"
-                className={classes.txtColor}
-              /> */}
               Logout
             </Button>
           ) : (
             <Link to="/auth" state={{ prevPath: location.pathname }}>
               <Button color="buttonLogin" variant="text">
-                {/* <LoginOutlinedIcon
-                  fontSize="large"
-                  className={classes.txtColor}
-                /> */}
                 LogIn
               </Button>
             </Link>

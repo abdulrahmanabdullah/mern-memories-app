@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { create } from "jss";
 import {
   createTheme,
@@ -22,8 +22,8 @@ import { fetchMe } from "./features/user/userSlice";
 const App = () => {
   const { user } = useSelector((state) => state?.users);
   const dispatch = useDispatch();
-  const [mode, setMode] = React.useState("light");
-  const [appDirection, setAppDirection] = React.useState("ltr");
+  const [mode, setMode] = useState("light");
+  const [appDirection, setAppDirection] = useState("ltr");
   React.useEffect(() => {
     if (!user) {
       dispatch(fetchMe());
@@ -94,9 +94,10 @@ const App = () => {
   const jss = create({
     plugins: [...jssPreset().plugins, rtl()],
   });
+
   return (
     <>
-      <ToastContainer position="top-center" autoClose={5000} closeOnClick />
+      <ToastContainer position="bottom-center" autoClose={5000} closeOnClick />
       <ThemeContext.Provider value={themeContext}>
         <StylesProvider jss={jss}>
           <BrowserRouter>
@@ -113,14 +114,12 @@ const App = () => {
                 }}
               />
               <Container maxWidth="xl">
-                {/* <Navbar /> */}
                 <Navbar props />
                 <Routes>
                   <Route path="/" element={<Navigate replace to="/posts" />} />
                   <Route path="/posts" element={<Home />} />
                   <Route path="/posts/search" element={<Home />} />
                   <Route path="/post/:id" element={<PostDetails />} />
-                  {/* <Route path="/auth" element={<Auth />} /> */}
                   {!user ? (
                     <Route path="/auth" element={<Auth />} />
                   ) : (

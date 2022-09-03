@@ -94,7 +94,7 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.status = "compelete";
-        state.message = "Create Account Successfully Please login 👍";
+        state.message = action.payload?.message;
         // state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
@@ -115,6 +115,8 @@ export const userSlice = createSlice({
       })
       .addCase(login.pending, (state) => {
         state.status = "loading login";
+        state.isLogin = false;
+        state.isLogout = true;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "compelete";
@@ -127,7 +129,7 @@ export const userSlice = createSlice({
         state.status = "failed";
         state.user = null;
         state.isLogin = false;
-        state.isLogout = false;
+        state.isLogout = true;
         state.message = action.payload;
       });
   },

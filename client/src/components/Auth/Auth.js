@@ -56,7 +56,11 @@ const Auth = () => {
     }
     // When login user successfully.
     if (isLogin) {
-      toast.success(message);
+      toast.success(message, {
+        position: "bottom-center",
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       //Navigate user to previous page OR go to home when user came from outside of our website.
       navigate(location?.state?.prevPath || "/");
     }
@@ -68,7 +72,11 @@ const Auth = () => {
     if (isRegister) {
       //Dispatch sign up action
       dispatch(register(formData));
-      toast.success(message);
+      toast.success(message, {
+        position: "bottom-center",
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       //Navigate user to previous page OR go to home when user came from outside of our website.
       navigate("/");
     } else {

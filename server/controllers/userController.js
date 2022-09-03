@@ -35,7 +35,11 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "email already exist" });
     }
     await newUser.save();
-    return res.status(200).json({ success: true, newUser });
+    return res.status(200).json({
+      success: true,
+      newUser,
+      message: "Create Account Successfully Please login 👍",
+    });
   } catch (error) {
     res.status(500).json({ message: error });
   }
