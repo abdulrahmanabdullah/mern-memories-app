@@ -9,10 +9,8 @@ Todo:
   - Redirect user when register. @done
   - Logout session. @done
   - Protect routes. @done
-  - Move user routes in userControll file.
-  - Verify emai with passport.
-  - Forget password.
+  - Move user routes in userControll file.@done
   - Login with email. @done  
-  - Create new route in backend for search by tags.
-  - Reduce React code, Back to Medium website.
-  - Connect mongodb image with docker.
+  - Create new route in backend for search by tags.@done 
+  - Reduce React code, Back to Medium website.@done
+  - Connect mongodb image with docker.@done

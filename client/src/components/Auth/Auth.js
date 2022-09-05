@@ -97,7 +97,7 @@ const Auth = () => {
   const validationPassword = () => {
     if (formData.password !== formData.confirmPassword) {
       setIsNotValdation(true);
-      toast.error("Password and confirm password does not match", {
+      toast.error(t("passwordNotMatch"), {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: true,

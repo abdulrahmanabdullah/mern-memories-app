@@ -46,7 +46,7 @@ export function genPassword(password) {
 }
 
 /**
- * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
+ * @param {user} - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
  */
 export function issueJwt(user) {
   const _id = user._id;

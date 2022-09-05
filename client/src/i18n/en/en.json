@@ -6,6 +6,8 @@
     "logout":"Logout",
     "light":"Light",
     "pleaseLogin":"Please Login to create your own memory",
+    "loginComment":"Please Login to write a comment", 
+    "passwordNotMatch":"Password and confirm password does not match",
     "language":"Languages",
     "arabic":"Arabic",
     "alreadyHaveAccount":" Sign in",

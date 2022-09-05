@@ -88,8 +88,8 @@ export const postBySearch = createAsyncThunk(
   async (searchQuery, thunkAPI) => {
     try {
       const { data } = await api.fetchPostBySearchAPI(searchQuery);
-      if (data.data.length === 0)
-        return thunkAPI.rejectWithValue("Found 0 matches");
+      //When No result
+      if (data.data.length === 0) return thunkAPI.rejectWithValue("No Result ");
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

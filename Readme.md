@@ -96,7 +96,7 @@ npm start
 
 # Server
 
-Our server is responsible for connecting to the database and routing incoming requests to the users.
+Our server is responsible for connecting to the database, and routing incoming requests to the users.
 
 # 📌 Requirements
 
@@ -115,6 +115,20 @@ npm start
 # Database :convenience_store:
 
 Here I'm using [NoSQL](https://www.mongodb.com/nosql-explained) database that store data in a format other than relational tables like MongoDB. In our database we created two documents first one for [posts](./server/models/postSchem.js) and the seconde one for [users](./server/models/user.js).
+
+## Connect to database:
+
+You can use Mongo Atlas cloud database-[follow this steps](https://www.mongodb.com/atlas/database),OR install mongo in local machine-[guid to install mongodb](https://www.mongodb.com/docs/manual/installation/). However I'm using docker container to connect local database. If you already installed docker write this command:
+
+```
+docker run --name mongodb -d -p 27017:27017 mongo
+```
+
+Now we have the database url and port
+
+```
+mongodb://localhost:27017/app
+```
 
 # Routes 🔄
 
@@ -142,3 +156,7 @@ Here I'm using [JWT](https://jwt.io/introduction) for authentication with RS256 
 # License
 
 The code in this project is free software under the [AGPL License version 3 or later](./LICENSE.md).
+
+---
+
+## This app built by Abdulrahman Alkhudhayri keep learning 💪.

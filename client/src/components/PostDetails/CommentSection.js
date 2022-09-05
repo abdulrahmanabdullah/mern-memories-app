@@ -62,7 +62,7 @@ const CommentSection = ({ post }) => {
         </div>
         <div ref={commentRef}></div>
       </div>
-      {user?.name && (
+      {user?.name ? (
         <div className={classes.writeCommentsArea}>
           <Typography gutterBottom variant="h6">
             {t("writeComment")}
@@ -90,6 +90,10 @@ const CommentSection = ({ post }) => {
             {t("comment")}
           </Button>
         </div>
+      ) : (
+        <Typography fontSize="large" style={{ textAlign: "center" }}>
+          {t("loginComment")}
+        </Typography>
       )}
     </div>
   );
